@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hi</title>
+        <link href="../css/styles.css" rel="stylesheet" type="text/css">
+      </head>
+<body>
+
+<h2>Computer Science 70: Discrete Mathematics and Probability Theory</h2>
+<a href="../index.html">Home</a>
+<br>
+<br>
+<div id="toc_container">
+    <p class="toc_title">Content:</p>
+    <ul class="toc_list">
+    <li><a href="#FP1">Introduction</a></li>
+    <li><a href="#FP2">Proofs</a></li>
+    <li><a href="#FP3">Stable Matching</a></li>
+    <li><a href="#FP4">Graphs</a></li>
+    <li><a href="#FP5">Modular Arithmatic</a></li>
+    <li><a href="#FP6">Euclid's/FLT/CRT</a></li>
+    <li><a href="#FP7">RSA</a></li>
+    <li><a href="#FP8">Polynomails</a></li>
+    <li><a href="#FP9">Error Correcting Codes</a></li>
+    <li><a href="#FP10">Counting</a></li>
+    </ul>
+    </div>
+    <h3 id="FP1">Introduction</h3>
+    <h4 id="subhead">Review:</h4>
+    <p id="subtext">
+      Set: a well defined collection of objects.<br>
+      Elements: objects within a set.<br>
+      Two sets A and B are said to be equal A = B if they have the same elements.<br>
+      Cardinality: the size of a set. Ex- A={1,2,3,4} the the cardinality of A, |A|, is 4.<br>
+      Subset(or): if every element of a set A is also a set B then we say that A is a subset of B. A proper subset is a set A that is strictly contained in B.<br>
+      Intersection(and): the set containing all elements which are both in A and B.<br>
+      Disjoint: if the intersection between A and B = {}<br>
+      Union(andor): the set of all elements which are in either A or B or both.<br>
+      Properties of the Intersection/Union: <br>
+      AuB=BuA and Au0=A and AnB=BnA and An0=0<br>
+      Complement: the not of set A. Or relative complement of A in B written as B-A or B\A is the set of elements in B but not A.<br>
+      Significant Sets: N-natural numbers | Z-integer numbers | Q-rational numbers | R-real numbers | C-complex numbers<br>
+      Cartesian Product: of two sets A and B(AxB) = {(a,b) |a∈A, b∈B} <br>
+      The power set of S denotes P(S) is hte set of all subsets of S. <br>
+      Universal and Existential Quantifiers: The universal quantifier ∀ "for all" and the existential quantifier ∃ "there exists" Quantifiers make the universe finite or "define" it. Ex: (∀ x∈Z)(∃ y∈Z)(y>x) or (∃ y∈Z)(∀x∈Z)(y > x)<br>
+    </p>
+    <h4 id="subhead">Propositional Logic:</h4>
+    <p id="subtext">
+      Proposition: simply a statement which is either true or false.
+      <p id="subtext_bullet">Let P, Q, and R be varaibles representing propositions.<br>
+        Conjuction: P∧Q("P and Q") True only when both P and Q are true.<br>
+        Disjunction: PvQ("P or Q") True when at least one of P and Q is true.<br>
+        Negation: ¬P("not P") True when P is false.<br>
+        Implication: P => Q("P implies Q") This is the same as "if P then Q". (P is the hypothesis and Q the conclusion)<br>
+        <p id="subtext_bullet">
+          P=>Q =<br>
+          if P then Q<br>
+          Q if P<br>
+          P only if Q<br>
+          P is sufficient for Q<br>
+          Q is necessary fo P<br>
+          Q unless not P<br>
+          if both P=>Q and Q=>P are true then we say "P if and only if Q"("P iff Q" or P <=> Q)
+        </p>
+      </p>
+    </p>
+    <p id="subtext">
+      These are of propostitional form.<br>
+      Law of the Excluded Middle: for any proposition P either P is true or ¬P is true(but not both). A tautology is a propositional form that is always true. A contradition is a propositional form that is always false.<br>
+      Logically Equivalent propositions will result in the same truth tables.<br>
+      Given and implication P => Q:
+    </p>
+      <p id="subtext_bullet">
+        Contrapositive: ¬Q => P<br>
+        Converse: Q => P<br>
+      </p>
+    <p id="subtext">
+      De Morgan's Laws: ¬(P∧Q)≡(¬Pv¬Q) and ¬(PvQ)≡(¬P∧¬Q)<br>
+      Universal Propisitional Equivalences: ¬(∀xP(x))≡∃x¬P(x) and ¬(∃xP(x))≡∀x¬P(x)
+    </p>
+    <h3 id="FP2">Proofs</h3>
+
+</body>
+</html>
