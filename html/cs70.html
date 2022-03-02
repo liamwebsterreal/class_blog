@@ -17,12 +17,11 @@
     <li><a href="#FP2">Proofs</a></li>
     <li><a href="#FP3">Stable Matching</a></li>
     <li><a href="#FP4">Graphs</a></li>
-    <li><a href="#FP5">Modular Arithmatic</a></li>
-    <li><a href="#FP6">Euclid's/FLT/CRT</a></li>
-    <li><a href="#FP7">RSA</a></li>
-    <li><a href="#FP8">Polynomails</a></li>
-    <li><a href="#FP9">Error Correcting Codes</a></li>
-    <li><a href="#FP10">Counting</a></li>
+    <li><a href="#FP5">Modular Arithmetic/Euclid's/FLT/CRT</a></li>
+    <li><a href="#FP6">RSA</a></li>
+    <li><a href="#FP7">Polynomials</a></li>
+    <li><a href="#FP8">Error Correcting Codes</a></li>
+    <li><a href="#FP9">Counting</a></li>
     </ul>
     </div>
     <h3 id="FP1">Introduction</h3>
@@ -40,8 +39,8 @@
       AuB=BuA and Au0=A and AnB=BnA and An0=0<br>
       Complement: the not of set A. Or relative complement of A in B written as B-A or B\A is the set of elements in B but not A.<br>
       Significant Sets: N-natural numbers | Z-integer numbers | Q-rational numbers | R-real numbers | C-complex numbers<br>
-      Cartesian Product: of two sets A and B(AxB) = {(a,b) |a∈A, b∈B} <br>
-      The power set of S denotes P(S) is hte set of all subsets of S. <br>
+      Cartesian Product: of two sets A and B("AxB") = {(a,b) |a∈A, b∈B} <br>
+      The power set of S denotes P(S) is the set of all subsets of S. <br>
       Universal and Existential Quantifiers: The universal quantifier ∀ "for all" and the existential quantifier ∃ "there exists" Quantifiers make the universe finite or "define" it. Ex: (∀ x∈Z)(∃ y∈Z)(y>x) or (∃ y∈Z)(∀x∈Z)(y > x)<br>
     </p>
     <h4 id="subhead">Propositional Logic:</h4>
@@ -65,7 +64,7 @@
       </p>
     </p>
     <p id="subtext">
-      These are of propostitional form.<br>
+      These are of propositional form.<br>
       Law of the Excluded Middle: for any proposition P either P is true or ¬P is true(but not both). A tautology is a propositional form that is always true. A contradition is a propositional form that is always false.<br>
       Logically Equivalent propositions will result in the same truth tables.<br>
       Given and implication P => Q:
@@ -76,9 +75,369 @@
       </p>
     <p id="subtext">
       De Morgan's Laws: ¬(P∧Q)≡(¬Pv¬Q) and ¬(PvQ)≡(¬P∧¬Q)<br>
-      Universal Propisitional Equivalences: ¬(∀xP(x))≡∃x¬P(x) and ¬(∃xP(x))≡∀x¬P(x)
+      Universal Propositional Equivalences: ¬(∀xP(x))≡∃x¬P(x) and ¬(∃xP(x))≡∀x¬P(x)
     </p>
     <h3 id="FP2">Proofs</h3>
+    <p id="subtext">
+      Mathematics aims to prove at a level of certainty. A mathematical proof provides a means for guaranteeing that a statement is true. A proof is a finite sequence of steps called logical decuctions. More specifically: start with axioms then make logical deducions which result in a sequence of statments where each successive statmentt is necessarily true if the previous statements were true. 
+      This property is enforced by the rules of logic. 
+    </p>
+    <img id="small_image" src="../assets/directproof.PNG" alt="Direct Proof">
+    <img id="small_image" src="../assets/contrapositionproof.PNG" alt="Contrapositive Proof">
+    <img id="small_image" src="../assets/proofbycontradiction.JPG" alt="Contradictive Proof">
+    <h4 id="subhead">Direct Proof:</h4>
+    <p id="subtext">
+      A direct proof proceeds as follows. For each x, the proposition we are trying to prove is of the form P(x) => Q(x). A direct proof starts by assuming P(x) for a generic value of x and eventually concludes Q(x) through a chain of implications.<br>
+      Example: Theorem 2.1 For any a,b,c∈Z, if a|b and a|c then a|(b+c)<br>
+      <p id="subtext_bullet">
+        Assume that a | b and a|c then there exist integers q1 and q2 such that b = q1*a and c = q2*a. Then b + c = q1*a + q2*a = (q1+q2)a. Since the Z is closed under addition we conclude that (q1+q2)∈Z and thus a | (b+c).<br>
+      </p>
+    <p id="subtext">
+      To prove P <=> Q prove P => Q and then Q => P separately. 
+    </p>
+    <h4 id="subhead">Proof by Contraposition:</h4>
+    <p id="subtext">
+      We know that and implication P => Q is equivalent to its contrapositive ¬Q => ¬P; yet ¬Q => ¬P is sometimes much easier to solve. Thus is how a proof my contraposition proceeds. <br>
+      Example: Theorem 2.4 Let n be a positive integer and let d divide n. If n is odd then d is odd.<br>
+      <p id="subtext_bullet"> 
+        We proceed by contraposition. Assume that d is even. Then by definition d = 2k for some k∈Z. Because d|n then n=dl for some l∈Z. Combining these two statements we have n=dl=(2k)l=2(kl)<br>
+      </p>
+    </p>
+    <p id="subtext">
+      Example: Theorem 2.5(Pigeonhole Principle) Let n and k be positive integers. Place objects into k boxes. If n>k, then at least one box must contain multiple objects.<br>
+    </p>
+    <p id="subtext_bullet">
+      We proceed by contraposition. If all boxes contain at most one object then the number of objects is at most the number of boxes n <= k.<br>
+    </p>
+    <h4 id="subhead">Proof by Contradiction:</h4>
+    <p id="subtext"> 
+      The idea in a proof by contradiction is to assume that the claim you wish to prove is false. Then you show that this leads to a conclusion which is utter nonsense: a contradiction. Hence you conclude that your claim must in fact have been true. ¬P => ¬R∧R≡False<br>
+      Lemma 2.1 Every natural number greater than one is either prime or has a prime divisor.<br>
+      Lemma 2.2 If a^2 is even then a is even.<br>
+      Example: Theorem 2.6 There are infinitely many prime numbers.<br>
+      <p id="subtext_bullet"> 
+        We proceed by contradiction. Suppose that there are only finitely many prime numbers, k of them. Then we can enumerate them: p1,p2,...,pk. Now define q := p1p2...pk + 1. This is the prodcut of all the primes plus one. We claim q cannot be prime because by definition it is larger than all the primes p1 through pk. We therefore conclude that q has a prime divisor p. This will be our statemnent R. Next because p1,p2,p3,...pk are all the primes, p must be equal toone of them; thus p divides r := p1p2...pk. Hence p|q and p|r implying p|(q-r). But q-r = 1 implying p <= 1 and hence p is not a prime. This is ¬R thus we have R and ¬R and thus a contradiction.<br>
+      </p>
+    </p>
+    <h4 id="subhead">Proof by Cases:</h4>
+    <p id="subtext">
+      The idea behind a proof by cases is as follows: sometimes when we wish to prove a claim, we don't know which of a set of possible cases is true, but we know that at least one of the cases is true. What we can do then is to prove the result in both cases;then, clearly the general statement must hold.<br>
+      Example: Theorem 2.8 There exist irrational numbers x and y such that x^y is rational.
+      <p id="subtext_bullet"> 
+        We proceed by cases. The statement of the theorem is quantified by an existential quantifier. Thus to prove our claim it suffices to demonstrate a single x nd y such that x^y is rational. To do so, let x = sqrt(2) and y = sqrt(2). Thus two cases arise: x^y is rational or x^y is irratinal. <br>
+        Case 1: Assume that sqrt(2)^sqrt(2) is rational. This immediately yields our claim, since x and y are irrational numbers such that x^y is rational.<br>
+        Case 2: Assume that sqrt(2)^sqrt(2) is irrational. So our first guess for x and y was not right, but now we have a new irrational number to play with, sqrt(2)^sqrt(2). So let's try setting x=sqrt(2)^sqrt(2) and y=sqrt(2). Then x^y = (sqrt(2)^sqrt(2))^sqrt(2) = 2. But now we again started with two irrational numbers x and y and obtained rational x^y. Since case 1 or 2 must hold we thus conclude that the statment of Theorem 2.8 is true.<br>
+        Note: This is an example of a non-constructive proof: we've proven that some object X exists but without explicitly revealing what X itself is.<br>
+      </p>
+    </p>
+    <h4 id="subhead">Common Errors when Writing Proofs:</h4>
+    <p id="subtext">
+      Lesson 1: When writing proofs do not assume the claim you aim to prove.<br>
+      Lesson 2: Never forget to consider the case where your variables take on the value 0.<br>
+      Lesson 3: Be careful when mixing negative numbers and inequalities.<br>
+    </p>
+    <h4 id="subhead">Mathematical Induction:</h4>
+    <p id="subtext">
+      Mathematical induction is a powerful tool which is used to establish that a statement holds for all natural numbers. Induction brings a way to reason about the infinite natural numbers in a finite way. Suppose a stament holds for some value of n = k(induction hypothesis). Then it must also hold for k + 1(inductive step).<br>
+      <p id="subtext_bullet">
+        Base Base: Prove that P(0) is true.<br>
+        Induction Hypothesis: For arbitrary k>=0 assume P(k) is true.<br>
+        Inductive Step: With the assumption of the inductionHypothesis in hand show P(k+1) is true.<br>
+      </p>
+    </p>
+    <p id="subtext">
+      Strengthening the Induction Hypothesis: when using induction it can be very important to choose the correct statement to prove. Sometimes we can't prove our original statement so instead we hypothesize a stronger one. Sometimes the original claim doesn't capture the true structure of the underlying fact we were trying to prove--too vague.<br>
+      Strong Induction: Says "if dominoes 1 through k fall then so does (k+1) instead of saying if kth domino falls so does the (k+1)st" This can make proofs easier but doesn't allow one to solve anything that isn't solvable with weak induction.<br>
+
+    </p>
+    <h3 id="FP3">Stable Matching</h3>
+    <p id="subtext"> 
+      Stable matching is one of the highlights of the field of algorithms. Suppose your run an employment system and your task is to match up n jobs and n candidates. Each job has an ordered preference list of the n candidates, and each candidate has a similiar list of the n jobs. Example:<br>
+      <img src="../assets/stablematching1.PNG" alt="Stable Matching" style="width:40%;text-align:end;">
+    </p>
+    <p id="subtext">
+      What would you like to do as head of the employment system is to match each job with a candidate. It turns out ther is an algorithm to achieve "everyone happy". It's called the purpose-and-reject algorithm(aka the Gale-Shapley algorithm)<br>
+      Unstable: a matching is unstable if there is a job and a candidate who both prefer working with each other over their current matchings(rogue couple).
+      Stable: a matching of n jobs and n candidates if it has no rogue couples.<br>
+      Well Ordering Principle: If S subset N and S ~= 0 then S has a smallest element.<br>
+      Optimality:<br>
+      <p id="subtext_bullet">
+        Optimal Candidate for a job: For a given job J, the optimal candidate for J is the highest rank candidate on J's preference list that J could be paried with in any stable matching.<br>
+        Optimal Job for a Candidate: For a given candidate C the optimal job for C is the highest ranked job on C's preference list that C could be paired with in any stable matching.<br>
+      </p>
+    </p>
+    <h4 id="subhead">Purpose-and-Reject Algorithm:</h4>
+    <p id="subtext">
+      We think of this algorithm as proceeding in "days" to have clear unambiguous sens of discrete time.<br>
+      Every Morning: Each job proposes to the most preferred candidate on its list who has not yet rejected this job.<br>
+      Every Afternoon: Each candidate collects all the offers she received in the morning;to the job offer she like best among these, she responds "maybe" and to the otheroffers she says "no".<br>
+      Every Evening: Each rejected job crosses off the candidate who rejected its offer from its list.<br>
+      The above loop is repeated each successive day until there are no offers rejected. At that point each candidate has a job offer in hand; and on this day each candidate accepts their offered job and the algorithm terminates.<br>
+
+      Properties:<br>
+      <p id="subtext_bullet"> 
+        Lemma 4.3 The propose-and-reject algorithm always terminates with a matching.<br>
+        Lemma 4.1 The matching produced by the algorithm is always stable. <br>
+        Lemma 4.2 The matching output by the algorithm is job/employer optimal; thus candidate pessimal.<br>
+      </p>
+    </p>
+    <h3 id="FP4">Graphs</h3>
+    <p id="subtext">
+      On of the fundamental ideas in computer science is the notion of abstraction: capturing the essence or the core of some complex situation by a simple model. Some of the largest and most complex entities we might deal with include the internet, the brain, maps, and social networks; in each of these cases ther is an underlying "network" or graph that captures the important features that help us understand theses entities more deeply.<br>
+    </p>
+    <h4 id="subhead">Definitions:</h4>
+      <p id="subtext_bullet">
+        Undirected Graph: defined by a set of vertices V and a set of edges E. Multiple edges between a single par of vertices leads to E being a multiset.<br>
+        Directed Graph: Let V be a set denoting the vertices of a graph G. Then the set of directed edges E is a subset of VxV.<br>
+        A graph: G(V,E) where V is the vertex set and E is the edge set.<br>
+        An edge e={u,v} is incident on vertices u and v, and are thus neighbors.<br>
+        If G is undirected then the degree of vertex u∈V is the number of edges incident to u, i.e., degree(u)=|{v∈V:{u,v}∈E}. A vertex whose degree is 0 is called an isolated vertex.<br>
+        If G is directed then there are two different notions of degree due to the directions on the edges. Specifically, the in-degree of a vertex u is the number of edges from other vertices to u and the out-degree of u is the number of edges from u to other vertices.<br>
+      </p>
+      <h4 id="subhead">Paths/Walks/Cycles:</h4>
+      <p id="subtext">
+        Let G = (V,E) be an undirected graph.
+        Path: a sequence of edges {v1,v2},{v2,v3},...,{vn-2,vn-1},{vn-1,vn} thus there is said to be a path between v1 and vn. Commonly its assumed a path is simple, v1 ~= Vn.<br>
+        Cycle: a sequence of edges {v1,v2},{v2,v3},...,{vn-2,vn-1},{vn-1,vn}{vn,v1} where v1,...,vn are distinct.<br>
+        Walk: analogous to a path but a sequence with repeated vertices.<br>
+        Tour: analogous to a cycle but a walk in which starts and ends at the same vertex.<br>
+      </p>
+      <h4 id="subhead">Connectivity:</h4>
+      <p id="subtext">
+        A graph is said to be connected if there is a path between any two distinct vertices. Note: any graph(even disconnected ones) always consist of a collection of connected components, i.e., sets V1,...,Vk of vertices such that all vertices in a set Vi are connected.<br>
+      </p>
+      <h4 id="subhead">Eulerian Tours:</h4>
+      <p id="subtext">
+        Theorem 5.1(Eulers Theorem(1736)) An undirected graph G=(V,E) has an Eulerian tour iff G is even degree and connected(except possibly for isolated vertices).<br>
+        INSERT PROOF
+      </p>
+      <h4 id="subhead">Planar/Non-Planar Graphs:</h4>
+      <p id="subtext">
+        Planar: a graph is planar if it can be drawn on the plane without crossings.<br>
+        Example:<br>
+        <img id="small_image" src="../assets/planargraphs.JPG" alt="Planar vs NonPlanar Graphs">
+      </p>
+      <p id="subtext">
+        The three nonplanar graphs from left to right: First, "three houses-three wells graph" or K33(this notation says there are two sets of vertices each of size three and all edges between the two sets of vertices are present). Second, the "complete graph" or K5 (every edge is present) with five nodes. Third, the four dimensional cube.<br>
+        Bipartite Graph:a graph where the vertices are split into two groups and edges only go between groups. Formally, we have V = LuR and E subset LxR.<br>
+        When a planar graph is drawn on the plane, one can distinguish, besides its vertices and edges, the faces of the graph. The faces are the regions into which the graph subdivides the plane.<br>
+        Euler's Formula: v + f = e + 2(History: Euler characterized all polyhedra as planar graphs and was able to use induction to prove.)<br>
+        <p id="subtext_bullet">
+          Proceed via induction. It certainly holds when e=0 and v=f=1. Now take any connects planar graph. Two Cases:<br>
+          If it is a tree then f=1(drawing a tree on the plane does not subdivide the plane) and e=v-1<br>
+          If it is not a tree, find a cycle and delete any edge of the cycle. This amounts to reducing both e and f by one. By induction the formula is true in the smaller graph and so it must be true in the original one. <br>  
+        </p>
+      </p>
+      <p id="subtext">
+        Another important fact from Euler's Formula any planar graph: e<=3v-6. This tells us that planar graphs are sparse they cannot have toomany edges. This fact tells us that both K5 and K33 are non-planar.<br>
+        Theorem 5.3 A graph is non-planar if and only if it contains K5 or K33.
+      </p>
+      <h4 id="subhead">Duality and Coloring:</h4>
+      <p id="subtext">
+        Ther is an interesting duality between planar graphs. For example the octahedron and the cube are "dual" to each other or the tetrahedron is self-dual.<br>
+        Take a planar graph G and assume it has no bridges and no degree two nodes. Draw a new graph G*: start by placing a node on each face of G. Then draw an edge between two faces if they touch at an edge--draw the new edge so that it crosses that edge. The result G* is also a planar graph. If you construct the dual of G*, it is the original graph: (G*)*=G.<br>
+        Jumping back to Bipartite graphs, any bipartite graph is two colorable and thus any two colorable graph is bipartite. Proof by the fact that any graph that does not contain any odd length cycles is two colorable and thus bipartite. <br>
+        Theorem 5.4 Every planar graph can be colored with five colors.
+      </p>
+      <h4 id="subhead">Important Classes of Graphs:</h4>
+      <p id="subtext">
+        Complete Graphs:
+        <p id="subtext_bullet">
+          Complete graphs contain the maximum number of edges possible. In an undirected complete graph every pair of distinct vertices u an v a re connected by an edge {u,v}. The notation Kn denotes the unique complete graph on n vertices. Formally: Kn = (V,E) for |V|=n and E={{vi,vj}|vi~=vj and vi,vj∈V}. There are n(n-1)/2 edges in a comp;lete graph. A complete graph is strongly connected and many edges have to be removed before the graph is disconnected into two components.<br>
+
+        </p>
+      </p>
+      <p id="subtext">
+        <img id="small_image" src="../assets/completegraphs.PNG" alt="Complete Graphs">
+      </p>
+      <p id="subtext">
+        Trees:
+        <p id="subtext_bullet">
+          Trees are the opposite of complete graphs, removing just one edge disconnects the graph. A graph G=(V,E) is a tree:<br>
+          G is connected and contains no cycles.<br>
+          G is connected and has n-1 edges(where n=|V|)<br>
+          G is connected and the removal of any single edge disconnects G.<br>
+          G has no cycles and the addition of any single edge creates a cycle.<br>
+          Trees can model many natural worldly relationships. Such as a rooted tree, there is a designated node called the root which sets at the top of the tree. The bottom most nodes are called leaves, and the intermediate nodes are called internal nodes. The depth d of the tree is the length of the longest path from the root to a leaf. Moreover the tree can be thought of as grouped into layers or levels, where the k-th level for k∈{0,1,...,d} is the set of vertices which are connected to the root via a path consisting of precisely k edges.<br>
+          Theorem 5.5 The statements "G is connected and contains no cycles" and "G is connected and has n-1 edges" are equivalent. 
+        </p>
+      </p>
+      <p id="subtext">
+        <img id="small_image" src="../assets/treegraphs.PNG" alt="Tree Graphs">
+      </p>
+      <p id="subtext">
+        Hypercubes:
+        <p id="subtext_bullet">
+          The hypercube lives in between the sparsely connected tree and the heavily connected fully "connected" graph. The vertex set of the n-dimensional hypercube G=(V,E) is given by V={0,1}^n where {0,1}^n denotes the set of all n-bit strings. In other words, each vertex is labeled by a unique n-bit string such as 0010...0100. The edge set of E is defined as follows: two vertices x and y are connected by edge {x,y} if and only if x and y differ in exactly one bit position. Formally, x=x1x2...xn and y=y1y2...yn are neighbors if and only if there is an i∈{1,...,n} such that xi=yi for all j~=i and xi~=yi.<br>
+          Lemma 5.1 The total number of edges in an n-dimensional hypercube is n2^(n-1).<br>
+          To disconnect any subset of S in V of vertices from the rest of the graph, a large number of edges must be discarded. In particular the number of discarded edges must scale with |S|.<br>
+          Theorem 5.6 Let S be a subset of V such that |S|<=|V-S|(i.e. that |S|<=2^(n-1), and let Es denote the set of edges connecting S to V-S, i.e., Es :={{u,v}∈V | u∈S and v∈V-s}. Then it holds that |Es|>=|S|.<br>
+          
+        </p>
+      </p>
+      <p id="subtext">
+        <img id="small_image" src="../assets/hypercubegraphs.PNG" alt="Hypercube Graphs">
+      </p>
+      <h3 id="FP5">Modular Arithmetic</h3>
+      <p id="subtext">
+        In several settings such as error correcting codes and cryptography we sometimes wish to work over a smaller range of numbers. Modular arithmetic is useful in these settings, since it limits numbers to a predefined range {0,1,...,N-1}, and wraps around  whenever you try and leave this range.<br>
+        More generally we can define x (mod m)(in words "x module m") to be the remainder r when we divide x by m, i.e., if x (mod m)≡r then x=mq+r where 0<=r<=m-1 and q is an integer. If we wish to calculate x + y (mod m) we would first add x+y and then calculate the remainder when we divide the result by m. Note while carrying out any sequence of additions,subtractions, or multiplications mod m, we get the same answer if we reduce any intermediate results mod m.<br>
+      </p>
+      <h4 id="subhead">Set Representation:</h4>
+      <p id="subtext">
+        For any integer m, we say that x and y are congruent modulo m if they differ by a multiple of m: x ≡ y (mod m ) <=> m divides (x - y).<br>
+        With in modular arithmetic sets arise everywhere. But when calculating what numbers are congruent to 0 (mod 12) for example, a set arises, all multiples of 12 {...,-36,-24,-12,0,12,24,36,...}<br>
+        Theorem 6.1 If a ≡ c (mod m) and b ≡ d (mod m) then a+b ≡ c + d (mod m) and a*b ≡ c*d (mod m).<br>
+        <img id="small_image" src="../assets/moduloarithmetic1.JPG" alt="Modular Arithmetic Graphs">
+      </p>
+      <h4 id="subhead">Exponentiation:</h4>
+      <p id="subtext">
+        How does one compute x^y (mod m) where x,y,m are natural numbers and m > 0. One could compute the sequence of x (mod m), x^2 (mod m), x^3 (mod m),... up to y terms, but this approach requires time exponential in the number of bits in y.<br>
+        We can do much better using a trick of repeated squaring: The algorithm uses the fact that any y>0 can be written as y = 2a or y = 2a + 1 where a = floor(y/2)<br>
+        <p id="subtext_bullet">
+          x^(2a) = (x^a)^2 and x^(2a+1) = x * (x^a)^2
+        </p>
+      </p>
+      <h4 id="subhead">Bijections:</h4>
+      <p id="subtext">
+        A function is a mapping from a set (domain) if inputs A to a set of outputs B: for input x∈A, f(x) must be in the set B. To denote such a function we write f:A->B.<br>
+        A bijection is a function for which every b∈B has a unique pre-image a∈A such that f(a)=b. This consists of two conditions: f is onto: every b ∈ B has a pre-image a ∈ A and f is one to one: for all a,a' ∈ A, if f(a) = f(a') then a = a'<br>
+        Lemma 6.6 For a finite set A, f: A -> A is a bijection if there is an inverse function g: A -> A such that for all x ∈ A g(f(x)) = x.<br>
+      </p>
+      <h4 id="subhead">Inverses:</h4>
+      <p id="subtext"> 
+      When we want to divide by x (mod m) we need to find y (mod m) such that x * y = 1 (mod m); then dividing by x modulo m will be the same as multiplying by y module m. Such a y is called the multiplicative inverse of x modulo m. When does x have a multiplicative inverse modulo m? If and only if the greatest common  divisor of m and x is 1, meaning they share no common factors. The gcd(x,y) is the largest natural number that divides them both.<br>
+      Theorem 6.2 Let m, x be positive integers such that gcd(m,x) = 1. Then x has a multiplicative inverse modulo m, and it is unique (modulo m).<br>
+      We write the inverse of x as x^(-1)(mod m). We compute the inverse using Euclid's Algorithm.<br>
+      Euclid's Algorithm:
+        <p id="subtext_bullet">
+          How is computing the multiplicative inverse of x modulo m related to finding the gcd(x,m). For any pairs of numbers x,y, suppose we could not only compute gcd(x,y), but also find integers a,b such that d = gcd(x,y) = ax + by. For example, we can write 1 = gcd(35,12) = -1*35 + 3*12, so here a = -1 and b = 3 are possible values for a,b. If we could do this we'd be able to compute inverses as follows. We first find integers a and b such that 1 = gcd(m,x) = am + bx. But this means that bx≡1 (mod m), so b is a multiplicative inverse of x modulo m. Reducing b modulo m gives us the unique inverse we are looking for. So we have reduced the problem of computing inverse to that of finding integers a,b that satisfy above. Euclid's Algorithm does just this.<br>
+          Theorem 6.3 Let x >= y >= 0. Then gcd(x,y) = gcd(y,x (mod y))<br>
+          <img id="medium_image" src="../assets/euclidalgo.PNG" alt="Euclid's Algorithm for GCD">
+
+        </p>
+      <p id="subtext_bullet">
+        Now in order to compute the multiplicative inverse, we need an algorithm which also returns integers a and b such that: gcd(x,y) = ax+by. Then when gcd(x,y) = 1 we can deduce that b is the inverse of y (mod x). The Extended Euclid's Algorithm makes this accommodation.<br>
+        The Extended Euclid's Algorithm follows the same recursive structure as Euclid's original algorithm but keeps track of the required coefficients a,b as the recursion unwinds. Specifically takes input x>=y of natural numbers and returns (d,a,b) such that d = gcd(x,y) and d = ax + by.
+        In the base case (y=0) the algorithm returns the gcd value d = x as before, together with coefficients a=1 and b-0; clearly these satisfy ax + by = d. When y > 0 the algorithm first recursively computes values (d,a,b) such that d = gcd(y,x(mod y)) and d = ay + b(x (mod y)). It then returns the triple (d,A,B) where A=b and B=a-floor(x/y)b; d = Ax + By should be satisfied.<br>
+        Quick Hand Calculation Method: First, find d = gcd(x,m) to till 1 = gcd(x,m). Then create equations d = x(a) + m(b). Figure out a and b for the first equation and then drop x (mod a) to b in the next equation. Repeat till the bottom and last b is your inverse. 
+
+      </p>
+      </p>
+      <h4 id="subhead">Division in Modular Arithmetic:</h4>
+      <p id="subtext">
+        Example: 8x ≡ 9 (mod 15) What is x?<br>
+        To solve the analogous equation 8x=9 over the rational numbers we would multiply both sides by 8^(-1) to get x = 9/8. Lets do that same thing in arithmetic (mod 15). The inverse of 8 (mod 15) is 2 (since 2*8 = 16 ≡ 1 (mod 15)). Hence we can multiply both sides of the equation by 8^(-1) ≡ 2 to get x ≡ 18 (mod 15) ≡ 3 (mod 15). So x = 3 and this solution is unique modulo 15.<br>
+      </p>
+      <h4 id="subhead">Chinese Remainder Theorem:</h4>
+      <p id="subtext_bullet">
+        Claim: For m, n with gcd(m,n) = 1 that there is exactly one x (mod mn) that satisfies the equations:<br>
+        x ≡ a (mod n) and x ≡ b (mod m)<br>
+        The proof follows from existence of inverses of n and m respectively modulo m and n, which holds when gcd(n,m) = 1.<br>
+        <img id="medium_image" src="../assets/crt1.PNG" alt="Chinese Remainder Theorem">
+
+      </p>
+      <h4 id="subhead">Fermat's Little Theorem:</h4>
+      <p id="subtext"> 
+        Theorem For prime p, and a ~≡ 0 (mod p), a^(p-1) ≡ 1 (mod p)<br>
+      </p>
+      <h3 id="FP6">Public Key Cryptography</h3>
+      <p id="subtext">
+        The basic setting for cryptography is typically described via a cast of three characters: Alice and Bob, who want to communicate confidentially over some (insecure) link, and Eve and eavesdropper who is listening in and trying to discover what they are saying. Lets assume that Alice wants to transmit a message x(written in binary) to Bob. She will apply her encryption function E to x and send the encrypted message E(x) over the link; Bob, upon receipt of E(x), will then apply his decryption function D to it and thus recover the original message: i.e. D(E(x)) = x.<br>
+        Since the link is insecure, Alice and Bob have to assume that Eve may get hold of E(x). Thus ideally we would like to know that the encryption function E is chosen so that just knowing E(x) doesn't allow one to discover anything about the original message x.<br>
+        For centuries cryptography was based on private-key protocol. In such a scheme Alice and Bob meet beforehand and together choose a secret codebook which plays the role of the functions E and D above. Public-key schemes such as RSA are significantly more subtle and tricky. The central idea behind the RSA cryptosystem is that Bob is able to implement a digital lock to which only he has the key. Now by making this digital lock public, he gives Alice a way to send him a secure message which only he can open.<br>
+        The RSA scheme is based heavily on modular arithmetic. Let p and q be two large primes and let N = pq. We will think of messages to Bob as numbers modulo N, excluding the trivial values 0 and 1. Also let e by any number that is relatively prime to (p-1)(q-1). Then Bob's public key is the pair of numbers (N,e). This pair is published to the whole world. Bob's private key, d, is the inverse of e (mod((p-1)(q-1))). <br>
+        <p id="subtext_bullet">
+          Encryption: When Alice wants to send a message x to Bob, she computes the value of E(x) ≡ x^(e) (mod N) and sends this to Bob.<br>
+          Decryption: Upon receiving the value y = E(x), Bob computes D(y) ≡ y^d (mod N); this will be equal to the original message x.<br>
+
+        </p>
+      </p>
+      <p id="subtext">
+        Theorem 7.1 Under the above definitions of the encryption and decryption functions E and D, we have D(E(x)) ≡ x (mod N) for every possible message x in {0,1,...,N-1}.<br>
+        Theorem 7.3 (Prime Number Theorem) Let Π(n) denote the number of primes that are less than or equal to n. Then for all n >= 17 we have Π(n) >= n/(ln(n)). (In facts lim(Π(n)/(n/ln(n))) = 1 as n goes to infinity.)<br>
+      </p>
+      <h3 id="FP7">Polynomials</h3>
+      <p id="subtext">
+        Polynomials constitute a rich class of functions which are both easy to describe and widely applicable in topics ranging from Fourier analysis, cryptography and communication, to control and computational geometry. A polynomial in a single variable is an expression that has an associated function: p(x) = ad*x^d + ad-1*x^(d-1) + ... + a1x + a0. Here the variables x and the coefficients ai are usually real numbers. We say that a is a root of the polynomial p(x) if p(a) = 0.<br>
+        Properties of Polynomials:
+        <p id="subtext_bullet">
+          Property 1: A non-zero polynomial of degree d has at most d roots.<br>
+          Property 2: Given d+1 pairs (x1,y1),...,(xd+1,yd+1), with all the xi distinct, there is a unique polynomial p(x) of degree (at most) d such that p(xi) = yi for 1 <= i <= d + 1.<br>
+        </p>
+      </p>
+      <h4 id="subhead">Polynomial Interpolation(Lagrange Interpolation):</h4>
+      <p id="subtext">
+        <img id="medium_image" src="../assets/lagrange1.PNG" alt="Lagrange Interpolation1">
+        <img id="medium_image" src="../assets/lagrange2.PNG" alt="Lagrange Interpolation2">
+      </p>
+      <h4 id="subhead">Polynomial Division:</h4>
+      <p id="subtext">
+        If we have a polynomial p(x) of degree d we can divide by a polynomial q(x) of degree <=d by using long division. The result being p(x) = q'(x)q(x) + r(x) where q'(x) is the quotient and r(x) is the remainder. The degree of r(x) must be smaller than the degree of q(x).<br>
+      </p>
+      <h4 id="subhead">Finite Fields:</h4>
+      <p id="subtext"> 
+        Both property 1 and property 2 hold for polynomials when the coefficients and variables x are chosen from the complex numbers or indeed the rational numbers, rather than from the real numbers. However, the proofs do not go through if the values are restricted to being natural numbers or integers. We used addition, subtraction, multiplication, and division in the proofs for property 1 & 2. These operations are still satisfied for complex numbers and the rational numbers. On the other hand we cannot subtract two natural numbers and guarantee that the result is a natural number and dividing two integers does not generally result in an integer so everything falls apart for natural numbers and integers.<br>
+        However, if we work with numbers modulo a prime m, then we can add, subtract, multiply, and divide (by any non-zero number modulo m). To check this, recall that x has an inverse (mod m) if gcd(m,x) = 1, so if m is prime all the numbers {1,...,m-1} have an inverse mod m.<br> 
+      </p>
+      <h4 id="subhead">Counting:</h4>
+      <p id="subtext">
+        How many polynomials of degree (at most) 2 are there in modulo m? There are 3 coefficients, each of which can take on one of m values for a total of m^3. Writing p(x) = ad*x^d + ad-1*x^(d-1) + ... + a0 by specifying its d + 1 coefficients ai is known as the coefficient representation of p(x). Our polynomial of degree (at most) 2 is uniquely specified by its values at any three points, say x=0,1,2. The polynomial can take any one of m values at each of these three points, for a total of m^3 possibilities. In general, we can specify a degree d polynomial p(x) by specifying its values at d+1 points for a total of m^(d+1) possibilities. These d+1 values (y0,y1,...,yd) are called the value representation of p(x). The coefficient representation can be converted to the value representation by evaluating at 0,1,...,d, and Lagrange Interpolation can be used to convert the value representation to the coefficient representation.<br>
+        So if we are given three pairs (x1,y1),(x2,y2),(x3,y3) then there is a unique polynomial of degree 2 such that p(xi) = yi. Suppose we are given two pairs (x1,y10),(x2,y2), then there are exactly m choices for y3 and for each choice there is a unique polynomial of degree two that goes through the three points (x1,y1),(x2,y2),(x3,y3). So there are exactly m polynomials of degree (at most) 2 that go through two points (x1,y1),(x2,y2). Note the reason we can count the number of polynomials in this setting is because we are working over a finite field.<br>  
+        <img id="small_image" src="../assets/countingpolynomials.JPG" alt="Counting Polynomials">
+      </p>
+      <h4 id="subhead">Secret Sharing:</h4>
+      <p id="subtext">
+        Suppose the U.S. government decides that a nuclear strike can be initiated only if at least k > 1 major officials agree to it. With the following scheme:<br>
+        <p id="subtext_bullet">
+          Any group of k of these officials can pool their information to figure out the launch code and initiate the strike.<br>
+          No group of k - 1 officials have any information about the launch code, even if they pool their knowledge. For example, they should not learn wether the secret is odd or even, a prime number, divisible by some number a or the secrets least significant bit, etc.<br>
+          *How do we construct this scheme?
+        </p>
+      </p>
+      <p id="subtext">
+        Suppose that there are n officials indexed from 1 to n and the launch code is some natural number s. Let q be a prime number larger than n and s. We will work over GF(q) from now on.<br>
+        Now pick a random polynomial P(x) of degree k - 1 such that P(0) = s and give P(1) to the first official, P(2) to the second,...,P(n) to the nth. Thus:
+        <p id="subtext_bullet">
+          Any k officials having the values of the polynomials at k points can use lagrange interpolation to find P, and once they know what P is, they can compute P(0) = s to learn the secret.<br>
+          Any group of k - 1 officials has no information about s! They have q possible values of the polynomial, thus they have no information about s. 
+        </p>
+      </p>
+      <h3 id="FP7">Secret Sharing</h3>
+      <p id="subtext">
+        What problems arise when transmitting messages across unreliable communication channels? The channel may cause some parts of the message to be lost, or more seriously corrupted. How do we encode the message by introducing redundancy into it in order to protect against both of these types of errors. Such encoding scheme is known as an "error correcting code". Error correcting codes are a major object of study in mathematics, computer science, and electrical engineering; they belong to a field known as "Information Theory" one of the core computer sciences, along with the theory of computation, control theory, communication theory, and estimation/learning/signal-processing theory.<br>
+        There are two distinct flavors of error correcting codes: algebraic codes, which are based on polynomials over finite fields, and combinatorial codes, which are based on graph theory. Focus is on algebraic codes.<br>
+      </p>
+      <h4 id="subhead">Erasure Errors:</h4>
+      <p id="subtext">
+        <img id="medium_image" src="../assets/erasureerrors.PNG" alt="Erasure Errors"><br>
+        For example when a file is transmitted over the internet, the file is broken into packets of which some are lost/dropped. Such errors are referred to as erasure errors. Suppose that the message consists of n packets and suppose that at most k packets are lost during transmission. We will show how to encode the initial message consisting of n packets into a redundant encoding consisting of n + k packets such that the recipient can reconstruct the message from any n received packets. Note that in this setting the packets are labeled with headers and thus the recipient knows exactly which packets were dropped during transmission.<br>
+        We can assume without loss of generality that the content of each packet is a number modulo q, where q is a prime. For example, the content of the packet might be a 32 bit string and can therefore be regarded as a number between 0 and 2^32 - 1; then we could choose q to be any prime larger than 2^32.<br>
+        Denote the message to be sent by m1,...,mn where each mi is a number in GF(q) thus:
+        <p id="subtext_bullet">
+          There is a unique polynomial P(x) of degree n - 1 such that P(i) = mi for 1<=i<=n.<br>
+          The message to be sent now m1 = P(1),...,mn = P(n). We can generate additional packets by evaluating P(x) at points n + j. Thus the transmitted codeword is c1 = P(1),c2 = P(2),...,cn+k = P(n+k). Since we are working modulo q we must make sure that n + k <= q, but q is typically very large.<br>
+          Thus can uniquely reconstructP(x) from its values at any n distinct points since it has degree n-1. This means P(x) can be reconstructed from any n of the transmitted packets. Once we have reconstructed the polynomial P, we can evaluate P(x) at x=1,...,n to recover the original message m1,...,mn.<br> 
+        </p>
+      </p>
+      <h4 id="subhead">General Errors:</h4>
+      <p id="subtext">
+        <img id="medium_image" src="../assets/generalerrors.PNG" alt="General Errors"><br>
+        Suppose Alice wishes to communicate with Bob over a noisy channel. Her message is m1,...,mn. Some of the characters are corrupted during transmission due to channel noise. Thus Bob receives exactly as many characters as Alice sent but k of them are corrupted and Bob has no idea which k these are.<br>
+        We will again think of each character as a number modulo q for some prime q. As before we can describe the message by a polynomial P(x) of degree n-1 over GF(q) such that m1=P(1),...,mn=P(n). Alice must transmit n + 2k characters to guard against k general errors. Thus the encoded codewrod is c1,...,cn=2k where cj = P(j) for 1<=j<-n+2k, and n + k of these characters that Bob receives are uncorrupted.<br>
+        For any given subset of n+k values of i between 1 and n+2k there is a unique polynomial P(x) such that P(i) = ri at these values of i. So Bob must find a polynomial P(x) of degree n-1 such that P(i)=ri for at least n+k values of i. How can bob guess this?<br>
+        Consider the error-locator polynomial: E(x) = (x-e1)(x-e2)...(x-ek) Note that E(x) is a polynomial of degree k(since x appears k times). Bob doesn't know this polynomial but can still utilize it.<br> Consider:
+        <p id="subtext_bullet">
+          P(i)E(i) = riE(i) for 1<=i<=n+2k<br>
+          Note that this holds at points i at which no error occurred since at those points P(i)=ri and it is trivially true at points i at which an error occurred since E(i) = 0.<br>          
+        </p>
+      </p>
+      <p id="subtext">
+        With this observation n+2k linear equations in n+2k unknowns from which the locations of the errors and coefficients of P(x) can be easily deduced.<br>
+        Define the polynomial Q(x) := P(x)E(x) which has degree n+k-1 and is therefore described by n + k coefficients a0,a1,...an+k-1. There error-locator polynomial E(x) = (x-e1)...(x-ek) has degree k and is described by k+1 coefficients b0,b1,...,bk but the leading coefficient is always 1.<br>
+        <img id="medium_image" src="../assets/generalerrorform.PNG" alt="General Error Formula"><br>
+      </p>
+
 
 </body>
 </html>

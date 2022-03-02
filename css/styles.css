@@ -57,3 +57,13 @@ hr {
   line-height: 150%;
   margin-left: 7.5%;
 }
+#subtext_bullet2 {
+  line-height: 150%;
+  margin-left: 10%;
+}
+#small_image {
+  width: 33%;
+}
+#medium_image {
+  width: 50%;
+}
