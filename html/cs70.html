@@ -438,7 +438,57 @@
         <img id="medium_image" src="../assets/generalerrorform.PNG" alt="General Error Formula"><br>
       </p>
       <h3 id="FP9">Counting</h3>
-
+      <p id="subtext">
+        Probability Theory: suppose you toss a fair coin a thousand times. How likely is it that you get exactly 500 heads? What about 1000 heads? Turns out the changes of 500 heads are roughly 2.5% whereas 1000 heads are so infinitesimally small that its said to be impossible. Those are the questions asked and answered by Probability Theory.<br>
+      </p>
+      <h4 id="subhead">Counting Sequence:</h4>
+      <p id="subtext">
+        Sampling without Replacement:We pick k <= n elements from an n-element set S ={1,2,...,n} one at a time while removing the sampled element for S. We wish to count the number of different ways to do this, taking into account the order in which the elements are picked. This train of thought leads to the first rule of counting.<br>
+        First Rule of Counting: If an object can be made by a succession of k choices, where there are n1 ways of making the first choice, and for every way of making the first choice there are n2 ways of making the second choice, and for every way of making the first and second choice there are n3 ways of making the third choice, and so on up to the nk choice then the total number of distinct object that can be made in this way is the product n1 * n2 * n3 *...* nk. This rule is visualized with a branching tree: n1=2, n2=2, n3=3<br>
+        <img id="medium_image" src="../assets/rule1countingtree.JPG" alt="First Rule of Counting Tree"><br>
+      </p>
+      <h4 id="subhead">Counting Sets:</h4>
+      <p id="subtext">
+        A slightly different question; we would like to pick k distinct element of S = {1,2,...,n} but we do not care about the order in which we pick the k elements. How many ways are there to choose these elements to obtain the same outcome? This train of thought leads to the second rule of counting.<br>
+        Second Rule of Counting: Assume an object is made by a succession of choice and the order in which the choices are made does not matter. Let A be the set of ordered objects and let B be the set of unordered objects. If there exists an m-to-1 function f from A to B we can count the number of ordered objects(pretending order matters) and divide by m(the number of ordered objects per unordered objects) to obtain |B| the number of unordered objects.<br>
+        The quantity n!/((n-k)!k!) is called the binomial coefficient, "n choose k" also written (n k) <- transpose that<br>
+      </p>
+      <h4 id="subhead">Sampling without Replacement Order Matters:</h4>
+      <p id="subtext">
+        Sometimes we wish to consider a different scenario of sampling were after we choose an element from S={1,2,...,n} we throw it back into S so that we can choose it again. Assume that we are still picking k elements out of S one at a time and that order matters. How many distinct sequences of k elements can we obtain under this new sampling scheme? We can use the First Rule of Counting, since we have n choices in each trial n1 = n2 = n3 =...= nk = n. So we have a total of n^k sequences.<br>
+        Examples include rolling two dice: 6^2 or flipping a coin k times n^k different possible sequences/objects. 
+      </p>
+      <h4 id="subhead">Sampling without Replacement Order Does Not Matters:</h4>
+      <p id="subtex">
+        Say there is an unlimited quantity of apples, bananas, and oranges. How many ways are there to select 5 pieces of fruit to make fruit salad? In this example S={1,2,3} where 1=apples, 2 represents bananas, 3 represents oranges, k =5 since we wish to select5 pieces of fruit, and ordering doesn't matter since selecting an apple followed by a banana will lead to the same salad as selecting a banana then apple. We can think of the fruit choices as bins and we have k=5 balls to throw into them. Now represent the balls inside of each bin as a "0" and the division between the next bin as a "1". Thus we have built a binary string of n+k-1 length, with k "0"s and n-1 "1". We can use "n choose k" where n= n+k-1 and k=k thus (n+k=1 k).<br>
+      </p>
+      <h4 id="subhead">Zeroth Rule of Counting:</h4>
+      <p id="subtext">
+        If a set A can be placed into a one-to-one correspondence with a set B(i.e. you can find a bijection between the two -- an invertible pair of maps that map elements of A to elements of B and vice-verse) the |A| = |B|. This is the very heart of what it means to count and is key to many combinatorial arguments.<br>
+      </p>
+      <h4 id="subhead">Combinatorial Proofs:</h4>
+      <p id="subtext">
+        Combinatorial proofs rely on intuitive counting arguments rather than tedious algebraic manipulation. They feel like proofs by stories--the same story, told from multiple points of view.<br>
+        Proving the Binomial Theorem:<br>
+        <img id="medium_image" src="../assets/binomialtheorem.JPG" alt="Binomial Theorem"><br>
+      </p>
+      <h4 id="subhead">Permutations and Derangements:</h4>
+      <p id="subtext">
+        Suppose we collect homeworks of n students, randomly shuffle them and return them to the students. If we related this experiment many times, then on average how many students would receive their own homework? Label the homeworks as 1,2,...,n and let Πi denote the homework that is returned to the i-th student. Then the vector Π =(Π1,...,Πn) corresponds to a permutation of the set {1,...,n}. Note that the Π1,...,Πn ∈ {1,2,...,n} are all distinct, so each element in {1,...,n} appears exactly once in the permutation Π. In total there are n! distinct permutations of {1,...,n}. In this setting the i-th student receives their own homework if and only if Πi = i. So how many indices "i"s satisfy Πi=i. These are termed fixed points of the permutation Π. So on average how many fixed points are there?<br>
+        Derangement: A permutation with no fixed points.<br>
+        Theorem 10.2: For an arbitrary positive integer n >= 3 the number of Dn of derangements of {1,...,n} satisfies Dn = (n-1)(Dn-1 + Dn-2)<br> 
+        This Theorem is proven using recursion, alternatively we can use the Principle of Inclusion Exclusion to solve for the number of derangements.<br> 
+      </p>
+      <h4 id="subhead">The Principle of Inclusion Exclusion:</h4>
+      <p id="subtext">
+        Let A1 and A2 be two subsets of the same finite set A, and suppose we want to count the number of elements in A1∪A2. If A1 and A2 are disjoint then clearly |A1∪A2| = |A1| + |A2|. But if A1 and A2 have common elements then those elements would be counted twice with the previous formula. To correct this we need to subtract |A1∩A2| from |A1| + |A2| thus yielding:<br>
+        |A1∪A2| = |A1| + |A2| - |A1∩A2| or:<br>
+        <img id="medium_image" src="../assets/principleofinclusionexclusion.JPG" alt="Principle of Inclusions Exclusion"><br>
+        Application in Derangements:<br>
+        <p id="subtext_bullet">
+          <img id="medium_image" src="../assets/inclusionexclusionderangements.JPG" alt="Application of the Principle of Inclusion Exclusion in Derangements"><br>
+        </p>
+      </p>
 
 </body>
 </html>
