@@ -67,3 +67,12 @@ hr {
 #medium_image {
   width: 49%;
 }
+#large_image {
+  width: 85%;
+}
+::selection {
+  /* Change highlight background color to black */
+  background: green;
+  /* Change highlight text color to red */
+  color: black;
+}

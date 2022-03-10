@@ -22,6 +22,9 @@
     <li><a href="#FP7">Polynomials</a></li>
     <li><a href="#FP8">Error Correcting Codes</a></li>
     <li><a href="#FP9">Counting</a></li>
+    <li><a href="#FP10">Countability and Computability</a></li>
+    <li><a href="#FP11">Probability</a></li>
+
     </ul>
     </div>
     <h3 id="FP1">Introduction</h3>
@@ -489,6 +492,151 @@
           <img id="medium_image" src="../assets/inclusionexclusionderangements.JPG" alt="Application of the Principle of Inclusion Exclusion in Derangements"><br>
         </p>
       </p>
-
+<h3 id="FP10">Countability and Computability</h3>
+<p id="subtext">
+  What are the connections to be made between infinity and the fundamental nature of computation and proof?<br>
+</p>
+<h4 id="subhead">Bijection:</h4>
+<p id="subtext">
+  Two finite sets have the same size if and only if their elements can be paired up so that each element of one set has a unique partner in the other set, and vice versa. This concept is formalized as bijection. Consider a function f that maps elements of a set A(domain of f) to elements of set B(range of f). Since f is a function it must specify for each element x ∈ A exactly one element f(x) ∈ B. Written f: A -> B. We say f is a bijection if ever element a ∈ A hahs a unique image b = f(a) ∈ B, and every element in b ∈ B has a unique pre-image a ∈ A: f(a) = b.<br>
+  f is one-to-one function(injection) if f maps distinct inputs to distinct outputs, x ~= y => f(x) ~= f(y).<br>
+  f is onto(surjective) if it "hits" every element in the range, (∀y∃x)(f(x)=y).<br>
+  <img id="medium_image" src="../assets/bijection.JPG" alt="Bijection"><br>
+</p>
+<h4 id="subhead">Cardinality:</h4>
+<p id="subtext">
+We determine whether two sets have the same cardinality with demonstrating a bijection f between the two sets. Any set S is countable if there is a bijection between S and N or some subset of N, thus any finite set S is countable. <br>
+For example: Is the cardinality of Q(rational numbers) greater than N(natural numbers). Surely it has to be since there are infinitely many rational numbers between any two natural numbers. If there is a one-to-one function f:A->B then the cardinality of A is less than or equal to that of B. The idea is to map each pair (a,b) to its position along along the spiral, starting at the origin. It is clear that this mapping maps every pair of integers injectively to a natural number because each pair occupies a unique position along the spiral. This tells us that |Q| <= |N| thus via the Cantor-Bernstein Theorem N and Q have the same cardinality. <br>
+</p>
+<h4 id="subhead">Cantor Diagonalization:</h4>
+<p id="subtext">
+  We have established that N,Z,Q all have the same cardinality. What about R the set of all real numbers? No there are more real numbers than rationals. That is, there is no bijection between the rationals and reals.<br>
+  Rational numbers will always be represented as recurring decimals while irrational ones will be represented as non-recurring ones.<br>
+  Theorem: The real interval R[0,1](and hence also the set of real numbers R) is uncountable.<br>
+  <p id="subtext_bullet">
+    Proof: Proceed with contradiction, there is a bijection f: N->R[0,1]. Then, we can enumerate the real numbers in an infinite list f(0),f(1),f(2),... as follows:<br>
+    <img id="small_image" src="../assets/cantordiagonalization.JPG" alt="Cantor Diagonalization"><br><br>
+    The number circled in the diagonal can be viewed as some real number r=0.5479..., since it is an infinite decimal expansion. Now consider the real number s obtained by modifying every digit of r, say by replacing each digit d with d + 2 (mod 10); thus s = 0.7691. Claim that s does not occur in our infinite list of real numbers. Suppose for contradiction that is did, adn that it was the nth number in the list, f(n). But by contradiction s differs from f(n) in the (n+1)th digit, so these two numbers cannot be equal! So its constructed such that this real number s that is not in the range of f. But this contradicts the assertion that f is a bijection. Thus the real numbers are not countable.<br>
+  </p>
+</p>
+<h4 id="subhead">The Cantor Set:</h4>
+<p id="subtext">
+  The Cantor Set is a remarkable set construction involving the real numbers in the interval [0,1]. The set is defined by repeatedly removing the middle thirds of line segments infinitely many times, starting with the original interval. For example the first iteration would involve the removal of the (open) interval (1/3,2/3), leaving [0,1/3]U[2/3,1]. The Cantor set contains all points that have not been removed: C = {x : x not removed}. How much of the original unit interval is left after this process is repeated infinitely? Start with an interval of length 1, and after the first iteration 1/3 of it is removed leaving 2/3. For the second iterations 2/3 * 2/3 of the original interval.<br>
+  <img id="small_image" src="../assets/cantorset.JPG" alt="Cantor Set"><br><br>
+  So the Cantor set is empty...No, the measure of the Cantor set is zero; the Cantor set consists of isolated points and does not contain any non-trivial intervals. In fact not only is the Cantor set non-empty it is uncountable.  C = {x ∈ [0,1] : x has a ternary representation consisting only of 0's and 2's} Using this characterization we can set up an onto map f from C to [0,1]. Since we already know that [0,1] is uncountable this implies that C is uncountable also. The map f is defined as follows: for x ∈ C, f(x) is defined as the binary decimal obtained by dividing each digit of the ternary representation of x by 2. If x = 0.0220 the f(x) is the binary decimal 0.0110. The set of all binary decimasl 0.xxxx... is in one-to-one correspondence with the real interval [0,1] and the map f is onto because every binary decimal is the image of some ternary string under f. This completes the proof that C is uncountable.<br>
+</p>
+<h4 id="subhead">Power Sets and Higher Orders of Infinity:</h4>
+<p id="subtext">
+  Let S be any set. Then the power set of S, denoted by P(S) is the set of all subsets of S; formally P(S) = {T : T subset of S}. What is the cardinality of S? If |S| = k is finite then |P(S)| = 2^k(binary string representation of numbers in Set). So for finite sets S, the cardinality of the power set of S is exponentially larger that the cardinality of S. What about infinite(countable) sets? Not countable.<br>
+  Theorem: |P(S)| > |N|<br>
+  Thus we have seen the cardinality of P(N) is strictly larger than the cardinality of N itself. The cardinality of N is denoted ℵ0 "aleph null" while that of P(N) is denoted 2^(ℵ0). It turns out that in fact the P(N) has the same cardinality as R and indeed as the real numbers in [0,1]. This cardinality is known as c, the "cardinality of continuum". Even larger infinite cardinalities ("orders of infinity") denoted ℵ1, ℵ2,..., can be defined using the machinery of set theory; these obey rules of arithmetic. The "continuum hypothesis" asserts that c=ℵ1, aka there are no sets with cardinality between that of the natural numbers and that of the real numbers.<br>
+</p>
+<h4 id="subhead">The Liar's Paradox:</h4>
+<p id="subtext">
+  "This statement is false" Is the statement true? If the statement is true, then it asserts must be true; namely that it is false. But if it is false then it must be true. So it really is a paradox, and we see that is arises because of the self-referential nature of the statement.<br>
+</p>
+<h4 id="subhead">Self-Replicating Programs:</h4>
+<p id="subtext">
+  Coding in english: 
+  Print out the following sentence twice, the second time in quotes:
+    "Print out the following sentence twice, the second time in quotes:"
+  In this instance we get the exact program as the output. This sort of program is called a quine, and we can always write quines in any programming language. How do we construct quines in general?<br>
+The answer is given by the recursion theorem. The recursion theorem states that given any program P(x,y) we can always convert it to another program Q(x) such that Q(x) = P(x,Q), i.e. Q behaves exactly as P would if its second input is the description of the program Q. In this sense Q is "self-aware" version of P, since Q essentially has access to its own description.<br>
+</p>
+<h4 id="subhead">The Halting Program:</h4>
+<p id="subtext">
+  Are there programs that run in an infinite loop? In 1936, Alan Turing showed that there is no program that can perform this test. The proof combines self reference, and the fact that programs and data are inseparable in a computer.<br>
+  Theorem: The Halting Problem is uncomputable; i.e. there does not exist a computer program TestHalt with behavior such that, TestHalt(P,x)= "yes" if program P halts on input x | "no" if program P loops on input x, on all inputs (P,x).<br>
+  <img id="medium_image" src="../assets/haltprogram.JPG" alt="Halting Program Proof"><br><br>
+  This is a proof by diagonalization. Since the set of all computer programs is countable, we cna enumerate all programs as follows(where Pi represents the ith program):
+  <img id="small_image" src="../assets/programhaltproof2.JPG" alt="Halting Program Proof Part 2"><br><br>
+  The (i,j)th entry in the table above is H(halts) if Program Pi halts on input Pj, and L(loops) if it does not halt. Now if the program Turing exists it must occur somewhere on our list of programs say as Pn. But this cannot be, since if the nth entry in the diagonal is H, meaning that Pn halts on Pn, then by its definition Turing loops on Pn; and if the entry is L then by definition Turing Halts on Pn. This the behavior is different from that of Pn, and hence Turing does not appear on our list. Since the list contains all possible programs we must conclude that the program Turing does not exist. And since Turing is constructed by simple modification of TestHalt its concluded that TestHalt does not exist.<br>
+  There are many similar such as whether a program ever outputs anything or if it ever executes a specific line or if two programs produce the same output.<br>
+  Reduction: reducing one problem "Does P halt on x?" to another problem "Does P' halt on 0?" in the sense that if we know how to solve the second problem, then we can use that knowledge to construct an answer for the first problem. This implies that the second problem is actually as difficult as the first despite the apparently simpler description of the second problem.<br>
+</p>
+<h4 id="subhead">Godel's Incompleteness Theorem:</h4>
+<p id="subtext">
+  Is arithmetic consistent? Is arithmetic complete?<br>
+  Mathematics is a formal system based on a list of axioms together with rules of inference. The axioms provide the initial list of true statements in our system, and we can apply the rules of inference to prove other true statements, which we can again use to prove other statements and so on.<br>
+  The first question above asks whether it is possible to prove a proposition P and its negation ~P. If this is the case then arithmetic is inconsistent. If arithmetic is inconsistent(false statements can be proven) then the entire arithmetic system will collapse because from a false statement anything can be deduced, so every statement in the system will be vacuously true.<br>
+  The second question asks whether every true statement in arithmetic can be proven. If this is the case then arithmetic is complete. In reality there are statements that are quite difficult to prove either true or false.In 1930 Kurt Godel proved that the answer is in fact "no": any formal system that is sufficiently rich to formalize arithmetic is either inconsistent or incomplete.<br>
+  Sketch of Godel's Proof:<br>
+  <p id="subtext_bullet">
+    Suppose we have a formal system F, which consists of a list of axioms and rules of inference, and assume F is sufficiently expressive that we can use it to express all of arithmetic.<br>
+    Now suppose we can write the following statements: S(F) = "This statement is not provable in F."<br>
+    Case 1: S(F) is provable. Then the statement S(F) is true, but by inspecting the content of the statement itself, we see that this implies S(F) should not be provable. Thus, F is inconsistent in this case.<br>
+    Case 2: S(F) is not provable. By construction, this means the statement S(F) is true. Thus, F is incomplete in this case, since there is a true statement that is not provable.<br>
+    To complete the proof it now suffices to construct such a statement S(F). This is the difficult part of Godel's proof, which requires a clever encoding of symbols and propositions as natural numbers.<br>
+  </p>
+</p>
+<h3 id="FP11">Probability</h3>
+<p id="subtext">
+  Probability Theory has its origins in gambling--analyzing card games, dice, and roulette wheels. Todays it is an essential tool in engineering and sciences.<br>
+</p>
+<h4 id="subhead">Random Experiments:</h4>
+<p id="subtext">
+  In general, a random experiments consists of drawing a sample of k elements from a set of S of cardinality n. The possible outcomes of such an experiment are exactly counted via the Rules of Counting. Sample Space: the space of all possible outcomes of the experiment, often denoted Ω. 
+</p>
+<h4 id="subhead">Probability Space:</h4>
+<p id="subtext">
+  A probability space is a sample space Ω, together with a probability P[ω] for each sample point ω, such that: (Non-Negativity) 0 <= P[ω] <= 1 for all ω∈Ω and (Total one) the sum of the probabilities over all outcomes is 1<br>
+  The easiest way to assign the probabilities to sample points is to do is uniformly: if |Ω| = N, then P[ω] = 1/N,  ∀ ω∈Ω.<br>
+  An event A is just a subset of the sample space Ω. For any event A⊆Ω we define the probability of A: P[A] = sum of P[ω] for all ω∈A.<br>
+</p>
+<h4 id="subhead">Examples of Uniform Probability Spaces:</h4>
+<p id="subtext">
+  Coin Tosses:<br>
+  <p id="subtext_bullet">
+    If we flip a coin n times we get a sample space of Ω of cardinality 2^n. If the coin has P(H) = p and we consider any sequence of n coin flips with exactly r H's then the probability of this sequence is p^r(1-p)^(n-r). The event C that we get exactly f H's when we flip the coins n times. This event consists of exactly (n K)t sample points and each has probability p^r(1-p)^(n-r); so P[C] = (n k)t * p^r(1-p)^(n-r).<br>
+  </p>
+</p>
+<p id="subtext">
+  Rolling Dice:<br>
+  <p id="subtext_bullet">
+    Consider rolling two fair dice, Ω = {(i,j) : 1<= i,j <= 6}. The probability space is uniform(all sample points in Ω). So the probability of event A: P[A] = |A|/|Ω|. For uniform spaces computing probabilities reduces to counting sample points. Now consider two events: the event A that the sum of the dice is at least 10 and the event V that this is at least one 6. By enumerating the sample points contained in each event, it can be shown that |A| = 6 and |B| = 11. Thus P[A] = 6/36 or 1/6 and P[B] = 11/36.<br>
+  </p>
+</p>
+<p id="subtext">
+  Card Shuffling:<br>
+  <p id="subtext_bullet">
+    <img id="large_image" src="../assets/probabilitypokerflush.JPG" alt="Probability of a Poker Hand Flush"><br><br>
+  </p>
+</p>
+<p id="subtext">
+  Balls and Bins:<br>
+  <p id="subtext_bullet">
+    Consider throwing 20 labeled balls into 10 labeled bins. Assume that each ball is equally likely to land in any bin, regardless of what happens to the other balls; in terms of sampling a sequence of k elements from a set S of cardinality n. The set S consists of 10 bins and sampling with replacement k=20 times, order matters since the balls are labeled. The sample space Ω is equal to {(b1,b2,...,b20) : 1 <= bi <= 10 for each i = 1,...,20} where the component bi denotes the bin in which ball i lands. |Ω| = 10^20 since each element bi in the sequence has 10 possible choices and there are 20 elements in teh sequence. More generally if m balls are thrown into n bins the sample space is n^m. The probability space is uniform since each balls i equally likely to land in any bin. Let A be the event that bin 1 is empty. Since the probability space is uniform we simply need to count how many outcomes have this property, aka the number of ways all 20 balls can fall into the remaining 9 bins, which is 9^20. Thus P[A] = (9^20)/(10^20). Let B be the even that bin 1 contains at least one ball, this event is the complement of A, aka it consists of precisely those sample point which are not in A. Thus P[B] = 1 - P[A]. <br>
+  </p>
+</p>
+<p id="subtext">
+  The Birthday Paradox:<br>
+  <p id="subtext_bullet">
+    The chances that two people in a group have the same birthday. S = {1,...,365}, and the random experiment consists of drawing a sample of n elements from S, where the elements are the birth dates of n people. Then |Ω| = 365^n. This is because each sample point is a sequence of possible birthdays for n people; so ther are n point sin the sequence and each point has 365 possible values. Let A be the event that at least a pair of people have the same birthday. P[A] is hard to compute but the complement is much easier; the event that no two people have the same birthday. Computing the number of ways for no two people to have the same birthday. There are 365 choices for the first person, 364 for the second,..., 365-n+1 choices for the nth person, for a total of 365*364*...*(365-n+1) we are sampling without replacement and order matters. P[A] = 1 - ((365*364*...*365-n+1)/365^n) <br>
+  </p>
+</p>
+<p id="subtext">
+  Summary:<br>
+  What is the sample space(the experiment and its set of possible outcomes)?<br>
+  What is the probability of each outcome(sample point)?<br>
+  What is the event we are interested in(which subset of the sample space)?<br>
+  Compute the probability of the event by adding up the probabilities of the sample points contained in it.<br>
+</p>
+<h4 id="subhead">Conditional Probabilities:</h4>
+<p id="subtext">
+  <img id="large_image" src="../assets/conditionaprobability.JPG" alt="Conditional Probability"><br><br>
+  Example:<br>
+  <p id="subtext_bullet">
+    When dealing 2 cards and the first card is known to be an ace, the second card is also an ace. Let B be the event that the first card is an ace and let A be the event that the second card is an ace. To compute P[A|B] we need to figure out P[A∩B]. Note that there are 52*51 sample points in the sample space, since each sample point is a sequence of two cards. A sample point is in A∩B if both cards are aces, this can happen in 4*3 = 12 ways. Since each sample point is equally likely, P[A∩B] = 12/(52*51) while P[5] the probability of drawing an ace in the first trial is 4/52. Therefore, P[A|B] = (P[A∩B]/P[B]) = 3/51.<br>
+  </p>
+</p>
+<h4 id="subhead">Bayesian Inference:</h4>
+<p id="subtext">
+  Bayesian inference is a way to update knowledge after making an observation. For example, we may have an estimate of the probability of a given event A. After event B occurs, we can update this estimate to P[A|B]. In this interpretation, P[A] is the prior probability; our assessment of the likelihood of an event of interest, A, before making an observation. P[A|B] can be interpreted as the posterior probability of A after the observation, it reflects our updated knowledge. <br>
+  Bayes Rule & Total Probability Rule:<br>
+  <img id="small_image" src="../assets/bayesrule.JPG" alt="Bayes Rule">
+  <img id="small_image" src="../assets/totalprobabiltyrule.JPG" alt="Total Probability Rule"><br><br>
+  Generalization of Conditional Probability:<br>
+  <img id="large_image" src="../assets/generalizationofconditionalprobability.JPG" alt="Generalization of Conditional Probabilities"><br><br>
+</p>
 </body>
 </html>

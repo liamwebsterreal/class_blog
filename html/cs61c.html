@@ -21,6 +21,9 @@
     <li><a href="#FP6">RISC-V Language</a></li>
     <li><a href="#FP7">CALL(compiler,assembler,linker,loader)</a></li>
     <li><a href="#FP8">Synchronous Digital Systems</a></li>
+    <li><a href="#FP9">Datapath</a></li>
+    <li><a href="#FP10">Caches</a></li>
+
     </ul>
     </div>
     <h3 id="FP1">Introduction</h3>
@@ -29,6 +32,7 @@
         The five great ideas in Computer Architecture:<br>
         <img id="medium_image" src="../assets/oldshardwaresoftwaremap.PNG" alt="Old Hardware-Software Interface Map">
         <img id="medium_image" src="../assets/newhardwaresoftwaremap.PNG" alt="New Hardware-Software Interface Map">
+        <h4 id="subhead">Great Ideas of Computer Science:</h4>
         <p id="subtext_bullet">
             Abstraction(layers of representation/Interpretation<br>
             Moore's Law(designing through trends)<br>
@@ -504,7 +508,7 @@
         Combinational Logic Delay: The amount of time that it takes for a value to propagate through the combinational logic.<br>
         Minimum Clock Cycle(critical path): The time it takes for the input of one state element to reach the input of the next state element(clk-to-q delay + longest combinational delay + setup time).<br>
         So the question "How to store a 32 bit number?" Put 32 flip flips together and thus a register(state element) is formed. A register has an extra input Write Enable which when 0 the contents of the register stay the same but when 1 the contents of the register are updated on the clock trigger.<br>
-        <img id="medium_image" src="../assets/registerdiagram.JPG" alt="Register Diamgram"><br>
+        <img id="medium_image" src="../assets/registerdiagram.JPG" alt="Register Diagram"><br>
     </p>
     <h4 id="subhead">Transistors:</h4>
     <p id="subtext">
@@ -519,7 +523,7 @@
     <p id="subtext">
         Uses complementary and symmetrical pairs of p-type and n-type MOSFETs to build logical functions. Consists of a pull-up and pull-down network.<br>
         We can construct our boolean gates with CMOS transistors.<br>
-        CMOS Inverter:
+        CMOS Inverter:<br>
         <img id="medium_image" src="../assets/CMOSinverter.JPG" alt="CMOS Inverter"><br>
         <img id="medium_image" src="../assets/ANDtransistors.PNG" alt="AND Transistor">
         <img id="medium_image" src="../assets/NANDtransistors.PNG" alt="NAND Transistor"><br>
@@ -542,14 +546,169 @@
             P = 1/2 α C * V^2 * F(α=activity factor, C=total chip capacitance, F=clock frequency).<br>
             Power proportional to F, reducing frequency will reduce power. But that doesn't improve energy efficiency(just spread computation over longer time).<br>
             Energy Efficiency: E ∝ V^2 but τ ∝ V; therefore by lowering supply voltage energy efficiency is lowered, make up for less performance by using parallelism.<br>
-
         </p>
-
-
     </p>
+<h3 id="FP9">Datapath</h3>
+<p id="subtext">
+    To build a complete processor two things are needed: the datapath that implements the computation and the control logic that looks at the instruction and tells the datapath what to do. Think of this setup like a Marionette; the puppet being the datapath and the strings being the control logic.<br>
+</p>
+<h4 id="subhead">"State" Required by RV321 ISA:</h4>
+<p id="subtext">
+    Each instruction reads and updates this state during execution:<br>
+</p>
+<p id="subtext_bullet">
+    Registers(0x...x31):<br>
+    Register file Reg holds 32 registers x 32 bits/register: Reg[0]...Reg[31]<br>
+    First register read specified by rs1 field in instruction. Second register read specified by rs2 field in instruction. Write register specified by rd field in instruction.<br>
+    x0 is always 0.<br>
+    Program Counter(PC):<br>
+    Holds address of current instruction.<br>
+    Memory(MEM):<br>
+    Holds both instructions and data, in one 32--byte-addressed memory space. To help with abstraction memory for instructions and data was separated in the course. Instructions are read from IMEM(instruction memory-read_only). Load/store instructions access data memory.<br>
+</p>
+<h4 id="subhead">Basic Phases of Instruction Execution:</h4>
+<p id="subtext">
+    There are five basic phases of instruction execution:<br>
+    Instruction Fetch: Send address to the instruction memory (IMEM), and read IMEM at that address.<br>
+    Instruction Decode: Generate control signals from instruction bits, generate the immediate, and read registers from the reg file.<br>
+    Execute: Perform ALU computations, and do branch comparisons.<br>
+    Memory: Read from or write to the data memory(DMEM).<br>
+    Writeback: write back either PC + 4, the result of the ALU operation, or data from the memory to the Reg file.<br>
+    <img id="medium_image" src="../assets/singlecycledatapath.JPG" alt="RISC-V Single Cycle Datapath"><br>
+</p>
+<h4 id="subhead">Specificities:</h4>
+<p id="subtext">
+    I-Format Immediate: high 12 bits of instruction(inst[31:20]) copied to low 12 bits of immediate(imm[11:0]). Immediate is sign extended by copying value of inst[31] to fill the upper 20 bits of the immediate value.<br>
+    I & S Immediate Generator: Just need a 5-bit mux to select between two positions where low five bits of immediate can reside in instruction. Other bits in immediate are wired to fixed positions in instruction.<br>
+    B Format: mostly the same as S-Format with two register sources (rs1/rs2) and a 12-bit immediate. But now immediate represents values --4096 to +4094 in 2 byte increments. The 12 immediate bits encode an even 13 bit signed byte offset(lowest bit of offset is always zero so no need to store it).<br>
+    Branch Comparator: BrEq = 1, if A=B | BrLt = 1, if A < B | BrUn = 1 selects unsigned comparison for BrLt, 0=singed. | BGE branchL A>=B if ~(A < B)<br>
+    Jal Instruction: sets PC = PC + offset; target somewhere within +- 2^19 locations, 2 bytes apart. Or +- 2^18 32 bit instructions.<br>
+</p>
+<h4 id="subhead">Universal Datapath Summary:</h4>
+<p id="subtext">
+    Capable of executing all RISC-V instructions in one cycle each. Datapath is the "union" of all the units used by all the instructions. Muxes provide the options. Not all units(hardware) used by all instructions. 5 phases of execution and not all instructions are active in all phases. Controller specifies how to execute instructions.<br>
+</p>
+<h4 id="subhead">Control:</h4>
+<p id="subtext">
+    <img id="medium_image" src="../assets/controlblock.JPG" alt="Control Block"><br><br>
+    Tells universal datapath how to execute each instruction.<br>
+    ROM(read-only Memory):<br>
+    Regular structure made from transistors. Cna be easily reprogrammed during the design process to fix errors or add instructions. Popular when designing control logic manually. An address decoder is used to access the ROM.<br>
+    Combinatorial Logic: Today, chip designers often use logic synthesis tools to convert truth tables to networks of gates. Logic equations for each control signal. Can exploit output "don't cares" and input "for all values" to simplify circuit.<br>
+</p>
+<h4 id="subhead">Performance:</h4>
+<p id="subtext">
+    At the current moment we have our datapath incrementing along the 5 stages processing 1 instruction. Essentially 4/5 phases of the datapath are unused while one is working. We can optimized this with a factory line approach.<br>
+    Performance Measures:<br>
+    <p id="suntextbullet">
+        Latency: instruction execution time<br>
+        Throughput: total number of instructions executed per unit time<br>
+        Energy Efficiency: energy per instruction, e.g. how many total instructions executed per batter charge<br>
+    </p>
+</p>
+<p id="subtext">
+    "Iron Law" of Processor Performance:<br>
+    <img id="large_image" src="../assets/ironlawPerfromance.JPG" alt="Iron Law of Performance"><br><br>
+    Instructions per Program: Determined by task specification, algorithm, programming language, compiler, and Instruction Set Architecture.<br>
+    (averg)Clock Cycles per Instruction: Determined by Instruction Set Architecture(CISC vs RISC), processor implementation, pipelined processors(CPI > 1), superscalar processors(CPI < 1).<br>
+    Time per Cycle: Determined by processor microarchitecture, technology, supply voltage(lower voltage reduces transistor speed but improves energy efficiency).<br>
+    Note: Energy per task can also be written as C*Vdd^2 where "C" is the capacitance depending on technology, microarchitecture, circuit details and Vdd is the supply voltage.<br>
+    Energy "Iron Law":<br>
+    Energy efficiency is a key metric in all computing devices. For power constrained systems need better energy efficiency to get more performance at same power. For energy constrained systems need better energy efficiency to prolong batter life.<br>
+</p>
+<h4 id="subhead">Pipelining:</h4>
+<p id="subtext">
+    Performance(tasks/second) = power(Joules/sec) * energy efficiency(tasks/Joule)<br>
+    Pipelining: is the process of implementing task completion in parallel, instead of limiting task completion to sequentially occur. Pipelining increases throughput but can never improve latency(sometimes decreases).<br>
+    <img id="medium_image" src="../assets/riscvpipeling.PNG" alt="RISC-V Pipelining"><br><br>
+    Pipeline registers separate stages, and hold date for each instruction in flight. Control signals derived from instruction, as in single cycle implementation. Information is stored in pipeline registers for use by later stages.<br>
+    Multiple tasks operating simultaneously using different resources. Potential speedup = Number pipe stages. Time to "fill" or "drain" pipeline reduces speedup.<br>
+    <img id="medium_image" src="../assets/pipelining.png" alt="Pipelining">
+    <img id="medium_image" src="../assets/pipelingperformance.png" alt="Pipelining Performance"><br><br>
+</p>
+    <p id="subtext">
+        Pipelining Hazards:<br>
+        Structural, Data(R-type/load instructions), and Control are all hazard types. 
+    </p>
+    <p id="subtext_bullet">
+        Structural Hazard: Two or more instructions in the pipelining compete for access to a single physical resource. Solution 1- Instructions take turns to use resource, some instructions have to stall. Solution 2- Add more hardware to machine.<br>
+        Reg File Structural Hazards: Each instruction can read up to two operands in decode stage. Can write one value in writeback stage. Therefore two different instructions might be accessing the register file on the same cycle. Avoid structural hazards by having separate ports. Read from one instruction and writes from another happens simultaneously. <br>
+        Memory Structural Hazard: Instruction and data memory used simultaneously. Caches: relatively small and fast "buffer" memories. Solution use two different cache memories.<br>
+        Summary: Conflict for use of resource. IN RISC-V pipeline with a single memory: load/store requires data access, without separate memories instruction fetch would have to stall for that cycle. Pipelined datapaths require separate instruction/data caches. Multi-ported register file. RISC ISAs (including RISC-V) designed to avoid structural hazards.<br>
+    </p>
+    <p id="subtext_bullet">
+        Data Hazard: Instruction dependent on data that causes issue. 
+        R-type Instruction: Instruction depend on result from previous instruction. Solution 1- bubble and stall the dependent instruction, stalls reduce performance, compiler could try to arrange code to avoid hazards and stalls but this requires code compiler understanding. Solution 2- forwarding(bypassing): grab operand from pipeline stage, rather than register file, requires additional connections in the datapath. To detect a need for forwarding compare destination register of older instructions in pipeline with sources of new instruction in decode stage. Thus we can use a previous result of an add in the next clock cycle.<br>
+        Load Instruction: Trying to compute upon a value that is being loaded from memory, 1 cycle stall unavoidable. We stall, and repeat and instruction and forward. Slot after a load is called the load delay slot, if that instruction uses the result of the load then the hardware will stall for one cycle, equivalent to inserting an explicit nop. Put unrelated instruction into load delay slot. We reorder instruction so that the lw values are used directly following aka microarchitecture optimization.<br>
+    </p>
+    <p id="subtext_bullet">
+        Control Hazard: two instructions executed following a branch instruction regardless of branch outcome because its down stream. Solution 1- if branch not taken then instructions fetched sequentially after branch are correct, if branch or jump taken, then need to flush incorrect instructions from pipeline by converting to NOPs. Every taken branch in simple pipeline costs 2 dead cycles. To improve performance, use “branch prediction” to guess which way branch will go earlier in pipeline. Only flush pipeline if branch prediction was incorrect. 
+        Branch Prediction: Keep a branch prediction buffer/cache: Small memory addressed by the lowest bits of PC. During instruction decode, if branch: Look up whether branch was taken last time? If yes, compute PC + offset and fetch that (or store actual branch target address from last time). If no, stick with PC + 4. If branch hasn't been seen before: assume forward branches are not taken, backward branches are taken. Update state on predictor with results of branch when it is finally calculated. Jumps are never mispredicted... but JALR can be. 
+    </p>
+<h4 id="subhead">Superscalar Processors:</h4>
+<p id="subtext">
+    Increasing single Processor Core Performance: increase clock rate, deeper pipeline, multi-issue "superscalar" processor.<br>
+    Multiple issue "superscalar":<br>
+    Replicate pipeline stages => multiple pipelines<br>
+    start multiple instructions per clock cycle<br>
+    CPI > 1, so use instructions Per Cycle(IPC)<br>
+    "out of order execution": Reorder instructions dynamically in hardware to reduce impact of hazards<br>
+    <img id="medium_image" src="../assets/superscalarprocessor.png" alt="Superscalar Processor"><br><br>
+    Don't just have one super-scalar processor core, have multiple!<br>
+    Past approach: Take your best single-core and replicate it...Problem: Those superscalar beasts consume a huge amount of energy. <br>
+    New approach: Big/Little...Some of your processor cores are the single-core beasts, Some are a more energy-optimized design, When absolute performance isn't needed, run tasks on the energy-efficient cores.<br>
+</p>
+<h4 id="subhead">Pipelining and RISC-V:</h4>
+<p id="subtext">
+    RISC-V ISA designed for pipelining:<br>
+    All instructions are 32-bits in the RV-32 ISA(Easy to fetch and decode in one cycle), Few and regular instruction formats(Decode and read registers in one step), Load/store addressing(Calculate address in 3rd stage, access memory in 4th stage, great for 5 stage pipeline), Alignment of memory operands(Memory access takes only one cycle).<br>
+    Apple M1 Processor:<br>
+    <img id="medium_image" src="../assets/appleM1.png" alt="Apple M1 Processor"><br><br>
+</p>
+<h3 id="FP10">Caches:</h3>
+<h4 id="subhead">Memory Hierarchy:</h4>
+<p id="subtext">
+    Mismatch between processor and memory speeds leads us to add a new level... introducing a "memory cache". Usually on the same chip as the cpu, faster but more expensive then DRAM. Cache is a copy of a subset of main memory. Most processors have separate caches for instructions and data.<br>
+    Memory hierarchy:<br>
+    <img id="medium_image" src="../assets/memoryhierachy.JPG" alt="memory Hierarchy"><br><br>
+    Cache contains copies of data that are being used. Caches work on the principles of temporal and spatial locality:<br> 
+    <p id="subtext_bullet">
+        Temporal Locality- if use it now chances are that we'll want to use it again soon. Keep most recently accessed data items closer to the processor.<br>
+        Spatial Locality- if we use a piece of memory chances are we'll use the neighboring pieces. Move blocks consisting of contiguous words closer to the processor.<br>
+    </p>
+</p>
+<h4 id="subhead">Memory Access Pattern:</h4>
+<p id="subtext">
+    <img id="medium_image" src="../assets/memoryaccesspatterns.JPG" alt="Memory Access Patterns"><br><br>
+    Memory Access with/without Caches:<br>
+    <img id="medium_image" src="../assets/memoryaccesswithoutcache.PNG" alt="Memory Access without Cache">
+    <img id="medium_image" src="../assets/memoryacceswithcache.PNG" alt="Memory Access with Cache"><br><br>
+    Cache Hit: the data you were looking for is in the cache, retrieve the data from the cache and bring it to the processor.<br>
+    Cache Miss: the data you were looking for is not in the cache, go to the memory and put the data in the cache, then bring to the processor.<br>
+</p>
+<h4 id="subhead">How is our data stored in the cache?:</h4>
+<p id="subtext">
+    Fully Associative Cache:<br>
+    Cache line/block: a single entry in the cache<br>
+    Line size/block size: the number of bytes in each cache line<br>
+    Tag: identifies the data stored at a given cache line<br>
+    Valid Bit: tells you fi the data stored at a given cache line is valid<br>
+    Capacity: the total number of data bytes that can be stored in a cache<br>
+    Eviction Policy 1: Least Recently Used(LRU): hardware keeps track of access history, replace the entry that has not been used for the longest time.<br>
+    Handling Stores: Store instructions write to memory, changing values, need to make sure cache and memory have consistent information.  Write Through: write to the cache and memory at the same time, the write to memory takes longer. Write Back: write data in cache and set the dirty bit to 1, when this line gets evicted from the cache write it to memory.<br>
+    Hardware Implementation: Need a comparator for each row in the cache to check the tag.<br>
+    <img id="medium_image" src="../assets/cachestructure.JPG" alt="Cache Structure">
+    <img id="medium_image" src="../assets/cachestructure2.JPG" alt="Cache Structure"><br><br>
+    <img id="medium_image" src="../assets/cachestructure3.PNG" alt="Cache Structure">
+    <img id="medium_image" src="../assets/cachestructure4.JPG" alt="Cache Structure"><br><br><br>
+    Direct Mapped Caches:<br>
+    Go to the index, check the tag and compare then load or store.<br> 
+    <img id="medium_image" src="../assets/directmapcache1.JPG" alt="Cache Structure"><br>
+    <img id="medium_image" src="../assets/directmapcache2.PNG" alt="Cache Structure">
+    <img id="medium_image" src="../assets/directmapcache3.PNG" alt="Cache Structure"><br><br>
 
 
-
+</p>
 
 </body>
 </html>
