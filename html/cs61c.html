@@ -600,7 +600,7 @@
 <p id="subtext">
     At the current moment we have our datapath incrementing along the 5 stages processing 1 instruction. Essentially 4/5 phases of the datapath are unused while one is working. We can optimized this with a factory line approach.<br>
     Performance Measures:<br>
-    <p id="suntextbullet">
+    <p id="subtext_bullet">
         Latency: instruction execution time<br>
         Throughput: total number of instructions executed per unit time<br>
         Energy Efficiency: energy per instruction, e.g. how many total instructions executed per batter charge<br>
@@ -685,17 +685,22 @@
     <img id="medium_image" src="../assets/memoryacceswithcache.PNG" alt="Memory Access with Cache"><br><br>
     Cache Hit: the data you were looking for is in the cache, retrieve the data from the cache and bring it to the processor.<br>
     Cache Miss: the data you were looking for is not in the cache, go to the memory and put the data in the cache, then bring to the processor.<br>
+    Hit Rate: number of hits/number of accesses<br>
+    Miss Rate: 1- hit rate<br>
+    Hit Time: the time that is takes for you to access an time on a cache hit<br>
+    Miss Penalty: on a miss the time it takes to access the block after discovering that ts not in cache.<br>
 </p>
 <h4 id="subhead">How is our data stored in the cache?:</h4>
 <p id="subtext">
     Fully Associative Cache:<br>
-    Cache line/block: a single entry in the cache<br>
+    Cache line/block: a single entry in the cache, each line has its own entry<br>
     Line size/block size: the number of bytes in each cache line<br>
     Tag: identifies the data stored at a given cache line<br>
     Valid Bit: tells you fi the data stored at a given cache line is valid<br>
     Capacity: the total number of data bytes that can be stored in a cache<br>
-    Eviction Policy 1: Least Recently Used(LRU): hardware keeps track of access history, replace the entry that has not been used for the longest time.<br>
-    Handling Stores: Store instructions write to memory, changing values, need to make sure cache and memory have consistent information.  Write Through: write to the cache and memory at the same time, the write to memory takes longer. Write Back: write data in cache and set the dirty bit to 1, when this line gets evicted from the cache write it to memory.<br>
+    Handling Stores: Store instructions write to memory, changing values, need to make sure cache and memory have consistent information.  
+    Write Through: write to the cache and memory at the same time, the write to memory takes longer. Write Back: write data in cache and set the dirty bit to 1, when this line gets evicted from the cache write it to memory.<br>
+    Write-allocate: on a write miss, you bring the line into the cache and then update the line. No Write-allocate: on a write miss, don't bring the line into the cache, you only update memory. For both you always bring the line in on a read miss. Common Combinations: write through and no write-allocate, or wite back and write allocate.<br> 
     Hardware Implementation: Need a comparator for each row in the cache to check the tag.<br>
     <img id="medium_image" src="../assets/cachestructure.JPG" alt="Cache Structure">
     <img id="medium_image" src="../assets/cachestructure2.JPG" alt="Cache Structure"><br><br>
@@ -706,9 +711,37 @@
     <img id="medium_image" src="../assets/directmapcache1.JPG" alt="Cache Structure"><br>
     <img id="medium_image" src="../assets/directmapcache2.PNG" alt="Cache Structure">
     <img id="medium_image" src="../assets/directmapcache3.PNG" alt="Cache Structure"><br><br>
-
+    Set Associative Caches:<br>
+    Compromise between fully associative and direct map cache.<br>
+    The data can only be stored at one index but there are multiple slots to store it in.The LRU bit indicates which set was least recently used. <br>
+    <img id="medium_image" src="../assets/setassociativecache.jpeg" alt="Cache Structure"><br>
 
 </p>
-
+<p id="subtext">
+    Eviction Policies:
+    <p id="subtext_bullet">
+        Least Recently Used: evict the line that was least recently used.<br>
+        Approximate LRU(clock algorithm):<br>
+        Each cache line has 1 referenced bit. This bit is set to 1 each time the line is accessed. When a line needs to be evicted we that at the first entry in the cache and check its reference bit. If 1, set to 0 and move on. Else choose as victim. The next time we need to evict a line from the cache we will start searching at the point where wee lest off.<br>
+    </p>
+    <p id="subtext_bullet">
+        Most Recently Used: evict the line that was most recently used.<br>
+    </p>
+    <p id="subtext_bullet">
+        Random: chooses a random line to evict, thus don't have to keep track of additional metadata.<br>
+    </p>
+</p>
+<p id="subtext">
+    Types of Misses:<br>
+    <p id="subtext">
+        Compulsory Miss: caused by first access to block that has never been in the cache.<br>
+        Capacity Miss: caused when the cache cannot contain all the blocks needed during the execution of a program. Occur when blocks were in the cache, replaced, and later retrieved.<br>
+        Conflict Miss: Occur in set-associative or direct mapped caches when multiple blocks compete for the same set.<br>
+    </p>
+</p>
+<p id="subtext">
+    Cache Summary:<br>
+    <img id="medium_image" src="../assets/cachecomparisons.jpeg" alt="Cache Structure"><br>
+</p>
 </body>
 </html>
