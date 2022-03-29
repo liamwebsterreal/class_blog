@@ -24,6 +24,7 @@
     <li><a href="#FP9">Counting</a></li>
     <li><a href="#FP10">Countability and Computability</a></li>
     <li><a href="#FP11">Probability</a></li>
+    <li><a href="#FP12">Random Variables</a></li>
 
     </ul>
 </div>
@@ -648,5 +649,29 @@ The answer is given by the recursion theorem. The recursion theorem states that 
   <img id="large_image" src="../assets/inclusionexclusionpriciple.JPG" alt="Inclusion Exclusion">
   <img id="large_image" src="../assets/inclusionexclusionprinciple2.JPG" alt="Inclusion Exclusion"><br><br>
 </p>
+<h3 id="FP1">Random Variables:</h3>
+<h4 id="subhead">Distribution and Expectation:</h4>
+<p id="subtext">
+  A value X that depends on the outcome of the probabilistic experiment is called a random variable. In most cases the variable X doesn't have a definitive value but instead only has a probability distribution over the set of possible values X can take. The average value of X if the experiment is repeated n times is called the expectation of X.<br>
+  Random Variable: a variable X on a sample space Ω is a function X: Ω -> R that assigns to each sample point ω ∈ Ω a real number X(ω)<br>
+</p>
+<h4 id="subhead">Probability Distribution:</h4>
+<p id="subtext">
+  Distribution: the distribution of a discrete random variable x is the collection of values {(a,P[X=a]) : a∈𝓐}, where 𝓐 is the set of all possible values taken by X. Note that the collection of X=a for a∈𝓐 satisfy: any two events X = a1 and X = a2 with a1 ≠ a2 are disjoint, and the union of all these events is equal to the entire sample space Ω.<br>
+  Bernoulli Distribution(X ~ Bernoulli(p)): 
+  <img id="medium_image" src="../assets/bernoulliedistribution.jpeg" alt="Bernoulli Distribution"><br><br>
+  Binomial Distribution(X ~ Bin(n,p)): 
+  <img id="medium_image" src="../assets/binomialdistribution.jpeg" alt="Binomial Distribution"><br><br>
+  Hypergeometric Distribution(X ~ Hypergeometric(N,B,n)): 
+  <img id="medium_image" src="../assets/hypergeometricdistribution.jpeg" alt="Hypergeometric Distribution"><br><br>
+</p>
+<h4 id="subhead">Joint Distributions and Independence and Expectation:</h4>
+<p id="subtext">
+  Joint Distribution: for two discrete random variables X and Y is the collection of values {(a,b),P[X=a,Y=b]) : a ∈ 𝓐, b∈ 𝓑}, where 𝓐 is the set of all possible values taken by X and 𝓑 is the set of all possible values taken by Y. When given a joint distribution for X and Y the distribution P[X=a] for X is called the marginal distribution for X, and can be found by "summing" over the values of Y.<br>
+  Independence: random varibales X and Y on the same probability space are said to be independent if the events X=a and Y=b are independent for all values of a,b. Equivalently the joint distribution of independent r.v.'s decomposes as P[X=a,Y=b] = P[X=a]P[Y=b], ∀a,b<br>
+  <img id="medium_image" src="../assets/expectation.jpeg" alt="Expectation"><br><br>
+</p>
+<h4 id="subhead">Linearity of Expectation:</h4>
+  Theorem: For any two random variables X and Y on the same probability space, E[X + Y] = E[x] + E[Y], also E[cX] = c*E[X]<br>
 </body>
 </html>

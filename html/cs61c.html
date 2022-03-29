@@ -23,6 +23,7 @@
     <li><a href="#FP8">Synchronous Digital Systems</a></li>
     <li><a href="#FP9">Datapath</a></li>
     <li><a href="#FP10">Caches</a></li>
+    <li><a href="#FP11">Parallelism</a></li>
 
     </ul>
     </div>
@@ -720,7 +721,7 @@
 <p id="subtext">
     Eviction Policies:
     <p id="subtext_bullet">
-        Least Recently Used: evict the line that was least recently used.<br>
+        Least Recently Used: evict the line that was least recently used. A set includes all of the ways of that index, the LRU tells us which way is the least recently used in the set.<br>
         Approximate LRU(clock algorithm):<br>
         Each cache line has 1 referenced bit. This bit is set to 1 each time the line is accessed. When a line needs to be evicted we that at the first entry in the cache and check its reference bit. If 1, set to 0 and move on. Else choose as victim. The next time we need to evict a line from the cache we will start searching at the point where wee lest off.<br>
     </p>
@@ -742,6 +743,78 @@
 <p id="subtext">
     Cache Summary:<br>
     <img id="medium_image" src="../assets/cachecomparisons.jpeg" alt="Cache Structure"><br>
+</p>
+<h4 id="subhead">Cache Performance:</h4>
+<p id="subtext">
+    Important to understand cache configurations/structure to design software that utilizes cache in an efficient way.<br>
+    Cache Blocking: A technique where data accesses are rearranged to make better use of the data that is brought into the cache. Helps prevent repeatedly evicting and fetching the same data from the main memory.<br>
+    <p id="subtext_bullet">
+        Example: Matrix multiplication, transposing the second matrix to make cache accesses more efficient. For even better performance, use cache blocking take chunks of each matrix multiply and move on to the next chunk.<br><br>
+        <img id="medium_image" src="../assets/cacheblocking1.jpeg" alt="Cache Blocking"><br>
+    </p>
+</p>
+<p id="subtext">
+    Measuring Cache Performance:<br>
+    <p id="subtext_bullet">
+        Hit Rate: number of hits / number of accesses<br>
+        Miss Rate: 1 - hit rate<br>
+        Hit Time: The time that it takes for you to access an item on the cache hit<br>
+        Miss Penalty: On a miss, the time it takes to access the lock after discovering that its not in the cache<br>
+        AMAT(average memory accesses time): hit time + miss rate * miss penalty<br>
+        <p id="subtext_bullet2">
+            How does increasing Associativity Affect AMAT?<br>
+            Hit time increases as associativity increases, because of the multiplexors, such that a 2 way associative set is more efficient then a 4 way set associative.<br>
+            Miss rate decreases as associativity increases, because due to less conflict misses.<br>
+            Miss Penalty Mostly unchanged, replacement policy runs in parallel with fetching missing line from memory.<br>
+            How does increasing number of entries affect AMAT?<br>
+            Hit time increases since reading tags and data from larger memory structures<br>
+            Miss rate decreases due to increased capacity and fewer conflict misses<br>
+            Miss penalty is unchanged<br>
+            How does increasing block size affect AMAT?<br>
+            Hit time mostly unchanged but might be slightly reduced as number of tags is reduced<br>
+            Miss rate goes down at first due to spatial locality then increases due to increased conflict misses due to fewer blocks in the cache<br>
+            Miss penalty rises<br>            
+        </p>
+    </p>
+</p>
+<p id="subtext">
+    Another way to reduce miss penalty is to include another cache between processor and main memory. The L2 cache is bigger than L1, accessed only if the requested data is not found in L1. L2 takes longer to access because it is larger and further away from the processor. All data in L1 can be found in L2. If the line in L1 is dirty when evicted you update the copy in L2.<br>
+    L1 Cache: embedded in processor chip, fast but limited storage.<br>
+    L2 Cache: embedded in processor chip or on its own chip, reduces L1 miss penalty.<br>
+    L3 Cache: on a separate chip, reduces L1 and L2 miss penalty.<br>
+    L4 Cache: uncommon.<br>
+    Hit Rate is thus differentiated into Local and global scales; local being hits at said level and global being total hits. <br>
+    New AMAT = L1 hit time + L1 miss rate*(L2 hit time + L2 miss rate * L2 miss penalty) Note: similar convention follows for cascading caches.<br>
+</p>
+<h3 id="FP11">Parallelism</h3>
+<h4 id="subhead">Why Parallelism?:</h4>
+<p id="subtext">
+    CPU Clock rates are no longer increasing: technical & economic challenges; advanced cooling technology too expensive and energy cost are prohibitive. Thus, parallel processing is only path to higher speed.<br>
+    Two Basic Approaches:
+    <p id="subtext_bullet">
+        Multiprogramming: run multiple independent programs in parallel, easy. <br>
+        Parallel Computing: run one program faster, hard.<br>
+    </p>
+</p>
+<h4 id="subhead">Parallel Computing:</h4>
+<p id="subtext">
+    Single Instruction/Single Data Stream(SISD): Sequential computer that exploits no parallelism in either the instruction or data streams. Examples of SISD architecture are traditional uniprocessor machines; our RISC-V processor.<br>
+    <img id="small_image" src="../assets/SISD.jpeg" alt="SISD"><br>
+    Single Instruction/Multiple Data Stream(SIMD): SIMD computer processes multiple data streams using a single instruction stream, example Intel SIMD instruction extensions.<br>
+    <img id="small_image" src="../assets/SIMD.jpeg" alt="SIMD"><br>
+    Multiple-Instruction/Multiple-Data Streams(MIMD): Multiple autonomous processors simultaneously executing different instructions on different data, example multicore and Warehouse-scale computers.<br>
+    <img id="small_image" src="../assets/MIMD.jpeg" alt="MIMD"><br>
+    Multiple-Instruction/Single-Data Stream(MISD): Multiple-Instruction, Single-Data stream computer that processes multiple instruction streams with a single data stream, example historical significance.<br>
+    <img id="small_image" src="../assets/MISD.jpeg" alt="MISD"><br><br>
+    Currently SIMD and MIMD are the most common parallelism architecture, usually both in the same system.<br>
+</p>
+<h4 id="subhead">Loop Unrolling:</h4>
+<p id="subtext">
+    On high performance processors, optimizing compilers performs "loop unrolling" operation to expose more parallelism and improve performance.<br>
+</p>
+<h4 id="subhead">Blocking:</h4>
+<p id="subtext">
+    Rearrange code to use values loaded in cache many times, only "few" accesses to slow main memory(DRAM) per floating point operation.<br>
 </p>
 </body>
 </html>
