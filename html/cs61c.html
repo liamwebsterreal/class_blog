@@ -816,5 +816,57 @@
 <p id="subtext">
     Rearrange code to use values loaded in cache many times, only "few" accesses to slow main memory(DRAM) per floating point operation.<br>
 </p>
+<h4 id="subhead">Amdahl's Law:</h4>
+<p id="subtext">
+    <img id="medium_image" src="../assets/AmdahlsLaw.jpeg" alt="Amdahl's Law"><br><br>
+</p>
+<h4 id="subhead">Strong and Weak Scaling:</h4>
+<p id="subtext">
+    Strong Scaling: when speedup can be achieved on a parallel processor without increasing the size of the problem.<br>
+    Weak Scaling: when speedup is achieved on a parallel processor by increasing the size of the problem proportionally to the increase in the number of processors.<br>
+    Load Balancing: every processor doing same amount of work, e.g. one unit with twice the load of others cuts speedup almost in half. <br>
+</p>
+<h4 id="subhead">Multiprocessor Execution:</h4>
+<p id="subtext">
+    <img id="medium_image" src="../assets/multiprocessorExecution.jpeg" alt="Multiprocessor Execution"><br><br>
+</p>
+<h4 id="subhead">Comparing Types of Parallelism:</h4>
+<p id="subtext">
+    SIMD(data parallel): a SIMD favorable problem can map easily to a MIMD type fabric. SIMD type generally offer a much higher throughput per dollar. Much simpler control logic, common approach is "vector" like.<br>
+    MIMD(data-dependent branches): a MIMD favorable problem will not map easily to SIMD type fabric.<br>
+    Only path to performance is parallelism. Key challenge is to craft parallel programs that have high performance on multiprocessors as the number of processors increase -i.e. that scale.<br>
+</p>
+<h4 id="subhead">Threads:</h4>
+<p id="subtext">
+    <img id="medium_image" src="../assets/threads.jpeg" alt="Threads"><br><br>
+    Processor resources are expensive and should not be left idle. Hardware switches threads to bring in other useful work while waiting for cache miss. Put in redundant hardware so don't have to save context on ever thread switch i.e. PC, registers.<br>
+</p>
+<h4 id="subhead">Multithreading vs Multicore:</h4>
+<p id="subtext">
+    <img id="medium_image" src="../assets/multithreadingVmulticore.jpeg" alt="Multithreading vs Multicore"><br><br>
+</p>
+<h4 id="subhead">Latest Design-Big_Lil:</h4>
+<p id="subtext">
+    "Big" processors are needed for both single threaded and multi-threaded performance, but such processors are very inefficient. Big_Lil designs "smaller" processors for idle and small tasks; "big" processors are used once the "small" can't keep up.<br>
+</p>
+<h4 id="subhead">OpenMP:</h4>
+<p id="subtext">
+    OpenMP is a language extension used for multi-threaded, shared memory parallelism. Portable, standardized and easy to compile(cc -fopenmp name.c). Create threads with markers, so that independent code blocks can be run at the same time.<br>
+    Pros: takes advantage of shared memory, programmer need not worry about data placement. Compiler directives are simple and easy to use. Legacy serial code does not need to be written.<br>
+    Cons: Code can only be run in shared memory environments. Compiler must support openMP. Amdahl's law is gonna get you after not too many cores...<br>
+    Data Race: if different threads attempt to access the same location, and at least one is a write,, and they occur one after another. Avoid data races by synchronizing writing and reading to get deterministic behavior.<br>
+    <p id="subtext_bullet">
+        Lock synchronization: use a "lock" to grat access to a region(critical section) so that only one thread can operate at a time. Processors read lock and either wait or set lock and go into critical section; 0-unlocked 1-locked. Check the lock, if unlocked set lock and access critical section then unset lock; else idle till unlocked or go do another process until unlocked.<br>
+        To build a lock hardware support is needed; Atomic read/write memory operation. Single inst- atomic swap of register <-> memory. Pair inst: one for read, one for write.<br>
+    </p>
+</p>
+<p id="subtext">
+    <img id="medium_image" src="../assets/RISCVsynchronization.jpeg" alt="RISC-V Synchronization"><br><br>
+    Example: use OpenMp to break up a for loop, that has not loop dependency. If the loop is doing a sum operation splitting it up will require the reduction operation, each loop has its own sum varibale of which are combined after the parallel loops execute.<br> 
+</p>
+
+
+
+
 </body>
 </html>
