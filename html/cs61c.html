@@ -861,8 +861,34 @@
     </p>
 </p>
 <p id="subtext">
+    Deadlock: a system stat in which no progress is possible because everything is locked waiting for something else. Many solutions but typically program specific. Locks innately inhibit parallelism, so try and limit locks or eliminate.<br>
+</p>
+<p id="subtext">
     <img id="medium_image" src="../assets/RISCVsynchronization.jpeg" alt="RISC-V Synchronization"><br><br>
     Example: use OpenMp to break up a for loop, that has not loop dependency. If the loop is doing a sum operation splitting it up will require the reduction operation, each loop has its own sum varibale of which are combined after the parallel loops execute.<br> 
+</p>
+<p id="subtext">
+    <img id="medium_image" src="../assets/OpenMP.jpeg`" alt="OpenMP"><br><br>
+</p>
+<h4 id="subhead">SMP:</h4>
+<p id="subtext">
+    SMP(Shared Memory) Symmetric Multiprocessor:<br>
+    <img id="medium_image" src="../assets/SharedMemoryMultiprocessor.jpeg" alt="SMP"><br><br>
+    Problems Arrise in data races, if one cache pulls data from main mem at X, then a second cache pulls the same data from main mem at X, then the first cache writes to memory X the second cache has stale data but how does it know that?<br>
+    Coherency: keep cache values coherent. When any processor has caches miss or writes notify other processor via interconnection entwork. Write transactions from one processor, other caches "snoop" the common interconnect chec iing for tages they hold. We want write-back caches, we want to minimize writes overall. The neighboring processor's cache is faster to get to than main memory.<br>
+   Common Cache Coherency Policy: MOESI
+    Shared: up-to-date data, other cahces may have a copy(valid bit set, shared bit set)<br>
+    Modified: up-to-date data, changed(dirty) no other cache has a copy, OK to write, memory out-of-date(valid and dirty bit set)<br>
+    Exclusive: up-to-date data no other cache has a copy, OK to write, memory up-to-date(valid bit set). If any other cache reads this line the state becomes shared, if I write this line sates becomes modified but I don't need to broadcast this when I do the write.<br>
+    Owner: up-to-date data, other caches may have a copy, memory is not up-to-date(valid, dirty, and shared is set). This cache now supplies data on read instead of going to memory, when you write once again have to have the other caches invalidate.<br>
+    Invalid: Invalid
+    <img id="medium_image" src="../assets/MOESI.jpeg" alt="MOESI"><br><br>
+    Problem: Everyt time one processor does a write the other processor will take a cache miss on the next read or write...new class of cache miss type: coherency.<br>
+</p>
+<h4 id="subhead">GO Language:</h4>
+<p id="subtext">
+    Language created at Google starting in 2007. Language continues to evolve but a commitment to backwarrds campatibilty.<br>
+    <img id="medium_image" src="../assets/golanguage.jpeg" alt="GO"><br><br>
 </p>
 
 

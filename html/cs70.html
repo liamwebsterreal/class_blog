@@ -25,6 +25,7 @@
     <li><a href="#FP10">Countability and Computability</a></li>
     <li><a href="#FP11">Probability</a></li>
     <li><a href="#FP12">Random Variables</a></li>
+    <li><a href="#FP13">Variance and Covariance</a></li>
 
     </ul>
 </div>
@@ -649,7 +650,7 @@ The answer is given by the recursion theorem. The recursion theorem states that 
   <img id="large_image" src="../assets/inclusionexclusionpriciple.JPG" alt="Inclusion Exclusion">
   <img id="large_image" src="../assets/inclusionexclusionprinciple2.JPG" alt="Inclusion Exclusion"><br><br>
 </p>
-<h3 id="FP1">Random Variables:</h3>
+<h3 id="FP12">Random Variables</h3>
 <h4 id="subhead">Distribution and Expectation:</h4>
 <p id="subtext">
   A value X that depends on the outcome of the probabilistic experiment is called a random variable. In most cases the variable X doesn't have a definitive value but instead only has a probability distribution over the set of possible values X can take. The average value of X if the experiment is repeated n times is called the expectation of X.<br>
@@ -703,7 +704,31 @@ The answer is given by the recursion theorem. The recursion theorem states that 
   <img id="medium_image" src="../assets/poissondistribution.jpeg" alt="Poisson Distribution"><br><br>
   Theorem 19.5: Let X ~ Poisson(λ) and Y ~ Poisson(μ) be independent Poisson random variables. Then, X + Y ~ Poisson(λ + μ)<br>
   <img id="medium_image" src="../assets/binomialTOpoisson.jpeg" alt="Binomial Distribution converging to Poisson Distribution"><br><br>
+</p>
 
+<h3 id="FP13">Variance and Covariance</h3>
+<h4 id="subhead">Law of the Unconscious Statistician:</h4>
+<img id="medium_image" src="../assets/unconciousStatistician.jpeg" alt="Law of the Unconscious Statistician"><br><br>
+<h4 id="subhead">Variance:</h4>
+<p id="subtext"> 
+  Variance: For a r.v. X with expectation E[X] = μ, the variance of X is defined to be Var(X) = E[(X - μ)^2]. The square root σ(X) = sqrt(Var(X)) is called the standard deviation of X.<br>
+  Theorem: For a r.v. X with expectation E[X] = μ, we have Var(X) = E[X^2] - μ^2<br>
+  Theorem: For any random variable X and constant c we have Var(cX) = c^2Var(X)<br>
+</p>
+<h4 id="subhead">Sum of Independent Random Variables:</h4>
+<p id="subtext">
+  If a random variable X is the sum of independent random variables X = X1 + ... + Xn, then its variance is the sum of the variances of the individual r.v.'s. In particular if the individual r.v.'s Xi are identically distributed then Var(X) = n*Var(X1). Thus the standard deviation is σ(X) = sqrt(n) * σ(X1), and by contrast the expected value is E[X] = n*E[X1]. Intuitively this means that the average value of X grows proportionally to n and the spread of the distribution grows proportionally to sqrt(n); in other words the distribution of X tends to concentrate around its mean.<br>
+  Theorem: For independent random variables X, Y we have E[XY] = E[X]E[Y]<br>
+  Theorem: For independent random variables X, Y we have Var(X + Y) = Var(X) + Var(Y)<br>
+</p>
+<h4 id="subhead">Covariance and Correlation:</h4>
+<p id="subtext">
+  Covariance: The covariance of random variables X and Y denoted Cov(X,Y) is defined as Cov(X,Y) = E[(X - μx)(Y - μy)] = E[XY] -E[x]E[Y] where μx = E[X] and μy = E[Y]<br>
+  Remarks: If X, Y are independent than Cov(X,Y) = 0, however the converse is not true. Cov(X,X) = Var(X). Covariance is bilinear; i.e. for any collection of random variables {X1,...,Xn},{Y1,...,Yn} and fixed constants {a1,...,an},{b1,...,bm}, Cov(sum(ai*Xi), sum(bi*Xi)) = sum(sum(ai*bi))*Cov(Xi,Yi); for general variables X and Y Var(X+Y) = Var(X) + Var(Y) + 2Cov(X,Y)<br>
+  While the sign of Cov(X,Y) is informative of how X and Y are associated, its magnitude is difficult to interpret. A statistic that is easier to interpret is correlation...<br>
+  Correlation: Suppose X and Y are random variables with σ(X) > 0 and σ(Y) > 0. Then the correlation of X and Y is defined as Corr(X,Y) = Cov(X,Y)/(σ(X)σ(Y))<br>
+  Correlation is more useful than covariance because the former alwasy ranges between -1 and 1.<br>
+  Theorem: For any pair of random variables X and Y with σ(X) > 0 and σ(Y) > 0, -1 <= Corr(X,Y) <= +1<br>
 </p>
 </body>
 </html>
