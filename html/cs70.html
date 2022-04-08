@@ -22,10 +22,11 @@
     <li><a href="#FP7">Polynomials</a></li>
     <li><a href="#FP8">Error Correcting Codes</a></li>
     <li><a href="#FP9">Counting</a></li>
-    <li><a href="#FP10">Countability and Computability</a></li>
+    <li><a href="#FP10">Countability & Computability</a></li>
     <li><a href="#FP11">Probability</a></li>
     <li><a href="#FP12">Random Variables</a></li>
-    <li><a href="#FP13">Variance and Covariance</a></li>
+    <li><a href="#FP13">Variance & Covariance</a></li>
+    <li><a href="#FP14">Concentration Inequalities & Confidence Intervals</a></li>
 
     </ul>
 </div>
@@ -676,7 +677,7 @@ The answer is given by the recursion theorem. The recursion theorem states that 
 <h4 id="subhead">Binomial Distribution(X ~ Bin(n,p)):</h4>
 <p id="subtext">
   One of the most important distributions, models the number of success in n independent experiments asking a yes-no question. The binomial distribution is frequently used to model the number of successes in a sample of size n drawn with replacement from a population of size N. If the sampling is carried out without replacement, the draws are not independent and so the resulting distribution is a hypergeometric distribution, not a binomial one. However, for N much larger than n, the binomial distribution remains a good approximation, and is widely used.<br>
-  E[X] = np
+  E[X] = np<br>
   <img id="medium_image" src="../assets/binomialdistribution.jpeg" alt="Binomial Distribution"><br><br>
 </p>
 <h4 id="subhead">Bernoulli Distribution(X ~ Bernoulli(p)):</h4>
@@ -688,7 +689,7 @@ The answer is given by the recursion theorem. The recursion theorem states that 
 <h4 id="subhead">Hypergeometric Distribution(X ~ Hypergeometric(N,B,n)): </h4>
 <p id="subtext">
   The hypergeometric distribution models the probability of {\displaystyle k}k successes (random draws for which the object drawn has a specified feature) in {\displaystyle n}n draws, without replacement, from a finite population of size {\displaystyle N}N that contains exactly {\displaystyle K}K objects with that feature, wherein each draw is either a success or a failure.<br>
-  E[X] = n * B / N
+  E[X] = n * B / N<br>
   <img id="medium_image" src="../assets/hypergeometricdistribution.jpeg" alt="Hypergeometric Distribution"><br><br>
 </p>
 <h4 id="subhead">Geometric Distribution(X ~ Geometric(p)):</h4>
@@ -707,8 +708,12 @@ The answer is given by the recursion theorem. The recursion theorem states that 
 </p>
 
 <h3 id="FP13">Variance and Covariance</h3>
+
 <h4 id="subhead">Law of the Unconscious Statistician:</h4>
-<img id="medium_image" src="../assets/unconciousStatistician.jpeg" alt="Law of the Unconscious Statistician"><br><br>
+<p id="subtext">
+  <img id="medium_image" src="../assets/unconciousStatistician.jpeg" alt="Law of the Unconscious Statistician"><br><br>
+
+</p>
 <h4 id="subhead">Variance:</h4>
 <p id="subtext"> 
   Variance: For a r.v. X with expectation E[X] = μ, the variance of X is defined to be Var(X) = E[(X - μ)^2]. The square root σ(X) = sqrt(Var(X)) is called the standard deviation of X.<br>
@@ -730,5 +735,30 @@ The answer is given by the recursion theorem. The recursion theorem states that 
   Correlation is more useful than covariance because the former alwasy ranges between -1 and 1.<br>
   Theorem: For any pair of random variables X and Y with σ(X) > 0 and σ(Y) > 0, -1 <= Corr(X,Y) <= +1<br>
 </p>
+
+<h3 id="FP14">Concentration Inequalities & Confidence Intervals</h3>
+
+<h4 id="subhead">Concentration Inequalities and the Laws of Large Numbers:</h4>
+<p id="subtext">
+  <img id="medium_image" src="../assets/ConcentrationsInequality.jpeg" alt="Concentration Inequalities"><br><br>
+</p>
+<h4 id="subhead">Markov's Inequality:</h4>
+<p id="subtext">
+  <img id="medium_image" src="../assets/MarkovsInequality.jpeg" alt="Markov's Inequality"><br><br>
+</p>
+<h4 id="subhead">Chebyshev's Inequality:</h4>
+<p id="subtext">
+  <img id="medium_image" src="../assets/chebychevcorollary.jpeg" alt="Chebyshev's Corollary"><br><br>
+</p>
+<h4 id="subhead">Law of Large Numbers:</h4>
+<p id="subtext">
+  Averaging tends to smooth out any fluctuations and the more averaging we do the better the smoothing.<br>
+  <img id="medium_image" src="../assets/LLN.jpeg" alt="Law of Large Numbers"><br><br>
+</p>
+
+
+
+
+
 </body>
 </html>

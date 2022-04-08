@@ -24,6 +24,7 @@
     <li><a href="#FP9">Datapath</a></li>
     <li><a href="#FP10">Caches</a></li>
     <li><a href="#FP11">Parallelism</a></li>
+    <li><a href="#FP12">Operating  System</a></li>
 
     </ul>
     </div>
@@ -890,9 +891,70 @@
     Language created at Google starting in 2007. Language continues to evolve but a commitment to backwarrds campatibilty.<br>
     <img id="medium_image" src="../assets/golanguage.jpeg" alt="GO"><br><br>
 </p>
-
-
-
-
+<h3 id="FP12">Operating System</h3>
+<h4 id="subhead">Introduction:</h4>
+<p id="subtext">
+    The OS is the software that runs on a computer. It is the software that provides the hardware with the ability to perform tasks such as reading and writing to memory, executing programs, and managing the hardware. Common OS: Unix(Berkeley Software Distribution, macOS), Linux(Debian, Ubuntu, Red Hat), Microsoft Windows<br>
+    Illusionist: The OS is divided up into threads to run mutliple processors at once. It provides clean, easy-to-use abstractions of physical resources. Masks limitations and abstracts higher level objects(files, sockets, etc.)
+    Referee: It manages protection, isolation and sharing of resources. The OS isolates processes from each other, OS isolates itself from other process, even though they are actually running on the same hardware.<br>
+    <img id="medium_image" src="../assets/operatingsystem.jpeg" alt="Operating System"><br><br>
+</p>
+<h4 id="subhead">Context Switch:</h4>
+<p id="subtext">
+    Context Switch: the swithcing from executing one program to another. Allows multiple processes to run on the same processor. The OS determines when to context switch.<br>
+    What Happens: The OS takes control of the CPU from the current process -> the OS saves the state of the current process -> the OS loads the state of the next process -> the OS hands over the CPU to the next process.<br>
+</p>
+<h4 id="subhead">Dual Mode Operation:</h4>
+<p id="subtext">
+    Hardware provides at least two modes: Kernel mode("supervisor" mode) and User mode<br>
+    Certain operations are prohibited when running in suer mode: interacting directly with hardwared, writing to kernel memory.<br>
+    OS mostly runs in user mode.<br>
+    Switching between user mode and kernel mode: system calls, interupts, and exceptions.<br>
+</p>
+<p id="subtext">
+    System Call:
+    <p id="subtext_bullet">
+        Allows the program to request a service from the operating system. Examples: creating and deleting files, reading and writing files, accessing external devices like a scanner, etc. Similiar to function calls except it's executed by the kernel.<br>
+        <img id="medium_image" src="../assets/systemcall.jpeg" alt="System Call"><br><br>
+    </p>
+</p>
+<p id="subext">
+    Interupts:
+    <p id="subtext_bullet">
+            Caused buy an event external to the current program. Example keyboard press or mouse click. Asynchronous to the current program; does not need to be handled immediatly but should be handled soon.<br>
+    </p>
+</p>
+<p id="subext">
+    Exceptions:
+    <p id="subtext_bullet">
+        Caused by an event during the execution of the current program. Example illegal intsruction, divide by zero. Synchronous to the current program; must be handled immediatly.<br>
+        <img id="medium_image" src="../assets/exceptions.jpeg" alt="Exceptions"><br><br>
+    </p>
+</p>
+<p id="subtext">
+    Trap Handler: code the services the interupt or exception; from the program's point of view it mus look like nothing happened.<br>
+    Traps: all instruciton befor ethe faulting instruction must complete -> all instructions after the faulting instruction must be flushed -> the faulting instruction must be flushed -> executiong of the trap handler begins.<br>
+    What it does: saves the state of the current program -> determine what caused the exxception or interupt -> handle the exception or interupt -> continue execution of the program: restoring the state of the program and returning the control to the program or terminate the execution of the program: free resources and schedule a new program.<br>
+    <img id="medium_image" src="../assets/traphandler.jpeg" alt="Trap Handler"><br><br>
+    ia is the faulting instruction we jump to the handler code who decides wether continuation or termination of the program is appropriate. Typically interupts and certain memory exceptions call for the contineued execution of the program, in contrast, illegal instructions and certain illegal memory accesses call for the termination of the program.<br>
+</p>
+<h4 id="subhead">Kernel:</h4>
+<p id="subtext">
+    <img id="medium_image" src="../assets/kernel.jpeg" alt="Kernel"><br><br>
+</p>
+<h4 id="subhead">Shell:</h4>
+<p id="subtext">
+    A program the exposes the operating system's services.<br>
+</p>
+<h4 id="subhead">What happens at Boot?</h4>
+<p id="subtext">
+    The BIOS(Basic Input Output System) runs the Power on Self Test(Post) and the bootloader -> the bootloader loads in part the operating system -> the operating system initializes services, drivers, etc -> launch a process that waits for an input in a loop<br>
+    Bootstrapping: a chain of stages, in which at each stage, a smaller, simpler program loads and then execurtes the larger more complicated program of the next stage.<br>
+</p>
+<h4 id="subhead">how do you begin executing a program?</h4>
+<p id="subtext">
+    Loader: responsible for loading the program into memory.<br>
+    The loader loads program into memory -> the loaders sets argc and argv -> the OS jumps to main and transfers control to the process<br>
+</p>
 </body>
 </html>
