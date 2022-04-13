@@ -27,6 +27,7 @@
     <li><a href="#FP12">Random Variables</a></li>
     <li><a href="#FP13">Variance & Covariance</a></li>
     <li><a href="#FP14">Concentration Inequalities & Confidence Intervals</a></li>
+    <li><a href="#FP15">Linear Regression & Conditional Expectations</a></li>
 
     </ul>
 </div>
@@ -716,6 +717,7 @@ The answer is given by the recursion theorem. The recursion theorem states that 
 </p>
 <h4 id="subhead">Variance:</h4>
 <p id="subtext"> 
+  The variance of a random variable X is the average of the squared deviations of X from its mean.<br>
   Variance: For a r.v. X with expectation E[X] = μ, the variance of X is defined to be Var(X) = E[(X - μ)^2]. The square root σ(X) = sqrt(Var(X)) is called the standard deviation of X.<br>
   Theorem: For a r.v. X with expectation E[X] = μ, we have Var(X) = E[X^2] - μ^2<br>
   Theorem: For any random variable X and constant c we have Var(cX) = c^2Var(X)<br>
@@ -728,11 +730,12 @@ The answer is given by the recursion theorem. The recursion theorem states that 
 </p>
 <h4 id="subhead">Covariance and Correlation:</h4>
 <p id="subtext">
+  The covariance of two random variables X and Y is the average of the products of the deviations of X and Y from their means. Covariance indicates the relationship of two variables whenever one variable changes. If an increase in one variable results in an increase in the other variable, both variables are said to have a positive covariance.<br>
   Covariance: The covariance of random variables X and Y denoted Cov(X,Y) is defined as Cov(X,Y) = E[(X - μx)(Y - μy)] = E[XY] -E[x]E[Y] where μx = E[X] and μy = E[Y]<br>
   Remarks: If X, Y are independent than Cov(X,Y) = 0, however the converse is not true. Cov(X,X) = Var(X). Covariance is bilinear; i.e. for any collection of random variables {X1,...,Xn},{Y1,...,Yn} and fixed constants {a1,...,an},{b1,...,bm}, Cov(sum(ai*Xi), sum(bi*Xi)) = sum(sum(ai*bi))*Cov(Xi,Yi); for general variables X and Y Var(X+Y) = Var(X) + Var(Y) + 2Cov(X,Y)<br>
   While the sign of Cov(X,Y) is informative of how X and Y are associated, its magnitude is difficult to interpret. A statistic that is easier to interpret is correlation...<br>
-  Correlation: Suppose X and Y are random variables with σ(X) > 0 and σ(Y) > 0. Then the correlation of X and Y is defined as Corr(X,Y) = Cov(X,Y)/(σ(X)σ(Y))<br>
-  Correlation is more useful than covariance because the former alwasy ranges between -1 and 1.<br>
+  Correlation: Suppose X and Y are random variables with σ(X) > 0 and σ(Y) > 0. Then the correlation of X and Y is defined as Corr(X,Y) = Cov(X,Y)/(σ(X)σ(Y)) = Cov(X,Y)/sqrt(Var(X)Var(Y))<br>
+  Correlation is more useful than covariance because the former always ranges between -1 and 1.<br>
   Theorem: For any pair of random variables X and Y with σ(X) > 0 and σ(Y) > 0, -1 <= Corr(X,Y) <= +1<br>
 </p>
 
@@ -756,9 +759,36 @@ The answer is given by the recursion theorem. The recursion theorem states that 
   <img id="medium_image" src="../assets/LLN.jpeg" alt="Law of Large Numbers"><br><br>
 </p>
 
-
-
-
+<h3 id="FP15">Linear Regression & Conditional Expectations</h3>
+<h4 id="subhead">Intro:</h4>
+<p id="subtext">
+  Prediction is one of the most compelling applications of probability, particularly in computer science. Prediction is the problem of making an estimate for a random variable from available information, commonly that information is a probability distribution or joint distribution. The goal of prediction is to minimize the error in the prediction. More formally we consider the mean squared error. That is for for a random variable X with a known distribution we define prediction as giving an estimate X̂ which minimizes E[(X - X̂)^2]<br>
+</p>
+<h4 id="subhead">Parabola:</h4>
+<p id="subtext">
+  Recall for the parabola f(x) = ax^2 + bx + c the vertex of the parabola is at x = -b/2a this was found by taking the derivative f'(x) = 2ax + b and solving for the critical point.<br>
+</p>
+<h4 id="subhead">Expected value is optimal:</h4>
+<p id="subtext">
+  We wish to find the X̂ that minimizes E[(X - X̂)^2], expanding we get the equation E[(X - X̂)^2] = E[X^2] - 2E[X]X̂ + E[X̂^2]. Reminiscent of the parabola we know the critical point is located at -2E[X]/2<br>
+  An important conceptual frame in estimation, what is the value of the best estimate and what is the error. In this setting, the estimator for XX with the lowest mean squared error is E[X], and this estimate results in a mean squared error or Var(X).<br>
+</p>
+<h4 id="subhead">Joint Distribution--Conditional Expectation:</h4>
+<p id="subtext">
+  <img id="medium_image" src="../assets/jointdist-conditionalexpectation.jpeg" alt="Joint Distributions--Conditional Expectation"><br><br>
+</p>
+<h4 id="subhead">Linear Regression:</h4>
+<p id="subtext">
+  The Correlation Coefficient is the specific measure that quantifies the strength of the linear relationship between two variables in a correlation analysis. See Note 20 for derivation.<br>
+  <img id="medium_image" src="../assets/linearregression.jpeg" alt="Linear Regression"><br><br>
+</p>
+<h4 id="subhead">Miscellaneous:</h4>
+<p id="subtext">
+  Another measure of error is measured as absolute value, that is, we minimize E[|X - X̂|]. In this case we get that X̂ should be a median of the distribution. This particular measure is more "robust" as a far away point has less influence on the value of the median compared to its influence on the value of the expectation.<br>
+  Often one predicts from many variables, the above model can be generalized to estimating a variable Y from many random variables Y1,...,Yn. With a bit of linear algebra the framework can be adjusted.<br>
+  Correlation and causation: Correlation does not mean causation; often causation is a difficult thing to determine. Though if causation is present then correlation is expected, although not absolute.<br>
+</p>
 
 </body>
+
 </html>

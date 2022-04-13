@@ -25,6 +25,7 @@
     <li><a href="#FP10">Caches</a></li>
     <li><a href="#FP11">Parallelism</a></li>
     <li><a href="#FP12">Operating  System</a></li>
+    <li><a href="#FP13">Virtual Memory</a></li>
 
     </ul>
     </div>
@@ -955,6 +956,45 @@
 <p id="subtext">
     Loader: responsible for loading the program into memory.<br>
     The loader loads program into memory -> the loaders sets argc and argv -> the OS jumps to main and transfers control to the process<br>
+</p>
+
+<h3 id="FP13">Virtual Memory</h3>
+<h4 id="subhead">Intro:</h4>
+<p id="subtext">
+    Three Problems with Memory: Not enough space, holes in address space(memory fragmentation), ensuring protection from other programs(they all have access to the same memory).<br>
+    If all programs have access to the same 32 bit address space:
+    <p id="subtext_bullet">
+        Can crash if there are less than 4gb of RAM.<br>
+        Can run out of space if we run multiple programs.<br>
+        Can corrupt other program's data.<br>
+    </p>
+</p>
+<h4 id="subhead">Virtual Memory--Indirection:</h4>
+<p id="subtext">
+    <img id="medium_image" src="../assets/virtualmemory.jpeg" alt="Virtual Memory"><br><br>
+    Mapping allows programs to be evicted and replaced by other programs, thus fixing problem 1.<br>
+    Each program has its own mapping, which allows up to put the data wherever in the RAM thus fixing problem 2(memory fragmentation).<br>
+    With two different programs each has its own address space, thus they cannot access each other's data. This fixes problem 3.<br>
+    VM also allows programs to share data easily while protecting data.<br>
+</p>
+<h4 id="subhead">Virtual Memory--How does it work?</h4>
+<p id="subtext">
+    Virtual address: what the program sees; in RV32I we can access bytes 0 to 2^32 - 1<br>
+    Physical address: what the computer sees(physical RAM)); with 2GB of RAM we can access bytes 0 - 2^31 - 1<br>
+    Translation: 
+    <img id="medium_image" src="../assets/VMtranslation.jpeg" alt="Virtual Memory Translation"><br><br>
+</p>
+<h4 id="subhead">Page Table:</h4>
+<p id="subtext">
+    The map from Virtual address(VA) to Physical address(PA) is the Page Table. If we have one entry for every word in our address space how many entries would we have? 2^30 = 1 billion.<br>
+    We instead divide the memory into chunks(pages)) instead of words. Course grain map chunck which lead to fewer entries. This leads to whole pages being brought in when data isn't present in the RAM.<br>
+    <img id="medium_image" src="../assets/pagetabletranslation.jpeg" alt="Page Table Translation"><br><br>
+    <img id="medium_image" src="../assets/pagetablefault.jpeg" alt="Page Table Fault"><br><br>
+</p>
+<h4 id="subhead">Page Table Replacement Policies:</h4>
+<p id="subtext">
+    <img id="medium_image" src="../assets/pagetablereplacement.jpeg" alt="Page Table Replacement"><br><br>
+
 </p>
 </body>
 </html>
