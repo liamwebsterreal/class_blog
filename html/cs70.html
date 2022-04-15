@@ -28,6 +28,7 @@
     <li><a href="#FP13">Variance & Covariance</a></li>
     <li><a href="#FP14">Concentration Inequalities & Confidence Intervals</a></li>
     <li><a href="#FP15">Linear Regression & Conditional Expectations</a></li>
+    <li><a href="#FP16">Hashing</a></li>
 
     </ul>
 </div>
@@ -740,7 +741,6 @@ The answer is given by the recursion theorem. The recursion theorem states that 
 </p>
 
 <h3 id="FP14">Concentration Inequalities & Confidence Intervals</h3>
-
 <h4 id="subhead">Concentration Inequalities and the Laws of Large Numbers:</h4>
 <p id="subtext">
   <img id="medium_image" src="../assets/ConcentrationsInequality.jpeg" alt="Concentration Inequalities"><br><br>
@@ -788,6 +788,21 @@ The answer is given by the recursion theorem. The recursion theorem states that 
   Often one predicts from many variables, the above model can be generalized to estimating a variable Y from many random variables Y1,...,Yn. With a bit of linear algebra the framework can be adjusted.<br>
   Correlation and causation: Correlation does not mean causation; often causation is a difficult thing to determine. Though if causation is present then correlation is expected, although not absolute.<br>
 </p>
+
+<h3 id="FP16">Hashing</h3>
+<h4 id="subhead">Intro:</h4>
+<p id="subtext">
+  With k balls distributed in n bins, how large can we choose k ensuring that with probability at least 1/2 no two balls land in the same bin? If K = n what is the maximum number of balls that are likely to land in the same bin? These two simple questions provide important insight into two important engineering applications: hashing and load balancing.<br>
+</p>
+<h4 id="subhead">Hashing:</h4>
+<p id="subtext">
+  One of the basic issues in hashing is the tradeoff between the size of the hash table and the number of collisions. Suppose a hash function distributes keys evenly over a table of size n. How many keys can we hash before the probability of a collision exceeds 1/2?<br>
+  Hashtable: data structure that supports the storage of a set of keys drawn from a large universe U. The set of keys to be stored changes over time, and so the data structure allows keys to be added and deleted quickly. The hash function h maps U to a table T of modest size. To ADD a key xx to our set, we evaluate h(x) and store xx at the location h(x) in the table T. All keys in our set that are mapped ot the same table location are stored in a simple linked list. The operations DELETE and MEMBER are implemented in similar fashion, by evaluating h(x) and searching the linked list at h(x). The efficiency of a hash function depends on having only a few collisions.<br>
+  We turn hashing problem into a balls and bins framework. The balls will be the m keys to be stored, and the bins will be the n locations in the hash table T. Since the hash function maps each key to a random location in the table T, we can see each key as choosing a hash table location uniformly from T, independently of all other keys. Thus the probability space corresponding to this hashing experiment is exactly the same as the balls-and-bins space. We are interested in the event A that there are no collisions, equivalently that all m balls land in different bins. Clearly P[A] will decrease as m increases. Our goal is to find the largest value of m such that P[A] ≥ 1 - 	ε, where ε is a specified tolerance level of collision probability. See note 18 for the derivation. <br>
+  <img id="medium_image" src="../assets/hashing.jpeg" alt="Hashing">
+  <img id="medium_image" src="../assets/hashing2.jpeg" alt="Hashing"><br><br>
+</p> 
+
 
 </body>
 

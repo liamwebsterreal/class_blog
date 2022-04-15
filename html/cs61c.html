@@ -994,7 +994,38 @@
 <h4 id="subhead">Page Table Replacement Policies:</h4>
 <p id="subtext">
     <img id="medium_image" src="../assets/pagetablereplacement.jpeg" alt="Page Table Replacement"><br><br>
-
+</p>
+<h4 id="subhead">Page Table Metadata:</h4>
+<p id="subtext">
+    Valid: 1=page is in RAM and mapping is valid, 0=page is not in RAM<br>
+    Dirty: 1=page on RAM is more upd to date than page on disk, 0=page in RAM matches page on disk<br>
+    Page Protection Bit: we can specify how a process can use each page(read, write, execute). If you don't have permission to do what the program is trying to do then you get a memory protection fault or segmentation fault.<br>
+    <p 
+</p>
+<h4 id="subhead">Memory Access at RAM with TLB:</h4>
+<p id="subtext">
+    Translation Lookaside Buffer(TLB): cache for the page table with valid, dirty, and permission bits. 
+    <img id="medium_image" src="../assets/TLB.jpeg" alt="Translation Lookaside Buffer"><br><br>
+    To be fast, TLBs must be small, ussually fully associative, typically 32-128 entries, each entry maps to a large page(takes advantage of spatial and temporal locality), random or FIFO replacement policy.<br>
+    TLB Flush: (context switch: changing which thread is exxecuting) The entries in the TLB correspoknd to the currenlty active process. On a conext switch the TLB is flushed.<br>
+</p>
+<h4 id="subhead">Multi-level Page Tables:</h4>
+<p id="subtext">
+    <img id="medium_image" src="../assets/Multi-lvlpagetble.jpeg" alt="Multi Level page Table"><br><br>
+    The first level page table must always be in RAM. The 2nd lvl page tables can be paged out to disk becasue we can find them through the 1st level page table. We want a page table to be equal to the sie of one page.<br>
+    <img id="medium_image" src="../assets/multipagetranslation.jpeg" alt="Multi Level Page Table Translation"><br><br>
+</p>
+<h4 id="subhead">Caches and Virtual Memory:</h4>
+<p id="subtext">
+    Synonym: different virutal address can map to the same physical address.<br>
+    Homonyms: the same virtual address can map to different physical addresses.<br>
+    There are three different approaches to integrating caches and virtual memory.<br><br>
+    <img id="medium_image" src="../assets/cache&VM1.jpeg" alt="Cache and VM"><br><br>
+    We can use the same cahe for multipe processes if the cache is physically indexed and physically tagged, the downside, we have to translate address before accessing the cache.<br>
+    <img id="medium_image" src="../assets/cache&VM2.jpeg" alt="Cache and VM"><br><br>
+    We can not use the same virtual cache for different processes because of synonyms and homonyms, we can solve this by flushing the cache on a context switch.<br>
+    <img id="medium_image" src="../assets/cache&VM3.jpeg" alt="Cache and VM"><br><br>
+    Best of both worlds, runs the TLB/PPN lookup and cache find in parallel.<br>
 </p>
 </body>
 </html>
