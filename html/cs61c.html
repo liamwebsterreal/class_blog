@@ -26,6 +26,9 @@
     <li><a href="#FP11">Parallelism</a></li>
     <li><a href="#FP12">Operating  System</a></li>
     <li><a href="#FP13">Virtual Memory</a></li>
+    <li><a href="#FP14">Input Output(I/O)</a></li>
+    <li><a href="#FP15">Networking</a></li>
+    <li><a href="#FP16">Warehouse-scale Computing</a></li>
 
     </ul>
     </div>
@@ -883,7 +886,7 @@
     Modified: up-to-date data, changed(dirty) no other cache has a copy, OK to write, memory out-of-date(valid and dirty bit set)<br>
     Exclusive: up-to-date data no other cache has a copy, OK to write, memory up-to-date(valid bit set). If any other cache reads this line the state becomes shared, if I write this line sates becomes modified but I don't need to broadcast this when I do the write.<br>
     Owner: up-to-date data, other caches may have a copy, memory is not up-to-date(valid, dirty, and shared is set). This cache now supplies data on read instead of going to memory, when you write once again have to have the other caches invalidate.<br>
-    Invalid: Invalid
+    Invalid: Invalid<br>
     <img id="medium_image" src="../assets/MOESI.jpeg" alt="MOESI"><br><br>
     Problem: Everyt time one processor does a write the other processor will take a cache miss on the next read or write...new class of cache miss type: coherency.<br>
 </p>
@@ -919,13 +922,13 @@
         <img id="medium_image" src="../assets/systemcall.jpeg" alt="System Call"><br><br>
     </p>
 </p>
-<p id="subext">
+<p id="subtext">
     Interupts:
     <p id="subtext_bullet">
             Caused buy an event external to the current program. Example keyboard press or mouse click. Asynchronous to the current program; does not need to be handled immediatly but should be handled soon.<br>
     </p>
 </p>
-<p id="subext">
+<p id="subtext">
     Exceptions:
     <p id="subtext_bullet">
         Caused by an event during the execution of the current program. Example illegal intsruction, divide by zero. Synchronous to the current program; must be handled immediatly.<br>
@@ -1026,6 +1029,165 @@
     We can not use the same virtual cache for different processes because of synonyms and homonyms, we can solve this by flushing the cache on a context switch.<br>
     <img id="medium_image" src="../assets/cache&VM3.jpeg" alt="Cache and VM"><br><br>
     Best of both worlds, runs the TLB/PPN lookup and cache find in parallel.<br>
+</p>
+<h4 id="subhead">CPU Utilization:</h4>
+<p id="subtext">
+    When a processor performs I/O it can take a long time, thus during said time the CPU can scedule another processs. The more processes there are the better the CPU utilization is.<br>
+    Thrashing: when the processor encounters page faults so frequently that the time spent resolving the page faults overwhelms the time spent performing the computations.<br>
+</p>
+
+<h3 id="FP14">Input Output(I/O)</h3>
+<h4 id="subhead">Intro:</h4>
+<p id="subtext">
+    <img id="medium_image" src="../assets/InputOutput.jpg" alt="I/O"><br><br>
+    Basic Flow: Input- I/O device wants to give data to the CPU, the CPU accepts teh data, the CPU does something with the data. | Output- The CPU wants to give data to the I/O device, the I/O deivce accepts the data, the I/O device does something with the data.<br>
+    Memory Mapped I/O: a portion of our memory is reserved for I/O devices. The addresses in this area correspond to different I/O devices. When the CPU wants to send information to an I/O device it "writes" to this location. This will write the data to the device that corresponds to that address. The hardware intercepts this "write" from the CPU and sends the data to the corresponding I/O device. No actaull memory access is performed.<br>
+    Inputs: the memory line contains a status bits and data bits. Status bits answers the question "Is there data to receive?" and the data bits contatins the data.<br>
+    Outputs: the memory line contains a status bits and data bits. Status bits answers the question "Is there data to send?" and the data bits contatins the data.<br>
+    Polling: the CPU periodically checks the status register to see if there is any data to receive. Typically occurs during a context switch.<br> 
+    Interrupts: when an interupt occurs stop the program; they act almost as a doorbell.<br>
+    <img id="medium_image" src="../assets/interruptsVSpolling.jpg" alt="Interrupts vs Polling"><br><br>
+</p>
+<h4 id="subhead">Programmed I/O:</h4>
+<p id="subtext">
+    CPU is in charge of moving all data to/from devices. Moving data is a pretty easy task, so it's wasteful to make the CPU do it. Also the speed of I/O devices is much slower than the CPU...<br>
+    Direct Memory Access(DMA): the DMA engine controls the movement of data between the memory and the I/O devices. Allows CPU to do other work.<br>
+    To initiate the transfer, the CPU will set up the following in the DMA controller -- memory address to place the data, # of bytes, I/O device #, direction of transfer <br>
+</p>
+
+<h3 id="FP15">Networking</h3>
+<h4 id="subhead">Intro:</h4>
+<p id="subtext">
+    Networking: talking to the outside world<br>
+    Orignally networking stemmed from the want to communicate with I/O devices. Now we have communication between networks of computers.<br>
+    The Internet(1962): a global network of computers connected by a network of routers. <br>
+    <p id="subtext_bullet">
+        1963: J.C.R. Licklider, while at DoD's ARPA, writes a memo descriving desire to connect the computers at various research universities.<br>
+        1969: ARPA deploys 4 "nodes" at UCLA, SRI, Utah, and UCSB.<br>
+        1973: Robert Kahn and Vint Verf invent TCP, now part of the Internet Protocol Suite.<br>
+        1989: The World Wide Web is created by Tim Berners-Lee by implemented the first succesful communication between a Hypertext Transfrer Protocol(HTTP) client and server using the internet.<br> 
+    </p>
+</p>
+<h4 id="subhead">What makes networks work?:</h4>
+<p id="subtext">
+    Links connecting switches and/or routers to each other and to computers or devices. Ability to name the components and to route packets of information from a source to a destination. Layering, redundancy, protocols, and encapsulation as means of abstraction.<br>
+    Protocol: packet structure and control commands to manage communication. <br>
+    Protocol Families: a set of cooperating protocols that implement the network stack.<br>
+    Encapsulation: carry higher level information within lower level "envelope".<br>
+    <img id="medium_image" src="../assets/network1.jpg" alt="Network1">
+    <img id="medium_image" src="../assets/network2.jpg" alt="Network2"><br><br>
+    <img id="medium_image" src="../assets/network3.jpg" alt="Network3">
+    <img id="medium_image" src="../assets/network4.jpg" alt="Network4"><br><br>
+    <img id="medium_image" src="../assets/network5.jpg" alt="Network5">
+    <img id="medium_image" src="../assets/network6.jpg" alt="Network6"><br><br>
+    <img id="medium_image" src="../assets/network7.jpg" alt="Network7"><br>
+    UDP is used over TCP when latency in initiating a connection. Old data is useless data.<br>
+    <img id="medium_image" src="../assets/network8.jpg" alt="Network8"><br>
+</p>
+<h4 id="subhead">Redundancy:</h4>
+<p id="subtext">
+    Spatial Redundancy: replicated data or extra information or hardware to handle hard and soft failures.<br>
+    Temporarl Redundancy: redundancy in time to handle soft failurs.<br>
+    Reliability: mean time to failure(MTTF)<br>
+    Service Interuption: mean time to repair(MTTR)<br>
+    Mean Time between Failures(MTBF): MTTF + MTTR <br>
+    Availability: MTTF / (MTTF + MTTR)<br>
+    Annualized Failure Rate(AFR): Annualized failure rate gives the estimated probability that a device or component will fail during a full year of use. It is a relation between the mean time between failure and the hours that a number of devices are run per year.<br>
+</p>
+<h4 id="subhead">Error Detection/Correction Codes(EDC/ECC):</h4>
+<p id="subtext">
+    Memory systems generate errors(accidentally flipping bits) e.g. DRAMs store very little charge per bit thus an alpha partcle has the ability to cause "soft" errors. Extra bits are added to each data word.<br>
+    <img id="medium_image" src="../assets/network9.jpg" alt="Network9"><br>
+    Hamming Codes: a set of codes that are used to detect and correct errors in data. <br>
+    <img id="medium_image" src="../assets/network10.jpg" alt="Network10"><br>
+
+</p>
+
+<h3 id="FP16">Warehouse-scale Computing</h3>
+<h4 id="subhead">Magnetic Disk:</h4>
+<p id="subtext">
+    A kind of computing memory thats non-volatile storage. Information stored by magnetizing ferrite material on surface of rotating disk; similar to tape recorder except digital rather than analog data.<br>
+    Two Types of Magnetic Disk: Hard Disk Drives (HDD) – faster, more dense, non-removable. | Floppy disks – slower, less dense, removable (now replaced by USB “flash drive”, only roll these days is as the "Save Icon"). <br>
+    Several platters, with information recorded magnetically on both surfaces (usually). Bits recorded in tracks, which in turn divided into sectors (e.g., 512 Bytes). Actuator moves head (end of arm) over track (“seek”), wait for sector rotate under head, then read or write. <br>
+    <p id="subtext_bullet">
+        Disk Access Time = Seek Time + Rotation Time + Transfer Time + Controller Overhead<br>
+        Seek Time = time to position the head assembly at the proper cylinder<br>
+        Rotation Time = time for the disk to rotate to the point where the first sectors of the block to access reach the head<br>
+        Transfer Time = time taken by the sectors of the block and any gaps between them to rotate past the head<br>
+    </p>
+</p>
+<h4 id="subhead">Solid State Drive(SSD):</h4>
+<p id="subtext">
+    NMOS transistor with an additional conductor between gate and source/drain which “traps” electrons. The presence/absence is a 1 or 0. Memory cells can withstand a limited number of program-erase cycles. Controllers use a technique called wear leveling to distribute writes as evenly as possible across all the flash blocks in the SSD. Erase or write a block, no way to change a block. <br>
+</p>
+<h4 id="subhead">RAID(Redundant Arrays of (Inexpensive) Disks):</h4>
+<p id="subtext">
+    Files are "striped" across multiple disks, ex: Redundancy yields high data availability Availability: service still provided to user, even if some components failed. Disks will still fail. Contents reconstructed from data redundantly stored in the array. Capacity penalty to store redundant info. Bandwidth penalty to update redundant info on writes. 6 Raid Levels, 0, 1, 5, 6 most common today. <br>
+    <img id="medium_image" src="../assets/RAID0.jpg" alt="RAID 0">
+    <img id="medium_image" src="../assets/RAID1.jpg" alt="RAID 1"><br>
+    <img id="medium_image" src="../assets/RAID2.jpg" alt="RAID 2">
+    <img id="medium_image" src="../assets/RAID3.jpg" alt="RAID 3"><br>
+    <img id="medium_image" src="../assets/RAID4.jpg" alt="RAID 4">
+    <img id="medium_image" src="../assets/RAID5.jpg" alt="RAID 5"><br>
+    <img id="medium_image" src="../assets/RAID5.2.jpg" alt="RAID 5">
+    <img id="medium_image" src="../assets/RAID6.jpg" alt="RAID 6"><br>
+</p>
+<h4 id="subhead">Warehouse Scaled Computing(WSC):</h4>
+<p id="subtext">
+    Energy Efficiency and Cooling:<br>
+    Google: Found success in redundancy and energy efficiency in their earliest data centers.<br>
+    Energy efficiency: Primary concern in the design of WSC, important component of the total cost of ownership.<br>
+    Power Usage Effectiveness (PUE): Power efficiency measure for WSC, not considering efficiency of servers, networking, Perfection = 1.0, for example Google's PUE 1.2. <br>
+    <img id="medium_image" src="../assets/WSCpower\.jpg" alt="WSC Power Efficiency"><br><br>
+    <img id="medium_image" src="../assets/WSCcooling.jpg" alt="WSC Cooling"><br><br>
+    Cloud Computing:<br>
+    Shared platform with illusion of isolation: collocation with other tenants, exploits technology of VMs and hypervisors, at best “fair” allocation of resources, but not true isolation.<br>
+    Attraction of low-cost cycles, Economies of scale driving move to consolidation, Statistical multiplexing to achieve high utilization/efficiency of resources. <br>
+    Elastic service, pay for what you need, get more when you need it, but no performance guarantees: assumes uncorrelated demand for resources. <br>
+    Cloud Services:<br>
+    <p id="subtext">
+        SaaS: deliver apps over Internet, eliminating need to install/run on customer's computers, simplifying maintenance and support • E.g., Google Docs, Win Apps in the Cloud
+        PaaS: Deliver computing “stack” as a service, using cloud infrastructure to implement apps. Deploy apps without cost/complexity of buying and managing underlying layers • E.g., Hadoop on EC2, Apache Spark on GCP
+        IaaS: Rather than purchasing servers, software, data center space or net equipment, clients buy resources as an outsourced service. Billed on utility basis.Amount of resources consumed/cost reflect level of activity e.g., Amazon Elastic Compute Cloud, Google Compute Platform. <br>
+    </p>
+</p>
+<h4 id="subhead">Request-Level Parallelism (RLP):</h4>
+<p id="subtext">
+    Hundreds of thousands of requests per second e.g. popular Internet services like web search, social networking, …<br>
+    Such requests are largely independent, often involve read-mostly databases, rarely involve read-write sharing or synchronization across requests.<br>
+    Computation easily partitioned across different requests and even within a request. Can often "load balance" just at the DNS level: Just tell different people to use a different computer. <br>
+    <img id="medium_image" src="../assets/WSCquery.jpg" alt="WSC Query"><br><br>
+    Anatomy of a Web Search:<br>
+    <p id="subtext_bullet">
+        1.Direct request to “closest” Google Warehouse-Scale Computer<br>
+        2.Front-end load balancer directs request to one of many clusters of servers within WSC<br>
+        3.Within cluster, select one of many Google Web Servers (GWS) to handle the request and compose the response pages<br>
+        4.GWS communicates with Index Servers to find documents that contain the search words, “UC”, “Berkeley”, uses location of search as well as user information<br>
+        5.Send information about this search to the node in charge of tracking you<br>
+        6.Return document list with associated relevance score<br>
+        7.In parallel, Ad system: if anyone has bothered to advertise for you, Customization based on your account<br>
+        8.Use docids (document IDs) to access indexed documents to get snippets of stuff<br>
+        9.Compose the page: Result document extracts (with keyword in context) ordered by relevance score A bunch of advertisements (along the top and side) Initially they were easy to see... But now they are almost indistinguishable from the desired content<br>
+        10.Implementation strategy: Randomly distribute the entries, Make many copies of data (aka “replicas”), Load balance requests across replicas<br>
+        11.Redundant copies of indices and documents: Breaks up hot spots — especially popular queries, Increases opportunities for request-level parallelism, Makes the system more tolerant of failures<br>
+    </p>
+</p>
+<h4 id="subhead">Data-Level Parallelism (DLP):</h4>
+<p id="subtext">
+    SIMD: Supports data-level parallelism in a single machine, Additional instructions & hardware (e.g., AVX) e.g., Matrix multiplication in memory<br>
+    DLP on WSC: Supports data-level parallelism across multiple machines, MapReduce & scalable file systems<br>
+    MapReduce: Simple data-parallel programming model and implementation for processing large datasets: Users specify the computation in terms of a map function, and a reduce function. Underlying runtime system: Automatically parallelize the computation across large scale clusters of machines, Handles machine failure, Schedule inter-machine communication to make efficient use of the networks<br>
+    <p id="subtext_bullet">
+        1. MR 1st splits the input files into M “splits” then starts many copies of program on servers<br>
+        2. One copy—the master— is special. The rest are workers. The master picks idle workers and assigns each 1 of M map tasks or 1 of R reduce tasks.<br>
+        3. A map worker reads the input split. It parses key/value pairs of the input data and passes each pair to the userdefined map function.<br>
+        4. Periodically, the buffered pairs are written to local disk, partitioned into R regions by the partitioning function.<br>
+        5. When a reduce worker has read all intermediate data for its partition, it bucket sorts using intermediate keys so that occurrences of same keys are grouped together.<br>
+        6. Reduce worker iterates over sorted intermediate data and for each unique intermediate key, it passes key and corresponding set of values to the user’s reduce function.<br>
+        7. When all map tasks and reduce tasks have been completed, the master wakes up the user program. The MapReduce call in user program returns. Output of MR is in R output files (1 per reduce task, with file names specified by user); often passed into another MR job so don’t concatenate into a single file.<br>
+        <img id="medium_image" src="../assets/WSCmapreduce.jpg" alt="WSC MapReduce"><br><br>
+
+    </p>
 </p>
 </body>
 </html>

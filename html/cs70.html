@@ -11,7 +11,7 @@
 <br>
 <br>
 <div id="toc_container">
-    <p class="toc_title">Content:</p>
+    <h3 id="FP1">Content:</h3>
     <ul class="toc_list">
     <li><a href="#FP1">Introduction</a></li>
     <li><a href="#FP2">Proofs</a></li>
@@ -29,6 +29,8 @@
     <li><a href="#FP14">Concentration Inequalities & Confidence Intervals</a></li>
     <li><a href="#FP15">Linear Regression & Conditional Expectations</a></li>
     <li><a href="#FP16">Hashing</a></li>
+    <li><a href="#FP17">Continuous Probability Distributions</a></li>
+    <li><a href="#FP18">Markov Chains</a></li>
 
     </ul>
 </div>
@@ -132,7 +134,7 @@
       The idea behind a proof by cases is as follows: sometimes when we wish to prove a claim, we don't know which of a set of possible cases is true, but we know that at least one of the cases is true. What we can do then is to prove the result in both cases;then, clearly the general statement must hold.<br>
       Example: Theorem 2.8 There exist irrational numbers x and y such that x^y is rational.
       <p id="subtext_bullet"> 
-        We proceed by cases. The statement of the theorem is quantified by an existential quantifier. Thus to prove our claim it suffices to demonstrate a single x nd y such that x^y is rational. To do so, let x = sqrt(2) and y = sqrt(2). Thus two cases arise: x^y is rational or x^y is irratinal. <br>
+        We proceed by cases. The statement of the theorem is quantified by an existential quantifier. Thus to prove our claim it suffices to demonstrate a single x nd y such that x^y is rational. To do so, let x = sqrt(2) and y = sqrt(2). Thus two cases arise: x^y is rational or x^y is irrational. <br>
         Case 1: Assume that sqrt(2)^sqrt(2) is rational. This immediately yields our claim, since x and y are irrational numbers such that x^y is rational.<br>
         Case 2: Assume that sqrt(2)^sqrt(2) is irrational. So our first guess for x and y was not right, but now we have a new irrational number to play with, sqrt(2)^sqrt(2). So let's try setting x=sqrt(2)^sqrt(2) and y=sqrt(2). Then x^y = (sqrt(2)^sqrt(2))^sqrt(2) = 2. But now we again started with two irrational numbers x and y and obtained rational x^y. Since case 1 or 2 must hold we thus conclude that the statment of Theorem 2.8 is true.<br>
         Note: This is an example of a non-constructive proof: we've proven that some object X exists but without explicitly revealing what X itself is.<br>
@@ -170,7 +172,7 @@
       Well Ordering Principle: If S subset N and S ~= 0 then S has a smallest element.<br>
       Optimality:<br>
       <p id="subtext_bullet">
-        Optimal Candidate for a job: For a given job J, the optimal candidate for J is the highest rank candidate on J's preference list that J could be paried with in any stable matching.<br>
+        Optimal Candidate for a job: For a given job J, the optimal candidate for J is the highest rank candidate on J's preference list that J could be paired with in any stable matching.<br>
         Optimal Job for a Candidate: For a given candidate C the optimal job for C is the highest ranked job on C's preference list that C could be paired with in any stable matching.<br>
       </p>
     </p>
@@ -237,12 +239,12 @@
         </p>
       </p>
       <p id="subtext">
-        Another important fact from Euler's Formula any planar graph: e<=3v-6. This tells us that planar graphs are sparse they cannot have toomany edges. This fact tells us that both K5 and K33 are non-planar.<br>
+        Another important fact from Euler's Formula any planar graph: e<=3v-6. This tells us that planar graphs are sparse they cannot have too many edges. This fact tells us that both K5 and K33 are non-planar.<br>
         Theorem 5.3 A graph is non-planar if and only if it contains K5 or K33.
       </p>
       <h4 id="subhead">Duality and Coloring:</h4>
       <p id="subtext">
-        Ther is an interesting duality between planar graphs. For example the octahedron and the cube are "dual" to each other or the tetrahedron is self-dual.<br>
+        There is an interesting duality between planar graphs. For example the octahedron and the cube are "dual" to each other or the tetrahedron is self-dual.<br>
         Take a planar graph G and assume it has no bridges and no degree two nodes. Draw a new graph G*: start by placing a node on each face of G. Then draw an edge between two faces if they touch at an edge--draw the new edge so that it crosses that edge. The result G* is also a planar graph. If you construct the dual of G*, it is the original graph: (G*)*=G.<br>
         Jumping back to Bipartite graphs, any bipartite graph is two colorable and thus any two colorable graph is bipartite. Proof by the fact that any graph that does not contain any odd length cycles is two colorable and thus bipartite. <br>
         Theorem 5.4 Every planar graph can be colored with five colors.
@@ -803,7 +805,67 @@ The answer is given by the recursion theorem. The recursion theorem states that 
   <img id="medium_image" src="../assets/hashing2.jpeg" alt="Hashing"><br><br>
 </p> 
 
+<h3 id="FP17">Continuous Function Distributions</h3>
+<h4 id="subhead">Intro:</h4>
+<p id="subtext">
+    Up to now we have focused exclusively on discrete sample spaces Ω, where the number of sample points ω ∈ Ω is either finite or countably infinite. In rea life many quantities that we wish to model probabilistically are real-valued; examples include the position of a particle in a box, the time at which a certain incident happens, or the direction of travel of a meteorite. Continuous distribution functions lead to a breakdown in our current tool kit, such as the fact if we have a uniform continuos space analogous to a uniform discrete space our total probability of each point within the space won't add to 1, because intuitively in a continuos space there are infinite points within the omega. <br>
+</p>
+<h4 id="subhead">Probability Density Function:</h4>
+<p id="subtext">
+  <img id="medium_image" src="../assets/continousrandomvariables.jpeg" alt="Continuous Random Variables"><br><br>
+</p>
+<h4 id="subhead">Cumulative Density Function:</h4>
+<p id="subtext">
+  <img id="medium_image" src="../assets/pdf(uniform).jpg" alt="Probability Density Function: Uniform Probability"><br><br>
+</p>
+<h4 id="subhead">Expectation and Variance of Continuous Function:</h4>
+<p id="subtext">
+  <img id="medium_image" src="../assets/continuousDistExpectation&Variance.jpg" alt="Continuous Distribution Expectation and Variance"><br><br>
+</p>
+<h4 id="subhead">Continuous Function Independence:</h4>
+<p id="subtext">
+  <img id="medium_image" src="../assets/continuousfunctionIndependence.jpg" alt="Continuous Function Independence"><br><br>
+</p>
+<h4 id="subhead">Joint Distribution:</h4>
+<p id="subtext">
+  <img id="medium_image" src="../assets/continuousfunction(joint density).jpg" alt="Continuous Distribution Joint Distribution"><br><br>
+</p>
+<h4 id="subhead">Continuous Function--Uniform Distribution:</h4>
+<p id="subtext">
+  Consider the case of a "wheel of fortune" with a pointer on the outer circumference of the wheel. Assuming the length of the circumference to be l and the wheel is unbiased, the position of the pointer is presumably equally likely to take on any value in the real intervale [0,l]. If ω ranges over the real interval [0,l] what value should we assign to each P[ω]? By uniformity they should all be the same, but if we assign P[ω] to be any positive value then because there are infinitely many ω's within the space the sum of all probabilities will be infinity. To resolve this problem, consider instead any intervale [a,b] ⊆ [0,l], where b > a. Intervals are subsets of the sample space Ω and are therefore events. In contrast to discrete probability, where we assigned probabilities to points in the sample space, in continuous probability we are assigning probabilities to certain basic events. By specifying the probability of intervals, we have also specified the probability of any event E which can be written as the disjoint union of intervals E = UiEi. We then can write P[E] = Σi P[Ei] in analogous fashion to the discrete case.<br>
+  E[X] = l/2<br>
+  Var(X) = l^2/12<br>
+</p>
+<h4 id="subhead">Continuous Function--Exponential Distribution:</h4>
+<p id="subtext">
+  The exponential distribution is a continuous version of the geometric distribution. The geometric distribution describes the number of tosses of a coin until the first Head appears; the distribution has a single parameter p, which is the bias of the coin. In many real life cases we are waiting for an event to occur such as the flip of a heads but in continuous time.<br>
+  <img id="medium_image" src="../assets/continousDis(exponential).jpg" alt="Continuous Distribution Exponential Distribution"><br><br>
+  E[X] = 1/λ<br>
+  Var(X) = 1/λ^2<br>
+</p>
+<h4 id="subhead">Continuous Function--Normal Distribution:</h4>
+<p id="subtext">
+  Another distribution we will consider and by far the most prevalent in applications is called the normal o Gaussian distribution. It has two parameters μ and σ^2 which are the mean and variance of hte distribution respectively.<br>
+  <img id="medium_image" src="../assets/continuousDist(Normal Distribution).jpg" alt="Continuous Distribution Normal Distribution"><br><br>
+  E[X] = μ<br>
+  Var(X) = σ^2<br>
+</p>
+<h4 id="subhead">Sum of Independent Normal Random Variables:</h4>
+<p id="subtext">
+  If X ~ N(μ,σ^2), the Y = (X - μ) / σ  ~ N(0,1). Equivalently if Y ~ N(0,1), then X = σY + μ ~ N(μ,σ^2).<br>
+  Let X ~ N(0,1) and Y ~ N(0,1) be independent standard random variables and suppose a,b are constants. Then Z = aX + bY ~ N(0,a^2,b^2). Z is also normally distributed with mean μ = aμ(x) + bμ(y) and variance σ^2 = a^2 * σ^2(x) + b^2 * σ^2(y).<br>
+</p>
+<h4 id="subhead">Sum of Independent Normal Random Variables:</h4>
+<p id="subtext">
+  <img id="medium_image" src="../assets/CentralLimitTheorem.jpg" alt="Central Limit Theorem"><br><br>
+</p>
 
+<h3 id="FP18">Markov Chains</h3>
+<h4 id="subhead">Intro:</h4>
+<p id="subtext">
+  Markov chains are models of random motion in a finite or countable set. These models capture a vast array of systems that we encounter in applications. Yet, the models are simple in that many of their properties can often be  determined using elementary matrix algebra. There are two types of Markov chains: (discrete-time) Markov chain on a countable or finite state space, and 	Continuous-time Markov process or Markov jump process. <br>
+  A Markov chain in which every state can be reached from every other state is called an irreducible Markov chain. If a Markov chain is not irreducible, but absorbable, the sequences of microscopic states may be trapped into some independent closed states and never escape from such undesirable states. <br>
+  A state in a discrete-time Markov chain is periodic if the chain can return to the state only at multiples of some integer larger than 1. Periodic behavior complicates the study of the limiting behavior of the chain. As we will see in this section, we can eliminate the periodic behavior by considering the -step chain, where  is the period, but only at the expense of introducing additional equivalence classes. Thus, in a sense, we can trade one form of complexity for another.<br>
+</p>
 </body>
-
 </html>
