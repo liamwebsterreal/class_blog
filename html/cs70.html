@@ -682,30 +682,35 @@ The answer is given by the recursion theorem. The recursion theorem states that 
 <p id="subtext">
   One of the most important distributions, models the number of success in n independent experiments asking a yes-no question. The binomial distribution is frequently used to model the number of successes in a sample of size n drawn with replacement from a population of size N. If the sampling is carried out without replacement, the draws are not independent and so the resulting distribution is a hypergeometric distribution, not a binomial one. However, for N much larger than n, the binomial distribution remains a good approximation, and is widely used.<br>
   E[X] = np<br>
+  Var(X) = np(1-p)<br>
   <img id="medium_image" src="../assets/binomialdistribution.jpeg" alt="Binomial Distribution"><br><br>
 </p>
 <h4 id="subhead">Bernoulli Distribution(X ~ Bernoulli(p)):</h4>
 <p id="subtext">
   A simple yet useful distribution, models the set of outcomes for any single experiment with a yes-no outcome, such as a coin toss. The Bernoulli Distribution is a special case of the Binomial Distribution where just a single trial is conducted.<br>
   E[X] = p<br>
+  Var(X) = p(1-p)<br>
   <img id="medium_image" src="../assets/bernoulliedistribution.jpeg" alt="Bernoulli Distribution"><br><br>
 </p>
 <h4 id="subhead">Hypergeometric Distribution(X ~ Hypergeometric(N,B,n)): </h4>
 <p id="subtext">
-  The hypergeometric distribution models the probability of {\displaystyle k}k successes (random draws for which the object drawn has a specified feature) in {\displaystyle n}n draws, without replacement, from a finite population of size {\displaystyle N}N that contains exactly {\displaystyle K}K objects with that feature, wherein each draw is either a success or a failure.<br>
+  The hypergeometric distribution models the probability of k successes (random draws for which the object drawn has a specified feature) in n draws, without replacement, from a finite population of size N that contains exactly K objects with that feature, wherein each draw is either a success or a failure.<br>
   E[X] = n * B / N<br>
+  Var(X) = n * B * (N-n) * (N-B) / (N*N*(N-1))<br>
   <img id="medium_image" src="../assets/hypergeometricdistribution.jpeg" alt="Hypergeometric Distribution"><br><br>
 </p>
 <h4 id="subhead">Geometric Distribution(X ~ Geometric(p)):</h4>
 <p id="subtext">
   The geometric distribution frequently occurs in applications because how long one has to wait before a certain event is often of interest; or how many runs before the system fails, how many shots before one is one target, etc.<br>
-  E[X] = 1/p and Var(X) = (1-p)/p^2<br>
+  E[X] = 1/p<br>
+  Var(X) = (1-p)/p^2<br>
   <img id="medium_image" src="../assets/geometricdistribution.jpeg" alt="Geometric Distribution"><br><br>
 </p>
 <h4 id="subhead">Poisson Distribution(X ~ Poisson(λ)):</h4>
 <p id="subtext">
   The Poisson distribution is a very widely accepted model for so-called "rare-events" such as misconnected phone calls, radioactive emissions, crossovers in chromosomes, the number of cases of disease, the number of births per hour, etc. This model is appropriate whenever the occurences can be assumed to happen randomly with some constant density in a continuous region, such that occurrences in disjoint subregions are independent. Once can then show that the number of occurences in a region of unit size should obey the Poisson distribution with parameters 	λ.<br>
-  E[X] = λ and Var(X) =	λ<br>
+  E[X] = λ<br>
+  Var(X) =	λ<br>
   <img id="medium_image" src="../assets/poissondistribution.jpeg" alt="Poisson Distribution"><br><br>
   Theorem 19.5: Let X ~ Poisson(λ) and Y ~ Poisson(μ) be independent Poisson random variables. Then, X + Y ~ Poisson(λ + μ)<br>
   <img id="medium_image" src="../assets/binomialTOpoisson.jpeg" alt="Binomial Distribution converging to Poisson Distribution"><br><br>

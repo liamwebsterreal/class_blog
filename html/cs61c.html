@@ -984,7 +984,7 @@
 <p id="subtext">
     Virtual address: what the program sees; in RV32I we can access bytes 0 to 2^32 - 1<br>
     Physical address: what the computer sees(physical RAM)); with 2GB of RAM we can access bytes 0 - 2^31 - 1<br>
-    Translation: 
+    Translation: <br>
     <img id="medium_image" src="../assets/VMtranslation.jpeg" alt="Virtual Memory Translation"><br><br>
 </p>
 <h4 id="subhead">Page Table:</h4>
@@ -1007,7 +1007,7 @@
 </p>
 <h4 id="subhead">Memory Access at RAM with TLB:</h4>
 <p id="subtext">
-    Translation Lookaside Buffer(TLB): cache for the page table with valid, dirty, and permission bits. 
+    Translation Lookaside Buffer(TLB): cache for the page table with valid, dirty, and permission bits.<br> 
     <img id="medium_image" src="../assets/TLB.jpeg" alt="Translation Lookaside Buffer"><br><br>
     To be fast, TLBs must be small, ussually fully associative, typically 32-128 entries, each entry maps to a large page(takes advantage of spatial and temporal locality), random or FIFO replacement policy.<br>
     TLB Flush: (context switch: changing which thread is exxecuting) The entries in the TLB correspoknd to the currenlty active process. On a conext switch the TLB is flushed.<br>
@@ -1138,7 +1138,7 @@
     Google: Found success in redundancy and energy efficiency in their earliest data centers.<br>
     Energy efficiency: Primary concern in the design of WSC, important component of the total cost of ownership.<br>
     Power Usage Effectiveness (PUE): Power efficiency measure for WSC, not considering efficiency of servers, networking, Perfection = 1.0, for example Google's PUE 1.2. <br>
-    <img id="medium_image" src="../assets/WSCpower\.jpg" alt="WSC Power Efficiency"><br><br>
+    <img id="medium_image" src="../assets/WSCpower.jpg" alt="WSC Power Efficiency"><br><br>
     <img id="medium_image" src="../assets/WSCcooling.jpg" alt="WSC Cooling"><br><br>
     Cloud Computing:<br>
     Shared platform with illusion of isolation: collocation with other tenants, exploits technology of VMs and hypervisors, at best “fair” allocation of resources, but not true isolation.<br>
@@ -1146,8 +1146,8 @@
     Elastic service, pay for what you need, get more when you need it, but no performance guarantees: assumes uncorrelated demand for resources. <br>
     Cloud Services:<br>
     <p id="subtext">
-        SaaS: deliver apps over Internet, eliminating need to install/run on customer's computers, simplifying maintenance and support • E.g., Google Docs, Win Apps in the Cloud
-        PaaS: Deliver computing “stack” as a service, using cloud infrastructure to implement apps. Deploy apps without cost/complexity of buying and managing underlying layers • E.g., Hadoop on EC2, Apache Spark on GCP
+        SaaS: deliver apps over Internet, eliminating need to install/run on customer's computers, simplifying maintenance and support • E.g., Google Docs, Win Apps in the Cloud<br>
+        PaaS: Deliver computing “stack” as a service, using cloud infrastructure to implement apps. Deploy apps without cost/complexity of buying and managing underlying layers • E.g., Hadoop on EC2, Apache Spark on GCP<br>
         IaaS: Rather than purchasing servers, software, data center space or net equipment, clients buy resources as an outsourced service. Billed on utility basis.Amount of resources consumed/cost reflect level of activity e.g., Amazon Elastic Compute Cloud, Google Compute Platform. <br>
     </p>
 </p>
