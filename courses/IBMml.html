@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hi</title>
+    <link href="../css/styles.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h2>
+      Electrical Engineering 16b: Designing Information Devices and Systems II
+    </h2>
+    <a href="../index.html">Back</a>
+    <br />
+    <br />
+    <div id="toc_container">
+      <p class="toc_title">Content:</p>
+      <ul class="toc_list">
+        <li><a href="#FP1">Introduction</a></li>
+        <li><a href="#FP2">Brief History of AI, ML, and DL</a></li>
+        <li><a href="#FP3">Retrieving and Cleaning Data</a></li>
+        <li><a href="#FP4">Exploratory Data Analysis</a></li>
+        <li><a href="#FP5">Inferential Statistics and Hypothesis Testing</a></li>
+        <li><a href="#FP6">Machine Learning Intro</a></li>
+        <li><a href="#FP7">Regression(Supervised)</a></li>
+        <li><a href="#FP8">Classification(Supervised)</a></li>
+      </ul>
+    </div>
+
+    <h3 id="FP1">Introduction</h3>
+    <p id="subtext">
+      Overview of the course: introduction to AI, ML, DL, and techniques within the field to make the most out of clean data.
+    </p>
+
+    <h3 id="FP2">Brief History of AI, ML, and DL</h3>
+    <h4 id="subhead">Intro:</h4>
+    <p id="subtext">
+      Artificial Intelligence: A program that can sense, reason, act and adapt.<br>
+      <p id ="subtext_bullet">
+        An AI that does not fall into the subset of ML is exemplified by rule based AI.<br>
+      </p>
+    </p>
+    <p id="subtext">
+      Machine Learning: A subset of AI; algorithms whose performance improve as they are exposed to more data over time.<br>
+      <p id ="subtext_bullet">
+        The study and construction of programs that are not explicitly programed, but learn patterns aas they are exposed to more data over time.<br>
+        Features: attributes of the data<br>
+        Target: column to be predicted<br>
+        Idea is to use features to predict the target<br>
+        Supervised Learning: Data- has target column | Goal- make prediction | Example- fraud detection<br>
+        Unsupervised Learning: Data- does not have target column | Goal- find structure in the data | Example- Customer Segmentation<br>
+    </p>
+    <p id="subtext">
+      Deep Learning: A subset of ML: in which multilayered neural networks learn from vasts amount of data. 
+      <p id="subtext_bullet">
+        Machine learning that involves using very complicated models called "deep neural networks." Models determine best representation of original data; in classic machine learning humans must do this.<br>
+      </p>
+    </p>
+    <h4 id="subhead">ML vs DL:</h4>
+    <p id="subtext"> 
+      ML: Step 1- determine features Step 2- Feed them through model Step 3- Predict target<br>
+      DL: steps 1 and 2 are combined into 1 step<br>
+    </p>
+    <h4 id="subhead">History of AI:</h4>
+    <p id="subtext">  
+      Early Algorithms -> Expert Systems -> Neural Networks -> Machine Learning -> Deep Learning<br>
+      1950s: Alan Turing developed the Turing Test; to test a machine's ability to exhibit intelligent behavior.<br>
+      1956: Artificial Intelligence was accepted as a field at the Dartmouth Conference.<br>
+      1957: Frank Rosenblatt invented to the perceptron. This was the precursor to the modern neural network.<br>
+      1959: Arthur Samuel published an algorithm for a checkers program using machine learning.<br>
+      1966: ALPAC committee evaluated AI techniques for machine translation and determined there was little yield from investment.<br>
+      1973: The Lighthill report highlighted AI's failure to live up to promises.<br>
+      1980s: Expert Systems with programmed rules designed to mimic human experts. Ran on mainframe computers with specialized languages(e.g LISP). Were the first widely used AI tech with 2/3 of "Fortune 500" companies using them at their peak.<br>
+      1986: The "Backpropagation" algorithm was able to train multi-layer perceptrons, leading to new successes and interest in neural network research.<br>
+      1990s: Expert systems progress on solving business problems slowed. Expert systems began to be melded into software suites(SAP, Oracle) that could be run onf PCs instead of mainframes. Neural networks didn't scale to large problems.<br>
+      1990s-2000s: AI solutions had successes in speech recognition, medical diagnosis, robotics, and many other areas. The Deep Blue chess system beat world chess champion Garry Kasparov. Google's search engine launched using their page rank algorithm.<br>
+      2006: Geoffrey Hinton publishes a paper on unsupervised pre-training that allowed deeper neural networks to be trained.<br>
+      2009: the ImageNet database of human-tagged images is presented at the CVPR conference.<br>
+      2010: Algorithms compete on several visual recognition tasks at the first ImageNet competition.<br>
+      2012: Deep learning beats previous benchmark on the ImageNet competition.<br>
+      2014: Stanford team creates computer vision algorithm that can describe photos.<br>
+      2015: Deep learning platform TensorFlow is developed.<br>
+      2019: IBM Project Debater is able to have a full debate with rebuttal with champion human debater.<br>
+    </p>
+    <h4 id="subhead">Modern AI:</h4>
+    <p id="subtext">
+      Two Large Trends: Computer Vision- self driving cars(object detection) & healthcare(improved diagnosis) and Natural Language Processing- communication(language translation).<br>
+      We now have bigger datasets, faster computers and large neural nets.<br>
+      Health: enhanced diagnostics, drug discovery, patient care, research, sensory aids<br>
+      Industrial: factory automation, preventative maintenance, precision agriculture, field automation<br>
+      Finance: algorithmic trading, fraud detection, research, personal finance, risk mitigation<br>
+      Energy: oil and gas, smart grid, operational improvement, conservation<br>
+      Government: defense, data insights, safety & security, engagement, smarter cities<br>
+      Transportation: autonomous cars, automated trucking, aerospace, shipping, search & rescue<br>
+      Misc: advertising, education, gaming, professional & IT services, telco/media, sports<br>
+    </p>  
+    <h4 id="subhead">Machine Learning Workflow:</h4>
+    <p id="subtext">
+      Problem Statement: What problem are you tring to solve?
+      Data Collection: What data do you need to solve it?
+      Data Exploration & Preprocessing: How should you clean your data so your model can use it?
+      Modeling: Build a model to sole your problem?
+      Validation: Did I solve the problem?
+      Decision Making & Deployment: Communicate to stakeholders or put into production?
+    </p>
+    <h4 id="subhead">Machine Learning Vocabulary:</h4>
+    <p id="subtext">
+      Target Variable: category or value that we are trying to predict<br>
+      Feature Variable: properties of the data used for prediction(explanatory variables)<br>
+      Example: a single data point within the data(one row)<br>
+      Label: the target value for a single data point<br>
+    </p>
+
+    <h3 id="FP3">Retrieving and Cleaning Data</h3>
+    <h4 id="subhead">Reading in CSV files:</h4>
+    <p id="subtext">
+      Comma-Separated Values(CSV) files consist of rows of data, separated by commas. In Pandas CSV files can typically be read using just a few lines of code: <br>
+      <p id="subtext_bullet">
+        import pandas as pd<br>
+        filepath = 'data/iris_data.csv'<br><br>
+        # Import the Data<br>
+        data = pd.read_csv(filepath)<br><br>
+        # Print a few rows<br>
+        print(data.iloc[:5])<br>
+      </p>
+    </p>
+    <p id="subtext">
+      # Different delimeters - tab-separated file(.tsv)<br>
+      data = pd.read_csv(filepath, sep='\t')<br>
+      # Different delimiters - space-separated file<br>
+      data = pd.read_csv(filepath, delim_whitespace=True)<br>
+      # Don't use first row for column names<br>
+      data = pd.read_csv(filepath, header=None)<br>
+      # Specify column names<br>
+      data = pd.read_csv(filepath, names=['Name1', 'Name2'])<br>
+      # Custom missing values<br>
+      data = pd.read_csv(filepath, na_values=['NA', 99])<br>
+    </p>
+    <h4 id="subhead">Reading in JSON files:</h4>
+    <p id="subtext">
+      JavaScript Object Notation(JSON) files are a standard way to store data across platforms. JSON files are very similar in structure to Python dictionaries. Reading JSON files into Python:<br>
+      <p id="subtext_bullet">
+        import pandas as pd<br>
+        filepath = 'data/iris_data.csv'<br><br>
+        # Read JSON file as dataframe<br>
+        data = pd.read_json(filepath)<br><br>
+        # Write dataframe file to JSON<br>
+        data.to_json('outputfile.json')<br>
+      </p>
+    </p>
+    <h4 id="subhead">Working with SQL Databases:</h4>
+    <p id="subtext">
+      Structured Query Language(SQL) represents a set of relational datbases with fixed schemas. There are many types of SQL databases which function similarly: Microsoft SQL Server, Postgres, MySQL, AWS Redshift, Oracle DB, DB2 Family, etc.<br>
+      Reading SQL databases using sqlite3 package:<br>
+      <p id="subtext_bullet">
+      # SQL Data Imports<br>
+      import sqlite3 as sq3<br>
+      import pandas as pd<br><br>
+      # Initialize path to SQLite database<br>
+      path = 'data/classic_rock.db'<br><br>
+      # Connect to SQLite database<br>
+      con = sq3.Connection(path)<br><br>
+      # Write Query<br>
+      query = ''' SELECT * FROM rock-songs;<br>
+      '''<br><br>
+      # Execute Query<br>
+      data = pd.read_sql(query, con)<br>
+      </p>
+    </p>
+    <h4 id="subhead">Working with NoSQL Databases:</h4>
+    <p id="subtext">
+      Not-Only SQL(NoSQL) databases are not relational, vary more in structure. Depending on application, may perform more quickly of reduce technical overhead. Most NoSQL databases store data in JSON format. Examples of NoSQL Databases: document databases(mongoDB), Key-value stores(Riak), Graph databases(Neo4j), Wide-column stores(Cassandra). <br>
+      Reading NoSQL databases using pymongodb:<br> 
+      <p id="subtext_bullet">
+        # SQL Data Imports<br>
+        from pymongo import MongoClient<br>
+        import pandas as pd<br><br>
+        # Create a Mongo connection<br>
+        con = MongoClient( #path )<br><br>
+        #Choose database (con.list_database_names() to see available databases)<br>
+        db = con.database_name<br><br>
+        # Create a cursor object using a query<br>
+        cursor = db.collection_name.find(query) # query should be replaced with a MongoDB query string or {} to select all<br><br>
+        # Expand cursor and construct Dataframe<br>
+        df = pd.DataFrame(list(cursor))<br>
+      </p>
+    </p>
+    <h4 id="subhead">Working with APIs and Cloud Data Access:</h4>
+    <p id="subtext">
+      A variety of providers make data available via Application Programming Interfaces (APIs) that make it easy to access such data via Python.<br>
+      Reading in data from UCI ML library:<br>
+      <p id="subtext_bullet">
+        import pandas as pd<br><br>
+        # UCI Cars data set - url location<br>
+        data_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/car/car.data'<br><br>
+        # Read data into Pandas<br>
+        df = pd.read_csv(data_url, header=None)
+      </p>
+    </p>
+    <h4 id="subhead">Cleaning Data:</h4>
+    <p id="subtext">
+      Messy data can lead to "garbage_in", "garbage-out" effect, and unreliable outcomes. 
+      Key Aspects of Machine Learning depend on cleaned data:<br>
+      <p id="subtext_bullet">
+        Observations: an instance of the data(usually a point or row in a dataset)<br>
+        Labels: Output variables being predicted<br>
+        Algorithms: computer programs that estimate models based on available data<br>
+        Features: information we have for each observation<br>
+        Model: hypothesized relationship between observations and data<br>
+      </p>
+    </p>
+    <p id="subtext">
+      Main data problems: lack of data, too much data, and bad data.<br>
+      Messy Data: duplicate or unnecessary data, inconsistent text and typos, outliers, data sourcing issues(multiple systems, different db types, on premise vs cloud, etc.), and missing data.<br>
+    </p>
+    <p id="subtext">
+      Handling Messy Data:
+      <p id="subtext_bullet">
+        Duplicate Values: pay attention, research why there are multiple values. Filter the data as necessary.<br>
+        Missing Data: remove the data(e.g. remove rows/cols with missing data)-- quickly cleans data set but can cause dependency issues for rows/cols or impute the data(e.g. replace with mean value)-- we don't loose full rows or columns but we add another level of uncertainty for the model or mask the data(e.g. create a category for missing values)-- we don't loose any rows/cols but we add another level of uncertainty/assumption.<br>
+        Outliers: find outlines by plots(histogram, density plots, etc.) or statistics(interquartile range, standard deviation, etc.) or by residuals(standardized, deleted, studentized, etc.). Digest the information the outlier provides. Remove the outliers or replace them with the mean value or transform the variable or predict what the value should be or keep but focus on models that are resistant to outliers.<br>
+      </p>
+    </p>
+    <p id="subtext">
+      There are many ways to discover correlation between the target variable and the rest of the features. Building pair plots, scatter plots, heat maps, and a correlation matrixes are the most common ones. Below, we will use the corr() function to list the top features based on the pearson correlation coefficient (measures how closely two sequences of numbers are correlated).<br>
+    </p>
+
+    <h3 id="FP4">Exploratory Data Analysis</h3>
+    <h4 id="subhead">Intro:</h4>
+    <p id="subtext">
+      Exploratory Data Analysis: is an approach to analyzing data sets to summarize their main characteristics, often with visual methods. EDA allows us to get an initial feel for the data. Determines if the data makes sense. EDA helps us identify patterns and trends in the data.<br>
+    </p>
+    <h4 id="subhead">EDA Techniques:</h4>
+    <p id="subtext">
+      Summary Statistics: mean, median, min, max, correlations, etc.<br>
+      Visualizations: histograms, scatter plots, box plots, etc.<br>
+    </p>
+    <h4 id="subhead">Tools for EDA:</h4>
+    <p id="subtext">
+      Data Wrangling: pandas library<br>
+      Visualization: matplotlib, seaborn<br>
+    </p>
+    <h4 id="subhead">Sampling from DataFrames:</h4>
+    <p id="subtext">
+      For large data, a random sample can make computation easier.<br>
+      We may want to train models on a random sample of the data<br>
+      We may want to over- or under-sample observations when outcomes are uneven.<br>
+    </p>
+    <h4 id="subhead">Visualizations Libraries:</h4>
+    <p id="subtext">
+      Visualizations can be created in multiple ways:<br>
+      Matplotlib:<br><br>
+    </p>
+    <p id="subtext_bullet">
+      # Basic Scatter Plots with Matplotlib<br>
+      import matplotlib.pyplot as plt<br>
+      plt.plot(x-axis(e.g. data.col1), y-axis(e.g. data.col2), ls='', marker='o')<br><br>
+    </p>
+    <p id="subtext_bullet">
+      # Multiple Layers Scatter Plots with Matplotlib<br>
+      import matplotlib.pyplot as plt<br>
+      plt.plot(x-axis(e.g. data.col1), y-axis(e.g. data.col2), ls='', marker='o', label='label1')<br>
+      plt.plot(x-axis(e.g. data.col1), y-axis(e.g. data.col2), ls='', marker='o', label='label2')<br><br>
+      plt.legend
+    </p>
+    <p id="subtext_bullet">
+      # Histograms<br>
+      plt.hist(data(e.g. data.col1), bins= number of bins(e.g. 12))<br><br>
+    </p>
+    <p id="subtext_bullet">
+      # Customizing Plots<br>
+      <img id="medium_image" src="../assets/customizingplots.jpeg" alt="Customizing Plots"><br><br>
+    </p>
+    <p id="subtext">
+      Pandas:<br><br>
+    </p>
+    <p id="subtext_bullet">
+      # Customizing Plots: by Group<br>
+      <img id="medium_image" src="../assets/customizingplotsbyGROUP.jpeg" alt="Customizing Plots: by Groups"><br><br>
+    </p>
+    <p id="subtext">
+      Seaborn:<br><br>
+    </p>
+    <p id="subtext_bullet">
+      <img id="medium_image" src="../assets/pairplots.jpeg" alt="Pairplots for Features">
+      <img id="medium_image" src="../assets/hexbinplot.jpeg" alt="hexbin Plots"><br>
+      <img id="medium_image" src="../assets/facetGrid.jpeg" alt="Facet Grid"><br
+    </p>
+    <h4 id="subhead">Feature Engineering:</h4>
+    <p id="subtext">
+      Feature Engineering: A critical part of the successful Machine Learning project is coming up with a good set of features to train on. It involves three steps: feature transformation (transforming the original features), feature selection (selecting the most useful features to train on), and feature extraction (combining existing features to produce more useful ones).<br>
+      Variable Selection Background: Involves choosing the set of features to include in the model.<br>
+      Variable Transformation Background: Models used in ML Workflows often make assumptions about the data. Variables must often be transformed before they can be included in models: log, polynomial, scaling, encoding. A common example is the linear regression model. This assumes a linear relationship between observations and target variables.<br>
+      Example:<br>
+      <p id="subtext_bullet">
+        Predictions from linear regression models assume residuals are normally distributed. Features and predicted data are often skewed. Data transformations can solve this issue.<br>
+        <img id="medium_image" src="../assets/datatransformation1.jpeg" alt="Transformation of Data Distribution">
+        <img id="medium_image" src="../assets/datatransformation2.jpeg" alt="Transformation of Data Distribution"><br>
+        <img id="medium_image" src="../assets/datatransformation3.jpeg" alt="Transformation of Data Distribution"><br>
+      </p>
+    </p>
+    <p id="subtext">
+      Encoding:<br>
+      <p id="subtext_bullet">
+        Intro:<br>
+        Often applied to categorical features that take non-numeric values.<br>
+        Types of Features:<br>
+        Nominal: categorical variable take values in unordered categories(e.g. red, blue, green; True, Fales)<br>
+        Ordinal: categorical variables take values in ordered categories(e.g. High, Medium, Low)<br>
+        Approach:<br>
+        Binary Encoding: converts variables to either 0 or 1 and is suitable for variables that take two possible values(e.g. True, Fals)<br>
+        One-Hot Encoding: converts variables that take multiple values into binary (0,1) variables, one for each category. This creates several new variables.<br>
+        Ordinal Encoding: involves converting ordered categories to numerical values, usually by creating one variable that takes integer equal to the number of categories(e.g. 0,1,2,...)<br>
+      </p>
+    </p>
+    <p id="subtext">
+      Feature Scaling:<br>
+      <p id="subtext_bullet">
+        Intro:<br>
+        Involves adjusting variable's scale. This allows comparison of variables with different scales. Different continuous features often have different scales.<br>
+        Approach:<br>
+        Standard Scaling: converts features to standard normal variables. This is done by subtracting the mean and divided by the standard error).<br>
+        Min-Max Scaling: converts variables to continuous variables in the (0,1) interval by mapping the minimum values to 0 and the maximum values to 1. This is done by subtracting the min value from the column and dividing by the (max value - min value). This type of scaling is sensitive to outliers.<br>
+        Robust Scaling: is similiar to min-max scaling, but instead maps the interquartile range(the 75th percentile value minus the 25th percentile value) to (0,1). This means the variable itself takes the values outside of the (0,1) interval.
+      </p>
+    </p>
+    <p id="subtext">
+      Common Variable Transformations in Python:<br>
+      <img id="medium_image" src="../assets/variabletransformations4.jpeg" alt="Transformation of Data Distribution">
+      <img id="medium_image" src="../assets/variabletransformation5.jpeg" alt="Transformation of Data Distribution">
+      <img id="medium_image" src="../assets/variabletransformations6.jpeg" alt="Transformation of Data Distribution">
+    </p>
+
+    <h3 id="FP5">Inferential Statistics and Hypothesis Testing</h3>
+    <h4 id="subhead">Estimation vs Inference:</h4>
+    <p id="subtext">
+      Estimation: is the application of an algorithm, for example taking an average(X̄ = Σ xi/n where i = 1 to n)<br>
+      Inference: involves putting an accuracy on the estimate for example finding the standard error of an average(σ = (Σ (xi - X̄)^2 / (n - 1))^(1/2) where i = 1 to n<br>
+      Machine learning and statistical inference are similar. In both we're using data to learn/infer qualities of a distribution that generate the data(often termed the data=generating process). We may care either about the whole distribution of just features(e.g. mean). Machine learning application that focus on understanding parameters and individual effects involve more tools from statistical inference.<br>
+      Example:<br>
+    </p>
+    <p id="subtext_bullet">
+      <img id="medium_image" src="../assets/customerchurnexample.jpeg" alt="Example: Customer Churn">
+      <img id="medium_image" src="../assets/customerchurnexample2.jpeg" alt="Example: Customer Churn"><br>
+      <img id="medium_image" src="../assets/customerchurnexample3.jpeg" alt="Example: Customer Churn">
+      <img id="medium_image" src="../assets/customerchurnexample4.jpeg" alt="Example: Customer Churn"><br>
+      <img id="medium_image" src="../assets/customerchurnexample5.jpeg" alt="Example: Customer Churn">
+      <img id="medium_image" src="../assets/customerchurnexample6.jpeg" alt="Example: Customer Churn"><br>
+      <img id="medium_image" src="../assets/customerchurnexample7.jpeg" alt="Example: Customer Churn">
+    </p>
+    <h4 id="subhead">Parametric vs Non-Parametric:</h4>
+    <p id="subtext">
+      If inference is about trying to find out the Data-Generating Process(DGP), then we can say that a statistical model(of the data) is a set of possible distributions or maybe even regressions.<br>
+      Parametric Model: A particular type of the statistical model: it's also a set of distributions or regressions, but they have a finite number of parameters. Example: the Normal Distribution.<br>
+      Non-Parametric Model: Fewer assumptions are made. In particular we don't assume that the data belong to any particular distribution(aka distribution-free inference). Example: Cumulative Distribution Function using a histogram.<br>
+      Example:<br>
+      <p id="subtext_bullet">
+        <img id="medium_image" src="../assets/customerLVexample1.jpeg" alt="Example: Customer Lifetime Value">
+        <img id="medium_image" src="../assets/customerLVexample2.jpeg" alt="Example: Customer Lifetime Value"><br>
+        <img id="medium_image" src="../assets/customerLVexample3.jpeg" alt="Example: Customer Lifetime Value">
+      </p>
+    </p>
+    <h4 id="subhead">Commonly Used Distributions:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/commonDistributions1.jpeg" alt="Common Distributions">
+      <img id="medium_image" src="../assets/commonDistributions2.jpeg" alt="Common Distributions">
+      <img id="medium_image" src="../assets/commonDistributions3.jpeg" alt="Common Distributions">
+      <img id="medium_image" src="../assets/commonDistributions4.jpeg" alt="Common Distributions">
+      <img id="medium_image" src="../assets/commonDistributions5.jpeg" alt="Common Distributions">
+    </p>
+    <h4 id="subhead">Frequentist vs Bayesian Statistics:</h4>
+    <p id="subtext">
+      Frequentist: 
+      Concerned with repeated observations in the limit.<br>
+      Processes may have true frequencies, but we're interest in modeling probabilities as many many repeats of an experiment.<br>
+      Approach: Derive the probabilistic property of a procedure, apply the probability directly to the observed data<br>
+      Bayesian: 
+      Concerned with describing parameters by probability distributions.<br>
+      Before seeing any data, a prior distribution(based on experimenters' belief) is formulated. This prior distribution is then updated after seeing the data. After updating the distribution is called the posterior distribution.<br><br>
+      We use much of the same math and same formulas in both Frequentist and Bayesian statistics. The element that differs is the interpretation-- are we estimating how likely we are to actually cover the population mean or are we coming up with a distribution for that population mean.<br>
+    </p>
+    <h4 id="subhead">Hypothesis Testing:</h4>
+    <p id="subtext">
+      Hypothesis: A statement about a population parameter.<br>
+      We create two hypotheses: Null Hypothesis(H0) and Alternative Hypothesis(H1 or HA). We decide whinc one to call the null depending on how the problem is setup.<br>
+      A hypothesis testing procedure gives us a rule to decide: for which values of the test statistic do we accept H0 and for which values of the test statistic do we reject H0 and accept HA.<br>
+      The likelihood ratio is called a test statistic: we use it to decide whether to accept/reject H0.<br>
+      The rejection region: is the set of values of the test statistic that lead to rejection of H0.<br>
+      The acceptance region: is the set of values of the test statistic that lead to acceptance of h0.<br>
+      The null distribution: is the test statistic's distribution when the null is true.<br>
+      A hypothesis testing procedure in the Bayesian interpretation we don't get a decision boundary, instead we get updated posterior probabilities.<br>
+      Example:<br>
+      <img id="medium_image" src="../assets/hypothesistesting.jpeg" alt="Hypothesis Testing"><br>
+
+    </p>
+    <h4 id="subhead">Type 1 vs Type 2 Error:</h4>
+    <p id="subtext">
+      Type 1 Error: Incorrectly rejecting the null hypothesis.<br>
+      Type 2 Error: Incorrectly accepting the null hypothesis.<br>
+      <img id="medium_image" src="../assets/Neyman-PearsonInterpretation.jpeg" alt="Neyman-Pearson Interpretation">
+      <img id="medium_image" src="../assets/customerLVexample4.jpeg" alt="Neyman-Pearson Interpretation"><br>
+    </p>
+    <h4 id="subhead">Significance Level and P-Values:</h4>
+    <p id="subtext">
+      We know the distribution of the null hypothesis. To get a rejection region, we calculate the test statistic. We will choose, before testing the data, the level at which we will reject the null hypothesis.<br>
+      Significance Level(α): A probability threshold below which the null hypothesis will be rejected. We must choose an α before computing the test statistic. If we don't we might be accused of p-hacking.<br>
+      P-value: The smallest significance level at which the null hypothesis would be rejected.<br>
+      Confidence Interval: the values of the statistic for which we accept the null.<br>
+    </p>
+    <h4 id="subhead">F-Statistic:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/F-Statistic.jpeg" alt="F-Statistic"><br>
+      <img id="medium_image" src="../assets/BonferroniCorrection.jpeg" alt="Bonferroni Correction"><br>
+    </p>
+    <h4 id="subhead">Correlation vs Causation:</h4>
+    <p id="subtext">
+      If two variables X and Y are correlated, then X is useful for predicting Y. If we are trying to model Y, and we find things that correlate with Y, we may improve the modeling. We should be careful about changing X with the hope of changing Y.<br>
+      X and Y can be correlated for different reasons:
+      <p id="subtext_bullet">
+        X causes Y(what we want)<br>
+        Y causes X(mixing up cause and effect)<br>
+        X and Y are both caused by something else(confounding)<br>
+        X and Y are related, we just got unlucky in the sample(spurious)<br>
+      </p>
+    </p>
+    <p id="subtext">
+      Confounding Variable: A variable that causes both X and Y to change. X and Y are correlated even though X doesn't cause Y and Y doesn't cause X.<br>
+    </p>
+
+    <h3 id="FP6">Machine Learning</h3>
+    <p id="subtext">
+      Model: a small thing that captures a larger thing; a good model omits unimportant details while retaining what's important.<br>
+      Modeling Best Practices:<br>
+      <p id="subtext_bullet">
+        Use Cost Function to fit model<br>
+        Develope multiple models<br>
+        Compare results and choose best one<br>
+      </p>
+    </p>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/MLFramework.jpeg" alt="Machine Learning Framework">
+      <img id="medium_image" src="../assets/parametersVShyperparameters.jpeg" alt="Parameters vs Hyperparameters"><br>
+      <img id="medium_image" src="../assets/MLapproach.jpeg" alt="Machine Learning Approach">
+      <img id="medium_image" src="../assets/MLframework2.jpeg" alt="Machine Learning Framework"><br>
+      <img id="medium_image" src="../assets/MLframework3.jpeg" alt="Machine Learning Framework"><br>
+    </p>
+    <p id="subtext">
+      Supervised: data points have a known outcome<br>
+      Unsupervised: data points have a unknown outcome<br>
+      Semi-Supervised: uses both: data with outcomes, data without outcomes<br><br>
+    </p>
+    <h4 id="subhead">Supervised ML:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/SupervisedLearningOverview.jpeg" alt="Supervised ML Overview"><br><br>
+      Approach Methodology:<br>
+      <img id="medium_image" src="../assets/MLinterpretation.jpeg" alt="Machine Learning Interpretation">
+      <img id="medium_image" src="../assets/MLprediction.jpeg" alt="Machine Learning Prediction"><br>
+    </p>
+    <p id="subtext">
+      Types of Supervised Learning: regression(outcome is continuous), classification(outcome is categorical)<br>
+    </p>
+    <h3 id="FP7">Regression(Supervised)</h3>
+    <h4 id="subhead">Linear Regression:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/LinearRegression1.jpeg" alt="Linear Regression">
+      <img id="medium_image" src="../assets/LinearRegression2.jpeg" alt="Linear Regression"><br><br>
+      <img id="medium_image" src="../assets/LinearRegression3.jpeg" alt="Linear Regression">
+      <img id="medium_image" src="../assets/LinearRegression4.jpeg" alt="Linear Regression"><br><br>
+
+      SST(TSS): The sum of squares total, denoted SST, is the squared differences between the observed dependent variable and its mean. You can think of this as the dispersion of the observed variables around the mean – much like the variance in descriptive statistics.<br>
+      SSR(ESS): The second term is the sum of squares due to regression, or SSR. It is the sum of the differences between the predicted value and the mean of the dependent variable. Think of it as a measure that describes how well our line fits the data. If this value of SSR is equal to the sum of squares total, it means our regression model captures all the observed variability and is perfect.<br>
+      SSE(RSS): The last term is the sum of squares error, or SSE. The error is the difference between the observed value and the predicted value. We usually want to minimize the error. The smaller the error, the better the estimation power of the regression.<br>
+      <img id="medium_image" src="../assets/LinearRegression5.jpeg" alt="Linear Regression"><br><br>
+    </p>
+    <h4 id="subhead">Training and Test Splits:</h4>
+    <p id="subtext">
+      Training Data: fit the model<br>
+      Test Data: measure performance<br>
+      See notebook for example.<br>
+    </p>
+    <h4 id="subhead">Cross Validation:</h4>
+    <p id="subtext">
+      Split into multiple training and test splits with no overlap in the test splits.(e.g. train_data1, train_data2, validation_data1, validation_data2).<br>
+      <img id="medium_image" src="../assets/crossvalidation1.jpeg" alt="Cross Validation">
+      <img id="medium_image" src="../assets/crossvalidation2.jpeg" alt="Cross Validation"><br>
+      <img id="medium_image" src="../assets/crossvalidation3.jpeg" alt="Cross Validation">
+      <img id="medium_image" src="../assets/crossvalidation5.jpeg " alt="Cross Validation"><br>
+    </p>
+    <h4 id="subhead">Bias and Variance:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/biasVSvariance.jpeg " alt="Bias and Variance"><br><br>
+      Three Sources of Model Error:<br>
+      <p id="subtext_bullet">
+        being wrong-- bias: tendency of predictions to miss true values, worsened by missing information, overly simplistic assumptions, miss real patterns.<br>
+        being unstable-- variance: tendency of predictions to fluctuate, characterized by sensitivity or output to small changes in input data, often due to overly complex or poorly fit models.<br>
+        unavoidable randomness-- irreducible error: tendency to intrinsic uncertainty/randomness, present in even the best models.<br>
+      </p>
+    </p>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/biasVSvariance2.jpeg " alt="Bias and Variance"><br><br>
+    </p>
+    <h4 id="subhead">Regularization:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/Regularization1.jpeg " alt="Bias and Variance">
+      <img id="medium_image" src="../assets/regularization2.jpeg " alt="Bias and Variance"><br><br>
+      Why is Feature Selection Important?<br>
+      <p id="subtext_bullet">
+        Reducing the number of features can prevent overfitting.<br>
+        For some models, fewer features can improve fitting time and/or results.<br>
+        Identifying most critical features can improve model interpretability.<br>
+      </p>
+      <br>
+      <p id="subtext">
+        Further Detail:<br>
+        Analytical View: Increasing L2/L1 penalties force coefficients to be smaller, restricting their plausible range. A smaller range for coefficients must be simpler/lower variance than a model with an infinite possible coefficient range.<br>
+        Geometric View: <br>
+        <img id="medium_image" src="../assets/regularization3.jpeg " alt="Regularization">
+        <img id="medium_image" src="../assets/regularization4.jpeg " alt="Regularization"><br><br>
+        Probabilistic View: <br>
+        <img id="medium_image" src="../assets/regularization5.jpeg " alt="Regularization">
+        <img id="medium_image" src="../assets/regularization6.jpeg " alt="Regularization"><br>
+        <img id="medium_image" src="../assets/regularization7.jpeg " alt="Regularization"><br><br>
+        Recap:<br>
+        <img id="medium_image" src="../assets/regularization8.jpeg " alt="Regularization"><br><br>
+        How it works:<br>
+        Analytically: penalty constrains the coefficient range<br>
+        Geometrically: L1/L2 imposes bounded regions<br>
+        Probabilistically: imposes prior on coefficients<br>
+
+      </p>
+    </p>
+    <h4 id="subhead">Ridge Regression(L2):</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/ridgeregression1.jpeg " alt="Ridge Regression">
+      <img id="medium_image" src="../assets/ridgeregression2.jpeg " alt="Ridge Regression"><br>
+      <img id="medium_image" src="../assets/ridgeregression3.jpeg " alt="Ridge Regression">
+      <img id="medium_image" src="../assets/ridgeregression4.jpeg " alt="Ridge Regression"><br><br>
+    </p>
+    <h4 id="subhead">LASSO Regression(L1):</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/lassoregression1.jpeg " alt="LASSO Regression">
+      <img id="medium_image" src="../assets/lassoregression2.jpeg " alt="LASSO Regression"><br>
+      <img id="medium_image" src="../assets/lassoregression3.jpeg " alt="LASSO Regression">
+      <img id="medium_image" src="../assets/lassoregression4.jpeg " alt="LASSO Regression"><br><br>
+    </p>
+    <h4 id="subhead">Elastic Net Regularization:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/elasticnet1.jpeg " alt="Elastic Net Regularization">
+      <img id="medium_image" src="../assets/elasticnet2.jpeg " alt="Elastic Net Regularization">
+    </p>
+    <h4 id="subhead">Recursive Feature Elimination:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/recursivefeatureelimination.jpeg " alt="Recursive Feature Elimination">
+    </p>
+    <h3 id="FP7">Classification(Supervised)</h3>
+    <p id="subtext">
+      What is needed for Classification?<br>
+      Model data with features that can be quantified and labels that are known.<br>
+      Method to measure similarity<br>
+      Types of Classification: Logistic Regression, K-Nearest Neighbors, Support Vector Machines, Neural networks, Decision Trees, Random Forests, Boosting, Ensemble Models<br>
+    </p>
+    <h4 id="subhead">Classification Error Metrics:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/confusionmatrix1.jpeg " alt="Confusion Matrix">
+      <img id="medium_image" src="../assets/ROC1.jpeg " alt="Receiver Operating Characteristic"><br><br>
+      <img id="medium_image" src="../assets/ROC2.jpeg " alt="Receiver Operating Characteristic">
+      <img id="medium_image" src="../assets/precisionrecallcurve.jpeg " alt="Precision Recall Curve"><br><br>
+      <img id="medium_image" src="../assets/confusionmatrixError.jpeg " alt="Picking the Right Error Metric"><br><br>
+    </p>
+    <h4 id="subhead">Logistic Regression:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/sigmoidfunction.jpg " alt="Sigmoid Function">
+      <img id="medium_image" src="../assets/sigmoidfunction2.jpg " alt="Sigmoid Function"><br><br>
+      <img id="medium_image" src="../assets/logisticregression3.jpeg " alt="Logistic Regression">
+      <img id="medium_image" src="../assets/logisticregression2.jpeg " alt="Logistic Regression"><br><br>
+      <img id="medium_image" src="../assets/logisticregression1.jpeg " alt="Logistic Regression">
+    </p>
+    <h4 id="subhead">K Nearest Neighbors for Classification:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/Knearestneighbors1.jpeg " alt="K Nearest Neighbors">
+      <img id="medium_image" src="../assets/Knearestneighbors2.jpeg " alt="K Nearest Neighbors"><br><br>
+      <img id="medium_image" src="../assets/Knearestneighbors4.jpeg " alt="K Nearest Neighbors">
+      <img id="medium_image" src="../assets/Knearestneighbors3.jpeg " alt="K Nearest Neighbors">
+
+    </p>
+
+
+  </body>
+</html>
