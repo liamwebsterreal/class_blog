@@ -550,7 +550,7 @@
     <p id="subtext">
       <img id="medium_image" src="../assets/recursivefeatureelimination.jpeg " alt="Recursive Feature Elimination">
     </p>
-    <h3 id="FP7">Classification(Supervised)</h3>
+    <h3 id="FP8">Classification(Supervised)</h3>
     <p id="subtext">
       What is needed for Classification?<br>
       Model data with features that can be quantified and labels that are known.<br>
@@ -564,6 +564,12 @@
       <img id="medium_image" src="../assets/ROC2.jpeg " alt="Receiver Operating Characteristic">
       <img id="medium_image" src="../assets/precisionrecallcurve.jpeg " alt="Precision Recall Curve"><br><br>
       <img id="medium_image" src="../assets/confusionmatrixError.jpeg " alt="Picking the Right Error Metric"><br><br>
+    </p>
+    <h4 id="subhead">Overview of Classifier Characteristics:</h4>:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/overviewClassifiers1.PNG " alt="SVM"><br><br>
+      <img id="medium_image" src="../assets/overviewClassifiers2.PNG " alt="SVM"><br><br>
+
     </p>
     <h4 id="subhead">Logistic Regression:</h4>
     <p id="subtext">
@@ -587,7 +593,103 @@
       <img id="medium_image" src="../assets/SVM2.jpeg " alt="SVM"><br><br>
       <img id="medium_image" src="../assets/SVM3.jpeg " alt="SVM">
       <img id="medium_image" src="../assets/SVM4.jpeg " alt="SVM"><br><br>
+      <img id="medium_image" src="../assets/SVM5.PNG " alt="SVM">
+      <img id="medium_image" src="../assets/SVM6.PNG " alt="SVM"><br><br>
+      <img id="medium_image" src="../assets/SVM7.PNG " alt="SVM">
+      <img id="medium_image" src="../assets/SVM8.PNG " alt="SVM"><br><br>
+    </p>
+    <h4 id="subhead">Decision Tree:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/decisiontree1.PNG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/decisiontree2.JPG  " alt="Decision Tree"><br><br>
+      <img id="medium_image" src="../assets/decisiontree3.JPG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/decisiontree4.JPG  " alt="Decision Tree"><br><br>
+      <img id="medium_image" src="../assets/decisiontree5.JPG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/decisiontree6.JPG  " alt="Decision Tree"><br><br>
+      <img id="medium_image" src="../assets/decisiontree7.JPG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/decisiontree8.JPG  " alt="Decision Tree"><br><br>
+      <img id="medium_image" src="../assets/decisiontree9.JPG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/decisiontree10.JPG  " alt="Decision Tree"><br><br>
+    </p>
+    <h4 id="subhead">Ensemble Models:</h4>
+    <p id="subtext">
+      Bagging:<br>
+      <img id="medium_image" src="../assets/decisiontree11.JPG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/decisiontree12.JPG  " alt="Decision Tree"><br>
+      <img id="medium_image" src="../assets/decisiontree13.JPG  " alt="Decision Tree"><br><br>
+      Random Forest:<br>
+      <img id="medium_image" src="../assets/randomforest1.JPG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/randomforest2.JPG  " alt="Decision Tree"><br><br>
+      Boosting:<br>
+      <img id="medium_image" src="../assets/boosting1.JPG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/boosting2.JPG  " alt="Decision Tree"><br><br>
+      <img id="medium_image" src="../assets/boosting3.JPG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/boosting4.JPG  " alt="Decision Tree"><br><br>
+      <img id="medium_image" src="../assets/boosting5.JPG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/boosting6.JPG  " alt="Decision Tree"><br><br>
+      <img id="medium_image" src="../assets/boosting7.JPG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/boosting8.JPG  " alt="Decision Tree"><br><br>
+      <img id="medium_image" src="../assets/boosting9.JPG  " alt="Decision Tree">
+      <img id="medium_image" src="../assets/boosting10.JPG  " alt="Decision Tree"><br><br>
+      <img id="medium_image" src="../assets/boosting11.JPG  " alt="Decision Tree"><br><br>
+      Stacking:<br>
+      <img id="medium_image" src="../assets/stacking1.JPG  " alt="Decision Tree"><br><br>
+      <img id="medium_image" src="../assets/stacking.JPG  " alt="Decision Tree"><br><br>
+    </p>
+    <h4 id="subhead">Model Interpretability:</h4>
+    <p id="subtext">
+      Self Interpretable Model: simple structure, ideal for high risk situations-- finance, healthcare, etc. Examples: linear models, decision trees, and K-nearest neighbors.<br>
+      Non-Self Interpretable Model: complex structure, ideal for state of the art performance for current problems-- language processing, traffic predictions, etc. Examples: ensemble models, SVMs, and neural networks.<br>
+      Model Interpretation Methods:<br>
+      <p id="subtext_bullet">
+        Intrinsic: for models with high interpretability, simplify models to increase interpretability.<br>
+        Post-hoc: for models with low interpretability, auxiliary methods are applied to block-box models.<br>
+      </p>
+    </p>
+    <h4 id="subhead">Model-Agnostic Explanations:</h4>
+    <p id="subtext">
+      Feature Importance: Measure the importance of features. Simplify your model by only including important features and interpret how predictions were made. <br>
+      <p id="subtext_bullet">
+        Permutation Feature Importance: measure the increases of prediction errors by permuting/shuffling a feature.<br>
+        Impurity-based feature importance:<br>
+        Shapley Additive Explanations values:<br>
+
+      </p>
+    </p>
+    <p id="subtext">
+      Partial Dependency Plot(PDP): shows the relationship of interested features on prediction outcome.<br>
+    </p>
+    <h4 id="subhead">Surrogate Models:</h4>
+    <p id="subtext">
+      <img id="medium_image" src="../assets/surrogatemodel.JPG  " alt="Surrogate Model">
+      <img id="medium_image" src="../assets/surrogatemodel2.JPG  " alt="Surrogate Model"><br><br>
+      <img id="medium_image" src="../assets/surrogatemodel3.JPG  " alt="Surrogate Model">
+      <img id="medium_image" src="../assets/surrogatemodel4.JPG  " alt="Surrogate Model"><br><br>
+    </p>
+    <h4 id="subhead">Unbalanced Classes:</h4>
+    <p id="subtext">
+      Classifiers are usually built to optimize accuracy and hence will often perform poorly on unbalanced classes.<br>
+      For unbalanced datasets we can balance the size of the classes by either downsampling the larger class or upsampling the small one or do a mix of the two.<br>
+      <img id="medium_image" src="../assets/unbalancedclasses1.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses2.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses3.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses4.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses5.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses6.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses7.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses8.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses9.JPG  " alt="Unbalanced Classes"><br>
+      Undersampling:<br>
+      <img id="medium_image" src="../assets/unbalancedclasses10.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses11.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses12.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses13.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses14.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses15.JPG  " alt="Unbalanced Classes">
+      <img id="medium_image" src="../assets/unbalancedclasses165.JPG  " alt="Unbalanced Classes">
 
     </p>
+
+
   </body>
 </html>
