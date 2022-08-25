@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hi</title>
+        <link href="../css/styles.css" rel="stylesheet" type="text/css">
+      </head>
+<body>
+    <h2>Computer Science 161: Computer Security</h2>
+    <a href="../index.html">Home</a>
+    <div id="toc_container">
+        <p class="toc_title">Content:</p>
+        <ul class="toc_list">
+        <li><a href="#FP1">Security Principles</a></li>
+
+        </ul>
+    </div>
+        <h3 id="FP1">Security Principles</h3>
+        <p id="subtext">
+            Summary: Always know your threat model-- the who and what. Consider human factors in security implementations-- keep tools fool proof and user friendly. No system is ever 100% secure, its a matter of resources. Don't put a 100 dollar lock on a dollar item, and vice versa. If an attack is inevitable always at least have detection of said attack when prevention is not possible. Layer defenses in depth. Always limit access to least privilege, give enough access to get the job done. Split up privilege so no one party has complete access. Takes multiple to launch the nuke. Ensure mediation, check all access points in and out. Never rely on obscurity for security-- the deets always get out. Use fail safe defaults-- meaning when a fail happens it better default to a safe space. Design security from the start don't try to back track. The TCB, the portion of the system that must operate correctly in order for the security goals of the system to be assured. Keep the principle of Time-of-Check To Time-Of-Use in mind.<br>
+        </p>
+        <h4 id="subhead">Know your threat model:</h4>
+        <p id="subtext">
+            Threat Model: a model of who your attacker is and what resources they have.<br>
+            Commone Assumptions that are taken into account for attackers:<br>
+            <p id="subtext_bullet">
+                The attacker can inter with your systems without anyone noticing.<br>
+                The attacker has some general information about your system.<br>
+                The attacker is persistent and lucky.<br>
+                The attacker has the resources required to undertake the attack.<br>
+                The attacker can coordinate several complex attacks across various systems.<br>
+                Every system is a potential target.<br>
+            </p>"
+        </p>
+        <h4 id="subhead">Consider Human Factors:</h4>
+        <p id="subtext">
+            Security systems must be usable by ordinary people and therefore must be designed to take into account the role that humans will play. <br>
+            Takeaway: consider the tools that are presented to users, and try to make them fool-proof and as user-friendly as possible.<br>
+        </p>
+        <h4 id="subhead">Security is Economics:</h4>
+        <p id="subtext">
+            Security is often a cost-benefit analysis where someone needs to make a decision regarding how much security is worth.<br>
+            A corollary of this principle is you should focus your energy on securing the weakest links. Security is like a chain: a system is only as secure as the weakest link. Attackers follow the path of least resistance, and they will attack the system at its weakest point.<br>
+            A closely related principle is conservative design, which states that systems should be evaluated according to the worst security failure that is at all plausible, under assumptions favorable to the attacker.<br>
+        </p>
+        <h4 id="subhead">Detect if you can't Prevent:</h4>
+        <p id="subtext">
+            If prevention is stopping an attack from taking place, detection is simply learning that the attack has taken place, and response would be doing something about the attack. The idea is that if you cannot prevent the attack from happening, you should at least be able to know that the attack has happened. Once you know that the attack has happened, you should find a way to respond, since detection without response is pointless.<br>
+            When dealing with response, you should always assume that bad things will happen, and therefore prepare your systems for the worst case outcome.<br>
+        </p>
+        <h4 id="subhead">Defense in depth:</h4>
+        <p id="subtext">
+            Defense in Depth: defenses should be layered together so an attacker would have to breach all the defenses to successfully attack a system.<br>
+            Beware of diminishing returns–if you’ve already built 100 walls, the 101st wall may not add enough additional protection to justify the cost of building it (security is economics).<br>
+        </p>
+        <h4 id="subhead">Least Privilege:</h4>
+        <p id="subtext">
+            Give a program the set of access privileges that it legitimately needs to do its job—but nothing more. Try to minimize how much privilege you give each program and system component.<br>
+            Least privilege is an enormously powerful approach. It doesn’t reduce the probability of failure, but it can reduce the expected cost of failures. The less privilege that a program has, the less harm it can do if it goes awry or becomes subverted.<br>
+        </p>
+        <h4 id="subhead">Separation of Responsibility:</h4>
+        <p id="subtext">
+            Split up privilege, so no one person or program has complete power. Require more than one party to approve before access is granted.<br>
+            In summary, if you need to perform a privileged action, require multiple parties to work together to exercise that privilege, since it is more likely for a single party to be malicious than for all of the parties to be malicious and collude with one another.<br>
+        </p>
+        <h4 id="subhead">Ensure Complete Mediation:</h4>
+        <p id="subtext">
+            When enforcing access control policies, make sure that you check every access to every object. This kind of thinking is helpful to detect where vulnerabilities could be. As such, you have to ensure that all access is monitored and protected. One way to accomplish this is through a reference monitor, which is a single point through which all access must occur.<br>
+        </p>
+        <h4 id="subhead">Shannon's Maxim:</h4>
+        <p id="subtext">
+            Shannon’s Maxim states that the attacker knows the system that they are attacking.<br>
+            “Security through obscurity” refers to systems that rely on the secrecy of their design, algorithms, or source code to be secure. The issue with this, however, is that it is extremely brittle and it is often difficult to keep the design of a system secret from a sufficiently motivated attacker. Historically, security through obscurity has a lousy track record: many systems that have relied upon the secrecy of their code or design for security have failed miserably.<br>
+            As such, you should never rely on obscurity as part of your security. Always assume that the attacker knows every detail about the system that you are working with (including its algorithms, hardware, defenses, etc.)<br>
+            erckhoff’s Principle, which states that cryptographic systems should remain secure even when the attacker knows all internal details of the system.<br>
+        </p>
+        <h4 id="subhead">Use Fail-Safe Defaults:</h4>
+        <p id="subtext">
+            Choose default settings that “fail safe”, balancing security with usability when a system goes down. Ensure that if the security mechanisms fail or crash, they will default to secure behavior, not to insecure behavior.<br>
+        </p>
+        <h4 id="subhead">Design security in from the start:</h4>
+        <p id="subtext">
+            Trying to retrofit security to an existing application after it has already been spec’ed, designed, and implemented is usually a very difficult proposition. At that point, you’re stuck with whatever architecture has been chosen, and you don’t have the option of decomposing the system in a way that ensures least privilege, separation of privilege, complete mediation, defense in depth, and other good properties. Backwards compatibility is often particularly painful, because you can be stuck with supporting the worst insecurities of all previous versions of the software.<br>
+        </p>
+        <h4 id="subhead">The Trusted Computing Base (TCB):</h4>
+        <p id="subtext">
+            In any system, the trusted computing base (TCB) is that portion of the system that must operate correctly in order for the security goals of the system to be assured. We have to rely on every component in the TCB to work correctly. However, anything that is outside the TCB isn’t relied upon in any way; even if it misbehaves or operates maliciously, it cannot defeat the system’s security goals. Generally, the TCB is made to be as small as possible since a smaller, simpler TCB is easier to write and audit.<br>
+            TCB Design Principles:<br>
+            <p id="subtext">
+                Unbypassable: there must be no way to breach system security by bypassing the TCB.<br>
+                Tamper-resistant: the TCB should be protected from tampering by anyone else. <br>
+                Verifiable: It should be possible to verify the correctness of the TCB.<br>
+            </p>
+        </p>
+        <p id="subtext">
+            Design your system so that as much code as possible can be moved outside the TCB.<br>
+            Benefits of TCBs: The notion of a TCB is a very powerful and pragmatic one as it allows a primitive yet effective form of modularity. It lets us separate the system into two parts: the part that is security-critical (the TCB), and everything else.<br>
+        </p>s
+        <h4 id="subhead">TOCTTOU Vulnerabilities:</h4>
+        <p id="subtext">
+            This is known as a Time-Of-Check To Time-Of-Use (TOCTTOU) vulnerability, because between the check and the use of whatever state was checked, the state somehow changed.<br>
+        </p>
+
+
+</body>
+</html>
