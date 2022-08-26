@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hi</title>
+        <link href="../css/styles.css" rel="stylesheet" type="text/css">
+      </head>
+<body>
+    <h2>Computer Science 162: Operating Systems</h2>
+    <a href="../index.html">Home</a>
+    <div id="toc_container">
+        <p class="toc_title">Content:</p>
+        <ul class="toc_list">
+        <li><a href="#FP1">Operating System Overview</a></li>
+
+
+        </ul>
+    </div>
+        <h3 id="FP1">Operating System Overview</h3>
+
+        <h4 id="subhead">Why OS:</h4>
+        <p id="subtext">
+            Every device runs an operating system. Every program ever runs on an operating system. Performance and execution behavior will depend on the operating system.<br>
+            Operating Systems are becoming largely more complex. This is due to hardware becoming smarter, need for better reliability and security, need for better performance(efficient code/parallel code), and need for better energy usage.<br>
+        </p>
+        <h4 id="subhead">What OS:</h4>
+        <p id="subtext">
+            Operating: manages multiple tasks and users. 
+            System: a set of interconnected components with an expected behavior observed at the interface with its environment.<br>
+            Operating System(v1): an operating system is the layer of software that interfaces between(diverse) hardware resources and the (many) applications running on the machine.<br>
+            Operating System(v2): an operating system implements a virtual machine for the application whose interface is more convenient than the raw hardware interface(convenint = security, reliability, portability).<br>
+            Three Main Hats:<br>
+            <p id="subtext_bullet">
+                Referee: manage protection, isolation, and sharing of resources<br>
+                Illusionist: provide clean, easy-to-use abstractions of physical resources<br>
+                Glue: provides a set of common services<br>
+            </p>
+        </p>
+        <p id="subtext">
+            OS as referee:<br>
+            Allow multiple(untrusted) applications to run concurrently.<br>
+            Fault Isolation: Isolate programs from each other. Isolate OS from other programs. Concepts: process and dual mode execution<br>
+            Resource Sharing: How to choose which task to run next? How to split physical resources? Concepts: scheduling<br>
+            Communication: How can OS support communication to share results? Concepts: Pipes/Sockets<br><br>
+            OS as illusionist:<br>
+            Mask the restrictions inherent in computer hardware through virtualization.<br>
+            All alone: provide abstraction that application has exclusive use of resources.<br>
+            All powerful: provide abstraction that hardware resources are infinite.<br>
+            All expressive: provide abstraction of hardware capabilities that are not physically present.<br><br>
+            OS as glue:<br>
+            Provide set of common standard services to applications to simplify and regularize their design.<br>
+            Make Sharing Easier: simpler if all assume same basic primitives.<br>
+            Minimize reuse: avoid re-implementing functionality from scratch. Evolve components independently.<br><br>
+            Putting it All Together:<br>
+            <img id="medium_image" src="../assets/cs162/OSoverview.jpg" alt=""><br><br>
+        </p>
+        <p id="subtext">
+            Definitions:<br>
+            Overhead: added resource cost of implementing an abstraction<br>
+            Fairness: How "well" are resources distributed across applications<br>
+            Response Time: how long does it take for a task to complete<br>
+            Throughput: rate at which group of tasks can be completed<br>
+            Predictability: are performance metrics constant over time<br>
+            Availability: mean time to failure + mean time to repair<br>
+            Integrity: computer's operation cannot be compromised by a malicious attacker<br>
+            Privacy: data stored on computer accessible to authorized users<br>
+            Enforcement Policy: How the OS ensures only permitted actions are allowed<br>
+            Security Policy: What is permitted<br>
+        </p>
+        <p id="subtext">
+            OS Evaluations Criteria:<br>
+            Performance: OS must implement the abstraction efficiently, with low overhead and equitably. Related: overhead, fairness, response time, throughput, predictability<br>
+            Reliability: system does what it is supposed to do-- OS failures are catastrophic. Related: availability<br>
+            Security: minimize vulnerability to attack. Related: integrity, privacy, enforcement policy, security policy<br>
+            Portability: a portable abstraction does not change as the hardware changes. Can't rewrite application(or OS) every time, must plan for hardware that does not exist yet.<br>
+
+        </p>
+
+</body>
+</html>

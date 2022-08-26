@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hi</title>
+        <link href="../css/styles.css" rel="stylesheet" type="text/css">
+      </head>
+<body>
+    <h2>Electrical Engineering and Computer Science 127: Optimization Models in Engineering</h2>
+    <a href="../index.html">Home</a>
+    <div id="toc_container">
+        <p class="toc_title">Content:</p>
+        <ul class="toc_list">
+        <li><a href="#FP1">Introduction</a></li>
+        <li><a href="#FP2">Optimization Models</a></li>
+
+
+        </ul>
+    </div>
+        <h3 id="FP1">Introduction</h3>
+        <p id="subtext">
+            This course focuses on tractable optimization problems, that is, problems that can be reliably and efficiently solved on a computer. Specifically we study convex optimization, with emphasis on problems involving convex quadratic constraints and objectives.<br>
+        </p>
+        <h3 id="FP2">Optimization Overview</h3>
+            <p id="subtext">
+                Optimization Problems: <br>
+                <img id="medium_image" src="../assets/eecs127/optimizationproblemintro.jpg" alt="Optimization Problem Definition"><br><br>
+                Keep in Mind:<br>
+                <p id="subtext_bullet">
+                    Local vs Global optimal points: most algorithms tend to be trapped in local minima.<br>
+                    Tractable vs Non-Tractable problems: not all problems have a reliable efficient algorithm. Tractable problems are all those optimization models for which a globally optimal solution can be found numerically in a reliable way, with computational effort that grows gracefully with the size of the problem. Models that can be formulated in the form of linear algebra problems or in convex form are typically tractable models. Tractability is often not a property of the problem itself but a property of our formulation and modeling of the problem.<br>
+                    Problem Transformations: The optimization formalism is extremely flexible and allows for many transformations which may help to cast a given problem in a tractable formulation.<br>
+                </p>
+             </p>
+             <p id="subtext">
+                Important Classes of Optimization Problems:<br>
+                Least Squares and Linear Equations:<br>
+                <img id="medium_image" src="../assets/eecs127/leastsquares.jpg" alt=""><br><br>
+                Low-rank Approximations and Maximum Variance:<br>
+                <img id="medium_image" src="../assets/eecs127/lowrankapproximations.jpg" alt=""><br><br>
+                Linear and Quadratic Programming:<br>
+                <img id="medium_image" src="../assets/eecs127/LPandQP.jpg" alt=""><br><br>
+             </p>
+             <p id="subtext">
+                Convex Optimization: convex optimization problems are of the form(1.2) where the objective and constraint functions have the special property of convexity. Not all convex problems are easy to solve but many of them are indeed computationally tractable.<br>
+                Combinatorial Optimization: in combinatorial optimization variables are Boolean or more generally integers reflecting discrete choices to be made. Combinatorial problems and more generally Mixed Integer Programs belong to a class of problems known to be computationally hard, in general. <br>
+                Non-Convex Optimization corresponds to problems where one or more of the objective or constraint functions in the standard form(1.2) does not have the property of convexity. Non-convex problems are very hard to solve, in general. 
+             </p>
+</body>
+</html>
