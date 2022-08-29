@@ -10,11 +10,24 @@
     <div id="toc_container">
         <p class="toc_title">Content:</p>
         <ul class="toc_list">
-        <li><a href="#FP1">Security Principles</a></li>
+        <li><a href="#FP1">Overview</a></li>
+        <li><a href="#FP2">Security Principles</a></li>
+        <li><a href="#FP2">x86 Assembly and Call Stack</a></li>
+
 
         </ul>
     </div>
-        <h3 id="FP1">Security Principles</h3>
+        <h3 id="FP1">Overview</h3> 
+        <p id="subtext">
+            1. Security Principles<br>
+            2. Memory Safety: x86 Assembly and Call Stack, Memory Safety Vulnerabilities, Mitigating Memory-Safety Vulnerabilities<br>
+            3. Cryptography: <br>
+            4. Web Security: <br>
+            5. Network Security: <br>
+
+        </p>
+
+        <h3 id="FP2">Security Principles</h3>
         <p id="subtext">
             Summary: Always know your threat model-- the who and what. Consider human factors in security implementations-- keep tools fool proof and user friendly. No system is ever 100% secure, its a matter of resources. Don't put a 100 dollar lock on a dollar item, and vice versa. If an attack is inevitable always at least have detection of said attack when prevention is not possible. Layer defenses in depth. Always limit access to least privilege, give enough access to get the job done. Split up privilege so no one party has complete access. Takes multiple to launch the nuke. Ensure mediation, check all access points in and out. Never rely on obscurity for security-- the deets always get out. Use fail safe defaults-- meaning when a fail happens it better default to a safe space. Design security from the start don't try to back track. The TCB, the portion of the system that must operate correctly in order for the security goals of the system to be assured. Keep the principle of Time-of-Check To Time-Of-Use in mind.<br>
         </p>
@@ -99,6 +112,84 @@
         <p id="subtext">
             This is known as a Time-Of-Check To Time-Of-Use (TOCTTOU) vulnerability, because between the check and the use of whatever state was checked, the state somehow changed.<br>
         </p>
+
+        <h3 id="FP2">x86 Assembly and Call Stack</h3>
+        <h4 id="subhead">Number Representation:</h4>
+        <p id="subtext">
+            At the lowest level, computers store memory as individual bits, where each bit is either 0 or 1. <br>
+            1 nibble = 4 bits<br>
+            1 byte = 8 bits<br>
+            1 word = 32 bits(on 32-bit architecture)<br>
+            A "word" is the size of a pointer, which depends on your CPU architecture. 
+        </p>
+        <h4 id="subhead">Call Stack:</h4>
+        <p id="subtext">
+            The compiler translates your C code into assembly instructions. 61c uses the RISC-V instruction set but in 161 we use x86, which is more commonly seen in the real world.<br>
+            The assembler translates the assembly instructions from the compiler into machine code.<br>
+            The linker resolves dependencies on external libraries. After the linker finishes linking external libraries, it outputs a binary executable of the program that you can run. <br>
+            The user runs the executable, the loader sets up an address space in memory and runs the machine code instructions in the executable.<br>
+        </p>
+        <h4 id="subhead">C memory layout:</h4> 
+        <p id="subtext">
+            At runtime, the OS gives the program an address space to store any state necessary for program execution. Each byte has a unique address. The size of the address space depends on the OS and CPU architecture. In a 32 bit system address are 32 bits long, which means the address space has 2^32 bytes of memory.<br>
+            <img id="small_image" src="../assets/cs161/memorylayout.jpeg" alt=""><br><br>
+            The code section contains executable instructions of the program. The assembler and linker output raw bytes that can be interpreted as machine code. These bytes are stored in the code section.<br>
+            The static section contains constants and static variables that never change during program execution, and are usually allocated when the program starts.<br>
+            The heap stores dynamically allocated data. When malloc is called in C, memory is allocated on the heap and persists until free is called. The heap starts at lower addresses and "grows up" to higher addresses as more memory is allocated.<br>
+            The stack stores local variables and other information associated with function calls. The stack starts at higher addresses and "grows down" as more functions are called.<br>
+            x86 is a Little Endian system this means when storing a word in memory the least significant byte is stored as the lowest address, and the most significant byte is stored at the highest address.<br>
+        </p>
+        <h4 id="subhead">Registers:</h4> 
+        <p id="subtext">
+            In addition to teh 2^32 bytes of memory in the address space, there are also registers, which store memory directly on the CPU. Each register can store one word. Unlike memory registers do not have addresses. Instead, registers are referred to by names. There are three special x86 registers that are relevant:
+            <p id="subtext_bullet">
+                eip: the instruction pointer, stores that address fo teh machine instruction currently being executed. IN RISC-V this register is called the PC.<br>
+                ebp: the base pointer, stores the address of the top of the current stack frame. IN RISC-V systems this register is called the FP. <br>
+                esp: the stack pointer, stores the address of the bottom of the current stack frame. In RISC-V this register is called the SP.<br>
+                eax and ebx are general purpose registers in x86<br>
+                Note: The eip register points to the code section of memory while the ebp and esp registers typically point to stack memory.<br>
+            </p>
+        </p>
+        <h4 id="subhead">Stack--Pushing and Popping:</h4> 
+        <p id="subtext">
+            When it is desirable to save a variable on the stack there are two steps to take. First allocated additional space on the stack by decrementing the esp. Next store the value in the newly allocated space. The x86 push instruction does both of these steps to add a value to the stack. To remove a value from the stack increments the esp register, in x86 the pop instruction does this. It also takes the value that was just popped and copies the value to a register. Note when we pop a value off the stack the bits of memory aren't removed but the memory space becomes undefined.<br>
+        </p>
+        <h4 id="subhead">x86 calling convention:</h4> 
+        <p id="subtext">
+            This class uses AT&T x86 syntax(since that is what GDB uses). This means that the destination register comes last; note that this is in contrast with RISc_v assembly where the destination register comes first. Suppose our assembly instruction was addl $0x*, %ebx; here, the opcode is addl, the source is $0x8, and the destination register is %ebx, so in pseudocode this can be read as EBX = EBX + 0x8.<br>
+            References to registers are preceded with a percent sign, so if we wanted to reference eax, we would do so as %eax. Immediates are preceded with a dollar sign(i.e. $1, $0x4, etc.). Furthermore, memory references use parenthesis and can have immediate offsets; for example. 12(%esp) dereferences memory 12 bytes above the address contained in ESP. If parenthesis are used without an immediate offset, the offset can be thought of as an implicit 0.<br>
+        </p>
+        <h4 id="subhead">x86 function calls:</h4> 
+        <p id="subtext">
+            When a function is called, the stack allocates extra space to store local variables and other information relevant to that function. The stack grows down, so this extra space will be at lower addresses in memory. Once the function returns, the space on the stack is freed up for future function calls. In a function call, the caller calls the callee. Program execution starts in the caller, moves to the callee as a result of the function call and then returns to the caller after the function call completes.<br>
+            When a function call is made in x86 the three special registers-- eip, evp, esp --need to be updated. The eip needs to be changed to point to the instructions of the callee. The ebp and esp currently point to the top and bottom of the caller stack frame, respectively. Both registers need to be updated to point to the top and bottom of a new stack frame for the callee. When the function returns the old register values need to be restored, so that the rest of the caller function can execute. There are 11 steps to calling an x86 function and returning:<br><br>
+            <img id="small_image" src="../assets/cs161/callercallee1.jpeg" alt=""><br><br>
+            1. Push arguments onto the stack. RISC-V passes arguments by storing them in registers, but x86 passes arguments by pushing them onto the stack. Note that esp is decrements as we push arguments onto the stack. Arguments are pushed onto the stack in reverse order. <br>
+            <img id="small_image" src="../assets/cs161/callercallee2.jpeg" alt=""><br><br>
+            2. Push the old eip(rip) on the stack. Before changing the value of the eip register its needed to save the current value on the stack. When the eip is pushed to the stack its is called the old eip or the rip(return instruction pointer).<br>
+            <img id="small_image" src="../assets/cs161/callercallee3.jpeg" alt=""><br><br>
+            3. Move eip. Now that we've saved the old value of eip, we can safely change eip to point to the instructions for the callee function.<br>
+            <img id="small_image" src="../assets/cs161/callercallee4.jpeg" alt=""><br><br>
+            4. Push the old ebp(sfp) on the stack. Before changing the value in the ebp register, its needed to save the current value on the stack. Push the current ebp is pushed onto the stack its referred to as the old ebp or the sfp(saved frame pointer). Not that esp has been decremented because of pushing the ebp onto the stack.<br>
+            <img id="small_image" src="../assets/cs161/callercallee5.jpeg" alt=""><br><br>
+            5. Move the ebp down. Now that we've saved the old value of ebp, we can safely change ebp to point to the top of the new stack frame. The top of the new stack frame is where esp is currently points since we are about to allocate new space below esp for the new stack frame.<br>
+            <img id="small_image" src="../assets/cs161/callercallee6.jpeg" alt=""><br><br>
+            6. Move esp down. Now we can allocate new space for the new stack frame by decrementing esp. The compiler looks at the complexity of the function to determine how far esp should be decremented. For example, a function with only a few local variables doesn't require too much space on the stack, so esp will only be decremented by a few bytes.<br>
+            <img id="small_image" src="../assets/cs161/callercallee7.jpeg" alt=""><br><br>
+            7. Execute the function. Local variables and any other necessary data can now be saved in the new stack frame. Additionally, since ebp is always pointing to the top of the stack frame, we can use it as a point of reference to find other variables on the stack. For example, the arguments will be located starting at the address stored in ebp, plus 8.<br>
+            <img id="small_image" src="../assets/cs161/callercallee8.jpeg" alt=""><br><br>
+            8. Move esp up. Once the function is ready to return, we increment esp to point to the top of the stack frame(ebp). This effectively erases the stack frame, since the stack frame is now located below esp. (Anything on the stack below the esp is undefined)<br>
+            <img id="small_image" src="../assets/cs161/callercallee9.jpeg" alt=""><br><br>
+            9. Restore the old ebp(sfp). The next value on the stack is the sfp, the old value of the ebp before we started executing the function. We pop the sfp off the stack and store it back into the ebp register. This returns ebp to its old value before the callee function was called.<br>
+            <img id="small_image" src="../assets/cs161/callercallee10.jpeg" alt=""><br><br>
+            10. Restore the old eip(rip). The next value on the stack is the rip, the old value of eip before we started executing the function. we pop the rip off the stack and store it back into the register.<br>
+            <img id="small_image" src="../assets/cs161/callercallee11.jpeg" alt=""><br><br>
+            11. Remove arguments from the stack. Since the functin call is over, we don't need to store the arguments anymore. We can remove them by incrementing esp. <br>
+            <img id="small_image" src="../assets/cs161/callercallee12.jpeg" alt=""><br><br>
+
+
+        </p>
+
 
 </body>
 </html>
