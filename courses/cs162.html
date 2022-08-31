@@ -11,6 +11,8 @@
         <p class="toc_title">Content:</p>
         <ul class="toc_list">
         <li><a href="#FP1">Operating System Overview</a></li>
+        <li><a href="#FP1">Protection: Processes and Kernels</a></li>
+
 
 
         </ul>
@@ -72,8 +74,66 @@
             Reliability: system does what it is supposed to do-- OS failures are catastrophic. Related: availability<br>
             Security: minimize vulnerability to attack. Related: integrity, privacy, enforcement policy, security policy<br>
             Portability: a portable abstraction does not change as the hardware changes. Can't rewrite application(or OS) every time, must plan for hardware that does not exist yet.<br>
+        </p>
+        <h3 id="FP2">Protection: Processes and Kernels</h3>
+        <p id="subtext">
+            The OS system implements a virtual machine for the application whose interface is more convenient than the raw hardware interface. Convenient = security, reliability, portability.<br>
+        </p>
+        <h4 id="subhead">Mechanisms vs Policy:</h4>
+        <p id="subtext">
+            Mechanism: Lowe-level methods or protocols that implement a needed piece of functionality.(e.g. A brake pedal) <br>
+            Policy: Algorithms for making decisions wihtin the OS. Use the mechanism. (e.g. "I break when I see a stop sign")<br>
+        </p>
+        <h4 id="subhead">Requirements for Virtualization:</h4>
+        <p id="subtext">
+            Protection is necessary to preserve the virtualization abstraction. Protect application from other application's code. Protect OS from the application. Protect applications against inequitable resource utilisation.<br>
+        </p>
+        <h4 id="subhead">What is a process?:</h4>
+        <p id="subtext">
+            A process is an instance of a running program. Which has access to:<br>
+            CPU, Memory(store code, data, stack, heap), registers(PC, SP, regular registers), IO information(open files, etc).<br>
+            <img id="medium_image" src="../assets/cs162/process.jpg" alt="">
+            <img id="medium_image" src="../assets/cs162/processlifecycle.jpg" alt=""><br><br>
+            When a process is in the running state it is in the CPU. Blocked and Ready processes are distinguished so that processes waiting on IO aren't rescheduled.<br>
+            Process Management: <br>
+            <p id="subtext_bullet">
+                Process Control Block: in OS stores necessary metadata-- pc, stack ptr, registers, PID, UID, list of open files, process state, etc.<br>
+                Process List: stores all processes. Run Queues: List all PCBs in Ready state. Wait Queues: lists all PCBs in blocked state<br>
+            </p>
+        </p>
+        <h4 id="subhead">OS Kernel:</h4>
+        <p id="subtext">
+            Lowest level of OS running on system. Kernel is trusted with full access to all hardware capabilities. All other software(OS or applications) is considered untrusted.<br>
+            The Kernel has full access to keep it simple and small is security. This is the principle of lowest access, keep entities with as little access as possible.<br>
+            Process Refined: an executing program with restricted rights. Processes are boxed in with the OS and Hardware and the kernel is the door. Enforcing mechanism must not hinder functionality or hurt performance.<br>
+            User Mode vs Kernel Mode:<br>
+            <p id="subtext_bullet">
+                Application/User Code(untrusted): run all the processor with all potentially dangerous operations disabled.<br>
+                Kernel Code(trusted): runs directly on processor with unlimited rights. Performs any hardware operations.<br>
+            </p>
+        </p>
+        <h4 id="subhead">How can the kernel enforce restricted rights?:</h4>
+        <p id="subtext">
+            Attempt 1: Simulation<br>
+            <img id="medium_image" src="../assets/cs162/kernel1.jpg" alt=""><br><br>
+            Attempt 2: Dual Mode Operation<br>
+            <img id="medium_image" src="../assets/cs162/kernel2.jpg" alt="">
+            <img id="medium_image" src="../assets/cs162/kernel3.jpg" alt=""><br><br>
+            Privileged Instructions: cannot change privilege level, cannot change address space, cannot disable interrupts, cannot perform IO operations, cannot halt the processor. So what can an application due? Asks for permission to access kernel mode. System calls Transition from user to kernel mode only at specific locations specified by the OS. Exceptsions User mode attempts to execute a privileged exception. Generates a processor exception which passes control to kernel at specific locations. <br>
+            Memory Protection: OS and application both resident in memory, application should not read/write kernel memory(or other apps memory).<br>
+            <p id="subtext_bullet">
+                How do we achieve memory isolation?<br>
+                Attempt 1: Isolation<br>
+                Hardware to the rescue-- base and bound registers. If memory reference was in between the base and bound reference it was 'ok' otherwise an exception is thrown. Limitations: static memory allocation, cannot share memory between processes, location of code & data determined at runtime, cannot relocate/move programs leads to fragmentation. <br>
+                Attempt 2: Virtualization<br>
+                Virtual Address space-- set of memory address that process can "touch". Physical address space-- set of memory addresses supported by hardware. Map from virtual addresses to physical address through address translation. Benefits: whole space of virtual address space even physical address not resident in memory, same virtual address can map to same physical address, every process's memory always starts at 0, can dynamically change mapping of virtual to physical addresses.<br>
+
+            </p>
+
 
         </p>
 
+
+        
 </body>
 </html>
