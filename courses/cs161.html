@@ -12,7 +12,8 @@
         <ul class="toc_list">
         <li><a href="#FP1">Overview</a></li>
         <li><a href="#FP2">Security Principles</a></li>
-        <li><a href="#FP2">x86 Assembly and Call Stack</a></li>
+        <li><a href="#FP3">x86 Assembly and Call Stack</a></li>
+        <li><a href="#FP4">Memory Safety Vulnerabilities</a></li>
 
 
         </ul>
@@ -113,7 +114,7 @@
             This is known as a Time-Of-Check To Time-Of-Use (TOCTTOU) vulnerability, because between the check and the use of whatever state was checked, the state somehow changed.<br>
         </p>
 
-        <h3 id="FP2">x86 Assembly and Call Stack</h3>
+        <h3 id="FP3">x86 Assembly and Call Stack</h3>
         <h4 id="subhead">Number Representation:</h4>
         <p id="subtext">
             At the lowest level, computers store memory as individual bits, where each bit is either 0 or 1. <br>
@@ -186,9 +187,47 @@
             <img id="small_image" src="../assets/cs161/callercallee11.jpeg" alt=""><br><br>
             11. Remove arguments from the stack. Since the functin call is over, we don't need to store the arguments anymore. We can remove them by incrementing esp. <br>
             <img id="small_image" src="../assets/cs161/callercallee12.jpeg" alt=""><br><br>
-
-
         </p>
+
+        <h3 id="FP4">Memory Safety Vulnerabilities</h3>
+        <h4 id="subhead">Buffer overflow vulnerabilities:</h4> 
+        <p id="subtext">
+            Buffer overflow vulnerabilities are a particular risk in C, and since C is an especially widely used systems programming language, you might not be surprised to hear that buffer overflows are one of the post pervasive kind of implementation flaws around. C is a low-level language, meaning that the programmer is always exposed to the bare machine, one of the reasons why C is such a popular systems language. A particular weakness in C is the absence of automatic bounds-checking for array or pointer accesses. For example, if the programmer declares an array char buffer[4], C will not automatically throw an error if the programmer tries to access buffer[5]. It is through this absence of automatic bounds-checking that buffer overflows take advantage of. A buffer overflow bug is one where the programmer fails to perform adequate bounds chekcs, triggering an out-of-bounds memory access that writes beyond the bounds of some meory region. Attackers can use these out-of-bounds memory accesses to corrupt the program's intended behavior.<br> 
+            Malicious code injection attack uses a buffer overflow to override a function pointer to point to malicious code. Malicious code injection attacks allows an attacker to seize control of the program. At the conclusion of the attack, the program is still running, but now it is executing code chosen by the attackers, rather than the original code. This type of attack are only possible when the code satisfies special conditions: the buffer that can be overflowed must be followed in memory by some security-critical data. Typically attacking the heap memory.<br>
+            Stack smashing takes advantage of the way local variables are laid out on the stack. Stack smashing attacks exploit the x86 call convention. An attacker would write past bounds overwriting the sfp and rip. The rip is the pointer to the next instruction to execute, overwriting this allows for again malicious code injection. Suppose the malicious code didn't already exist in memory, and we have to inject it ourselves during the stack smashing attack. Sometimes this malicious code is called shellcode, because the malicious code is often written to spawn an interactive shell that lets the attacker perform arbitrary actions.<br>
+            Bottom Line: If your program has a buffer overflow bug, you should assume that the bug is exploitable and an attacker can take control of your program.<br>
+        </p>
+        <h4 id="subhead">Format String Vulnerabilities:</h4> 
+        <p id="subtext">
+            When the printf() function executes, it looks for a format string modifier denoted by a "%" in its first arguments located 4 bytes above the rip of printf(). If it finds the modifier, it then looks 8 bytes above the rip for the "actual" argument. What happens when there is a mismatch in the number of format string modifiers in the first arguments and number of additional arguments? Such as "printf("x has the value %d, y has the value %d, z has the value %d \n", x, y);" The format string asks for 3 arguments but having three "%d" modifiers but the printf() function is only passed 2 additional arguments. The C compiler does not catch this error. As long as at least one additional argument is passed everything looks fine to the C compiler. Thus prinf() simply fetches arguments from the stack according to the number of format modifiers present. In cases of mismatch it will fetch some data from the stack that does not belong to the function call. Similar to how the %d format modifier makes the printf() function print the value located at the expected address, various string modifiers have different uses: %s->treat the argument as an address and print the string at that address up until the first null byte, %n->treat the argument as an address and write the number of characters that have been printed so far to that address, %c->treat the argument as a value and print it out as a character, %x look at the stack and read the first variable after the format string, %[b]u->print out [b] bytes starting from the argument.<br>
+            Bottom Line: if your program has a format string vulnerability assume that the attacker cal learn any value stored in memory adn can take control of your program.<br>
+        </p>
+        <h4 id="subhead">Integer Conversion Vulnerabilities:</h4> 
+        <p id="subtext">
+            <img id="small_image" src="../assets/cs161/numberconversionvulnerabilities.jpg" alt=""><br><br>
+            If the attacker provides a negative value for len, the if statement won't notice anything wrong and memcpy() will be executed with a negative third argument. C will cast this negative value to an unsigned int and it will become a very large positive integer. Thus memcpy() will copy a huge amount of memory into buf, overflowing the buffer.Note the C compiler won't warn about the type mismatch between the signed int and unsigned int; it silently inserts an implicit cast. This kind of bug can be hard to spot, because on the surface it appears that the programmer has applied the correct bounds checks, but they are flawed.<br>
+            <img id="small_image" src="../assets/cs161/numberconversionvulnerabilites2.jpg" alt=""><br><br>
+            This code seems to avoid buffer overflow problems(indeed it allocates 5 more bytes than necessary). But, there is a subtle problem: len+5 can wrap around if len is too large. For instance, if len = 0xFFFFFFFF, then the value of len+5 is 4(on 42-bit platforms). In this case, the code allocates a 4-byte buffer and then writes a lot more than 4 bytes into it: a classic buffer overflow.<br>
+        </p>
+        <h4 id="subhead">Off-by_one Vulnerabilities:</h4> 
+        <p id="subtext">
+            Off-by-one errors are very common in programming: for example, you might accidentally use <= instead of <, or you might accidentally start a loop at i=0 instead of i=1. As it turns out, even an off-by-one error can lead to dangerous memory safety vulnerabilities. Consider a buffer whose bounds checks are off by one.<br>
+            <img id="small_image" src="../assets/cs161/offbyonevulnerability.jpg" alt=""><br><br>
+            Step 1: This is what normal execution during a function looks like. The stack has the rip(saved eip), sfp(saved ebp), and the local variable buff. The esp register points to the bottom of the stack. The ebp register points to the sfp at the top of the stack. The sfp(saved ebp) points ot the ebp of the previous function, which is higher up in memory. The rip(saved eip) points to somewhere in the code section.<br>
+            Step 2: We overwrite all of buff, plus the byte immediately after buff, which is the least significant byte of the sfp directly above buff. We can change the last byte of sfp so that the sfp points to somewhere inside buff. The sfp label becomes fsp here to indicate that it is now a forged sfp with the last byte changed. Eventually after your function finishes executing it returns and executes: mov %ebp %esp = change the esp register to point to wherever ebp is currently point to, pop %ebp = take the next value on the stack and place it in the ebp register and move esp up by 4 to delete this value off the stack, pop %eip = take the next value on the stack and place it in the eip register and move the exp up by 4 to delete this value off the stack.<br> 
+            Step 3: mov %ebp, %esp- esp now points where ebp is point which is the forged sfp.<br>
+            Step 4: pop %ebp take the next value on the stack, the forged sfp, and place it in the ebp register. Now ebp is point inside the buffer.<br>
+            Step 5: pop %eip take the next value on the stack, the rip, and place it in the eip register. Since we didn't maliciously change the rip, the old eip is correctly restored.<br>
+            After step 5, nothing has changed exept that the ebp now points inside the buffer, This make sense: we only changed the sfp so when ebp is restored it will point to where the forged sfp was pointing(inside buffer). The key insight for this exploit is that one function return is not enough. However, eventually if a second function return happens, it will allow us to start executing instructions at an arbitrary location. <br>
+            Step 6: move %ebp, %esp esp now points where ebp is pointing which is inside the buffer. At this point in normal execution both ebp and esp think that they are pointing at the sfp.<br>
+            Step 7: pop %ebp take the next value on the stack(which the program thinks is the sfp but is actually some attacker-controlled value inside the buffer) and place it in the ebp register. The question mark here says that even though the attacker controls what gets placed in the ebp register, we don't care what the value actually is.<br>
+            Step 8: pop %eip take the next value on the stack(which the program thinks is the rip but is actually some attacker-controlled value inside the buffer) and place it in the eip register. This is where you place the address of shellcode, since you control the values in buff, and the program is taking an address from buff and jumping there is execute instructions. Also, note that it is not enough to place the shellcode 4 bytes above where the forged sfp is points, You need to put the address of shellcode there, since the program will interpret that part of memory as the rip.<br>
+        </p>
+        <h4 id="subhead">Other Memory Safety Vulnerabilities:</h4> 
+        <p id="subtext">
+            Buffer overflows, format string vulnerabilities, and other examples above are examples of memory safety bugs: cases where an attacker can read or write beyond the valid range of memory regions. Other examples of memory safety violations include using a dangling pointer(a pointer into a memory region that has been freed and is no longer valid) and double-free bugs(where a dynamically allocated object is explicitly freed multiple times). "Use after free" bugs, where an object or structure in memory is deallocated but still used. are particularly attractive targets for exploitation. Exploiting these vulnerabilities generally involve the attacker triggering the creation of two separate objects that, because of the use-after-free on the first object, actually share the same memory. The attacker can now use the second object to manipulate the interpretation of the first object. <br>
+        </p>
+
 
 
 </body>
