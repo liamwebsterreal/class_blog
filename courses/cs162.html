@@ -11,128 +11,280 @@
         <p class="toc_title">Content:</p>
         <ul class="toc_list">
         <li><a href="#FP1">Operating System Overview</a></li>
-        <li><a href="#FP1">Protection: Processes and Kernels</a></li>
+        <li><a href="#FP2">Protection: Processes and Kernels</a></li>
+        <li><a href="#FP3">Abstractions: Files, I/O, IPC, Pipes and Sockets</a></li>
 
 
 
         </ul>
     </div>
-        <h3 id="FP1">Operating System Overview</h3>
-
-        <h4 id="subhead">Why OS:</h4>
-        <p id="subtext">
-            Every device runs an operating system. Every program ever runs on an operating system. Performance and execution behavior will depend on the operating system.<br>
-            Operating Systems are becoming largely more complex. This is due to hardware becoming smarter, need for better reliability and security, need for better performance(efficient code/parallel code), and need for better energy usage.<br>
-        </p>
-        <h4 id="subhead">What OS:</h4>
-        <p id="subtext">
-            Operating: manages multiple tasks and users. 
-            System: a set of interconnected components with an expected behavior observed at the interface with its environment.<br>
-            Operating System(v1): an operating system is the layer of software that interfaces between(diverse) hardware resources and the (many) applications running on the machine.<br>
-            Operating System(v2): an operating system implements a virtual machine for the application whose interface is more convenient than the raw hardware interface(convenint = security, reliability, portability).<br>
-            Three Main Hats:<br>
-            <p id="subtext_bullet">
-                Referee: manage protection, isolation, and sharing of resources<br>
-                Illusionist: provide clean, easy-to-use abstractions of physical resources<br>
-                Glue: provides a set of common services<br>
-            </p>
-        </p>
-        <p id="subtext">
-            OS as referee:<br>
-            Allow multiple(untrusted) applications to run concurrently.<br>
-            Fault Isolation: Isolate programs from each other. Isolate OS from other programs. Concepts: process and dual mode execution<br>
-            Resource Sharing: How to choose which task to run next? How to split physical resources? Concepts: scheduling<br>
-            Communication: How can OS support communication to share results? Concepts: Pipes/Sockets<br><br>
-            OS as illusionist:<br>
-            Mask the restrictions inherent in computer hardware through virtualization.<br>
-            All alone: provide abstraction that application has exclusive use of resources.<br>
-            All powerful: provide abstraction that hardware resources are infinite.<br>
-            All expressive: provide abstraction of hardware capabilities that are not physically present.<br><br>
-            OS as glue:<br>
-            Provide set of common standard services to applications to simplify and regularize their design.<br>
-            Make Sharing Easier: simpler if all assume same basic primitives.<br>
-            Minimize reuse: avoid re-implementing functionality from scratch. Evolve components independently.<br><br>
-            Putting it All Together:<br>
-            <img id="medium_image" src="../assets/cs162/OSoverview.jpg" alt=""><br><br>
-        </p>
-        <p id="subtext">
-            Definitions:<br>
-            Overhead: added resource cost of implementing an abstraction<br>
-            Fairness: How "well" are resources distributed across applications<br>
-            Response Time: how long does it take for a task to complete<br>
-            Throughput: rate at which group of tasks can be completed<br>
-            Predictability: are performance metrics constant over time<br>
-            Availability: mean time to failure + mean time to repair<br>
-            Integrity: computer's operation cannot be compromised by a malicious attacker<br>
-            Privacy: data stored on computer accessible to authorized users<br>
-            Enforcement Policy: How the OS ensures only permitted actions are allowed<br>
-            Security Policy: What is permitted<br>
-        </p>
-        <p id="subtext">
-            OS Evaluations Criteria:<br>
-            Performance: OS must implement the abstraction efficiently, with low overhead and equitably. Related: overhead, fairness, response time, throughput, predictability<br>
-            Reliability: system does what it is supposed to do-- OS failures are catastrophic. Related: availability<br>
-            Security: minimize vulnerability to attack. Related: integrity, privacy, enforcement policy, security policy<br>
-            Portability: a portable abstraction does not change as the hardware changes. Can't rewrite application(or OS) every time, must plan for hardware that does not exist yet.<br>
-        </p>
-        <h3 id="FP2">Protection: Processes and Kernels</h3>
-        <p id="subtext">
-            The OS system implements a virtual machine for the application whose interface is more convenient than the raw hardware interface. Convenient = security, reliability, portability.<br>
-        </p>
-        <h4 id="subhead">Mechanisms vs Policy:</h4>
-        <p id="subtext">
-            Mechanism: Lowe-level methods or protocols that implement a needed piece of functionality.(e.g. A brake pedal) <br>
-            Policy: Algorithms for making decisions wihtin the OS. Use the mechanism. (e.g. "I break when I see a stop sign")<br>
-        </p>
-        <h4 id="subhead">Requirements for Virtualization:</h4>
-        <p id="subtext">
-            Protection is necessary to preserve the virtualization abstraction. Protect application from other application's code. Protect OS from the application. Protect applications against inequitable resource utilisation.<br>
-        </p>
-        <h4 id="subhead">What is a process?:</h4>
-        <p id="subtext">
-            A process is an instance of a running program. Which has access to:<br>
-            CPU, Memory(store code, data, stack, heap), registers(PC, SP, regular registers), IO information(open files, etc).<br>
-            <img id="medium_image" src="../assets/cs162/process.jpg" alt="">
-            <img id="medium_image" src="../assets/cs162/processlifecycle.jpg" alt=""><br><br>
-            When a process is in the running state it is in the CPU. Blocked and Ready processes are distinguished so that processes waiting on IO aren't rescheduled.<br>
-            Process Management: <br>
-            <p id="subtext_bullet">
-                Process Control Block: in OS stores necessary metadata-- pc, stack ptr, registers, PID, UID, list of open files, process state, etc.<br>
-                Process List: stores all processes. Run Queues: List all PCBs in Ready state. Wait Queues: lists all PCBs in blocked state<br>
-            </p>
-        </p>
-        <h4 id="subhead">OS Kernel:</h4>
-        <p id="subtext">
-            Lowest level of OS running on system. Kernel is trusted with full access to all hardware capabilities. All other software(OS or applications) is considered untrusted.<br>
-            The Kernel has full access to keep it simple and small is security. This is the principle of lowest access, keep entities with as little access as possible.<br>
-            Process Refined: an executing program with restricted rights. Processes are boxed in with the OS and Hardware and the kernel is the door. Enforcing mechanism must not hinder functionality or hurt performance.<br>
-            User Mode vs Kernel Mode:<br>
-            <p id="subtext_bullet">
-                Application/User Code(untrusted): run all the processor with all potentially dangerous operations disabled.<br>
-                Kernel Code(trusted): runs directly on processor with unlimited rights. Performs any hardware operations.<br>
-            </p>
-        </p>
-        <h4 id="subhead">How can the kernel enforce restricted rights?:</h4>
-        <p id="subtext">
-            Attempt 1: Simulation<br>
-            <img id="medium_image" src="../assets/cs162/kernel1.jpg" alt=""><br><br>
-            Attempt 2: Dual Mode Operation<br>
-            <img id="medium_image" src="../assets/cs162/kernel2.jpg" alt="">
-            <img id="medium_image" src="../assets/cs162/kernel3.jpg" alt=""><br><br>
-            Privileged Instructions: cannot change privilege level, cannot change address space, cannot disable interrupts, cannot perform IO operations, cannot halt the processor. So what can an application due? Asks for permission to access kernel mode. System calls Transition from user to kernel mode only at specific locations specified by the OS. Exceptsions User mode attempts to execute a privileged exception. Generates a processor exception which passes control to kernel at specific locations. <br>
-            Memory Protection: OS and application both resident in memory, application should not read/write kernel memory(or other apps memory).<br>
-            <p id="subtext_bullet">
-                How do we achieve memory isolation?<br>
-                Attempt 1: Isolation<br>
-                Hardware to the rescue-- base and bound registers. If memory reference was in between the base and bound reference it was 'ok' otherwise an exception is thrown. Limitations: static memory allocation, cannot share memory between processes, location of code & data determined at runtime, cannot relocate/move programs leads to fragmentation. <br>
-                Attempt 2: Virtualization<br>
-                Virtual Address space-- set of memory address that process can "touch". Physical address space-- set of memory addresses supported by hardware. Map from virtual addresses to physical address through address translation. Benefits: whole space of virtual address space even physical address not resident in memory, same virtual address can map to same physical address, every process's memory always starts at 0, can dynamically change mapping of virtual to physical addresses.<br>
-            </p>
 
 
+    <h3 id="FP1">Operating System Overview</h3>
+    <h4 id="subhead">Why OS:</h4>
+    <p id="subtext">
+        Every device runs an operating system. Every program ever runs on an operating system. Performance and execution behavior will depend on the operating system.<br>
+        Operating Systems are becoming largely more complex. This is due to hardware becoming smarter, need for better reliability and security, need for better performance(efficient code/parallel code), and need for better energy usage.<br>
+    </p>
+    <h4 id="subhead">What OS:</h4>
+    <p id="subtext">
+        Operating: manages multiple tasks and users. 
+        System: a set of interconnected components with an expected behavior observed at the interface with its environment.<br>
+        Operating System(v1): an operating system is the layer of software that interfaces between(diverse) hardware resources and the (many) applications running on the machine.<br>
+        Operating System(v2): an operating system implements a virtual machine for the application whose interface is more convenient than the raw hardware interface(convenint = security, reliability, portability).<br>
+        Three Main Hats:<br>
+        <p id="subtext_bullet">
+            Referee: manage protection, isolation, and sharing of resources<br>
+            Illusionist: provide clean, easy-to-use abstractions of physical resources<br>
+            Glue: provides a set of common services<br>
         </p>
+    </p>
+    <p id="subtext">
+        OS as referee:<br>
+        Allow multiple(untrusted) applications to run concurrently.<br>
+        Fault Isolation: Isolate programs from each other. Isolate OS from other programs. Concepts: process and dual mode execution<br>
+        Resource Sharing: How to choose which task to run next? How to split physical resources? Concepts: scheduling<br>
+        Communication: How can OS support communication to share results? Concepts: Pipes/Sockets<br><br>
+        OS as illusionist:<br>
+        Mask the restrictions inherent in computer hardware through virtualization.<br>
+        All alone: provide abstraction that application has exclusive use of resources.<br>
+        All powerful: provide abstraction that hardware resources are infinite.<br>
+        All expressive: provide abstraction of hardware capabilities that are not physically present.<br><br>
+        OS as glue:<br>
+        Provide set of common standard services to applications to simplify and regularize their design.<br>
+        Make Sharing Easier: simpler if all assume same basic primitives.<br>
+        Minimize reuse: avoid re-implementing functionality from scratch. Evolve components independently.<br><br>
+        Putting it All Together:<br>
+        <img id="medium_image" src="../assets/cs162/OSoverview.jpg" alt=""><br><br>
+    </p>
+    <p id="subtext">
+        Definitions:<br>
+        Overhead: added resource cost of implementing an abstraction<br>
+        Fairness: How "well" are resources distributed across applications<br>
+        Response Time: how long does it take for a task to complete<br>
+        Throughput: rate at which group of tasks can be completed<br>
+        Predictability: are performance metrics constant over time<br>
+        Availability: mean time to failure + mean time to repair<br>
+        Integrity: computer's operation cannot be compromised by a malicious attacker<br>
+        Privacy: data stored on computer accessible to authorized users<br>
+        Enforcement Policy: How the OS ensures only permitted actions are allowed<br>
+        Security Policy: What is permitted<br>
+    </p>
+    <p id="subtext">
+        OS Evaluations Criteria:<br>
+        Performance: OS must implement the abstraction efficiently, with low overhead and equitably. Related: overhead, fairness, response time, throughput, predictability<br>
+        Reliability: system does what it is supposed to do-- OS failures are catastrophic. Related: availability<br>
+        Security: minimize vulnerability to attack. Related: integrity, privacy, enforcement policy, security policy<br>
+        Portability: a portable abstraction does not change as the hardware changes. Can't rewrite application(or OS) every time, must plan for hardware that does not exist yet.<br>
+    </p>
+    <p id="subtext">
+        What functions do we need an operating system to provide applications?<br>
+        Process Management:  Can a program create an instance of another program? Wait for it to complete? Stop or resume another running program? Send it an asynchronous event?<br>
+        Input/output. How do processes communicate with devices attached to the computer and through them to the physical world? Can processes communicate with each other?<br>
+        Thread management. Can we create multiple activities or threads that share memory or other resources within a process? Can we stop and start threads? How do we synchronize their use of shared data structures?<br>
+        Memory management. Can a process ask for more (or less) memory space? Can it share the same physical memory region with other processes?<br>
+        File systems and storage. How does a process store the user’s data persistently so that it can survive machine crashes and disk failures? How does the user name and organize their data?<br>
+        Networking and distributed systems. How do processes communicate with processes on other computers? How do processes on different computers coordinate their actions despite machine crashes and network problems?<br>
+        Graphics and window management. How does a process control pixels on its portion of the screen? How does a process make use of graphics accelerators?<br>
+        Authentication and security. What permissions does a user or a program have, and how are these permissions kept up to date? On what basis do we know the user (or program) is who they say they are?<br>
+    </p>
 
 
+    <h3 id="FP2">Protection: Processes and Kernels</h3>
+    <p id="subtext">
+        The OS system implements a virtual machine for the application whose interface is more convenient than the raw hardware interface. Convenient = security, reliability, portability.<br>
+    </p>
+    <h4 id="subhead">Mechanisms vs Policy:</h4>
+    <p id="subtext">
+        Mechanism: Lowe-level methods or protocols that implement a needed piece of functionality.(e.g. A brake pedal) <br>
+        Policy: Algorithms for making decisions wihtin the OS. Use the mechanism. (e.g. "I break when I see a stop sign")<br>
+    </p>
+    <h4 id="subhead">Requirements for Virtualization:</h4>
+    <p id="subtext">
+        Protection is necessary to preserve the virtualization abstraction. Protect application from other application's code. Protect OS from the application. Protect applications against inequitable resource utilisation.<br>
+    </p>
+    <h4 id="subhead">What is a process?:</h4>
+    <p id="subtext">
+        A process is an instance of a running program. Which has access to:<br>
+        CPU, Memory(store code, data, stack, heap), registers(PC, SP, regular registers), IO information(open files, etc).<br>
+        <img id="medium_image" src="../assets/cs162/process.jpg" alt="">
+        <img id="medium_image" src="../assets/cs162/processlifecycle.jpg" alt=""><br><br>
+        When a process is in the running state it is in the CPU. Blocked and Ready processes are distinguished so that processes waiting on IO aren't rescheduled.<br>
+        Process Management: <br>
+        <p id="subtext_bullet">
+            Process Control Block: in OS stores necessary metadata-- pc, stack ptr, registers, PID, UID, list of open files, process state, etc.<br>
+            Process List: stores all processes. Run Queues: List all PCBs in Ready state. Wait Queues: lists all PCBs in blocked state<br>
+        </p>
+    </p>
+    <h4 id="subhead">OS Kernel:</h4>
+    <p id="subtext">
+        Lowest level of OS running on system. Kernel is trusted with full access to all hardware capabilities. All other software(OS or applications) is considered untrusted.<br>
+        The Kernel has full access to keep it simple and small is security. This is the principle of lowest access, keep entities with as little access as possible.<br>
+        Process Refined: an executing program with restricted rights. Processes are boxed in with the OS and Hardware and the kernel is the door. Enforcing mechanism must not hinder functionality or hurt performance.<br>
+        User Mode vs Kernel Mode:<br>
+        <p id="subtext_bullet">
+            Application/User Code(untrusted): run all the processor with all potentially dangerous operations disabled.<br>
+            Kernel Code(trusted): runs directly on processor with unlimited rights. Performs any hardware operations.<br>
+        </p>
+    </p>
+    <h4 id="subhead">How can the kernel enforce restricted rights?:</h4>
+    <p id="subtext">
+        Attempt 1: Simulation<br>
+        <img id="medium_image" src="../assets/cs162/kernel1.jpg" alt=""><br><br>
+        Attempt 2: Dual Mode Operation<br>
+        <img id="medium_image" src="../assets/cs162/kernel2.jpg" alt="">
+        <img id="medium_image" src="../assets/cs162/kernel3.jpg" alt=""><br><br>
+        Privileged Instructions: Unsafe instructions cannot be executed in user mode.<br>
+        cannot change privilege level, cannot change address space, cannot disable interrupts, cannot perform IO operations, cannot halt the processor. So what can an application due? Asks for permission to access kernel mode. System calls Transition from user to kernel mode only at specific locations specified by the OS. Exceptsions User mode attempts to execute a privileged exception. Generates a processor exception which passes control to kernel at specific locations. <br>
         
+        Memory Isolation: Memory accesses outside a process's address space is prohibited.<br>
+        Attempt 1: Isolation<br>
+        Hardware to the rescue-- base and bound registers. If memory reference was in between the base and bound reference it was 'ok' otherwise an exception is thrown. Limitations: static memory allocation, cannot share memory between processes, location of code & data determined at runtime, cannot relocate/move programs leads to fragmentation. <br>
+        Attempt 2: Virtualization<br>
+        Virtual Address space-- set of memory address that process can "touch". Physical address space-- set of memory addresses supported by hardware. Map from virtual addresses to physical address through address translation. Benefits: whole space of virtual address space even physical address not resident in memory, same virtual address can map to same physical address, every process's memory always starts at 0, can dynamically change mapping of virtual to physical addresses.<br>
+
+        Interrupts: Ensure kernel can regain control from running process<br>
+        Hardware to the rescue. Set to interrupt processor after a specified delay or specified event and transfer control to (specific locations) in Kernel. Resetting timer is a privilege operation.<br>
+
+        Safe Transfers: Correctly transfer control from user-mode to kernel-mode and back.<br>
+        <img id="medium_image" src="../assets/cs162/safecontroltransfer.jpg" alt=""><br><br>
+        <p id="subtext_bullet">
+            System Calls: User program requests OS service. Transfers to kernel at well-defined location. Read input/write to screen, to files, create new processes, send network packets, get time, etc.<br>
+            <img id="medium_image" src="../assets/cs162/systemcalls.jpg" alt=""><br><br>
+
+            Exceptions: Any unexpected condition caused by user program behavior. Stop executing process and enter kernel at specific exception handler. E.G. process missteps(division by zero, writing read-only memory) Attempts to execute a privileged instruction in user mode. Debugger breakpoints! Exceptions are handled the same as interrupts.<br>
+        
+            Interrupts: Asynchronous signal to the processor that some external event has occurred and may require attention. When process interrupt, stop current process and enter kernel at designated interrupt handler. E.G. timer interrupts, IO interrupts, interprocessor interrupts.<br>
+        </p>
+    </p>
+    <p id="subtext">
+        Kernel->User:<br><br>
+        New Process Creation: Kernel instantiates data structures, sets registers, switches to user mode.<br>
+        Resume after an exception/interrupt/syscall: resume execution by restoring PC, registers, and unsetting mode.<br>
+        Switching to a different process: save old process state. Load new process state(restore PC, registers). Unset mode.<br>
+        User->Kernel:<br><br>
+        Key Requirements: malicious user program(or IO device) cannot corrupt the kernel. Interrupts, exceptions or system calls handled similarly => fewer code paths, fewer bugs.<br>
+        Limited Entry: cannot jump to arbitrary code in kernel.<br>
+        Atomic Switch: switch from process stack to kernel stack.<br>
+        Transparent Execution: restore prior state to continue program.<br>
+    </p>
+    <p id="subtext">
+        <img id="medium_image" src="../assets/cs162/interrupthandler.jpg" alt=""><br><br>
+        <img id="medium_image" src="../assets/cs162/syscalls.jpg" alt=""><br><br>
+        <img id="medium_image" src="../assets/cs162/syscall2.jpg" alt=""><br><br>
+        <img id="medium_image" src="../assets/cs162/syscall3.jpg" alt=""><br><br>
+    </p>
+
+    <h3 id="FP3">Abstractions: Files, I/O, IPC, Pipes and Sockets</h3>
+    <h4 id="subhead">The Programming Interface:</h4>
+    <p id="subtext">
+        In this section the focus is on process management and input/output.<br>
+    </p>
+    <h4 id="subhead">Process Management:</h4>
+    <p id="subtext">
+        A shell: a job control system; both Windows and UNIX have a shell. An early innovation for user-level process management was to allow developers to write their won shell command line interpreters. Many tasks involve a sequence of steps to do something, each of which can be its own program. With a shell, you can write down the sequence of steps, as a sequence of programs to run to do each step. Thus, you can view it as a very early version of a scripting system.<br>
+        <p id="subtext_bullet">
+            Windows Process Management:<br>
+            One approach to process management is to just add a system call to create a process and other system calls for other process process operations. This turns out to be simple in theory and complex in practice. In Windows, there is a routine called, CreateProcess():<br>
+            1. Create and initialize the process control block(PCB) in the kernel. <br>
+            2. Create and initialize a new address space.<br>
+            3. Load the program prog into the address space.<br>
+            4. Copy arguments args into memory in the address space.<br>
+            4. Initialize the hardware context to start execution at "start".<br>
+            5. Inform the scheduler that the new process is ready to run.<br>
+            Unfortunately, there are quite a few aspects of the process that the parent might like to control, such as: its privileges, where it sends its input and output, what is should store its files, what to use as a scheduling priority, and so forth. We cannot trust the child process to set its own privileges.<br><br>
+            UNIX Process Management:<br>
+            UNIX takes a different approach to process management, one that is complex in theory and simple in practice. UNIX splits CreateProcess in two steps, called fork and exec. UNIX fork creates a complete copy of the parent process, with one key exception. The child process sets up privileges, priorities and I/O for the program that is about to be started, e.g., by closing some files, opening others, reducing priority if it is to run in the background, etc. Because the chile runs exactly the same cod as the parent it can be trusted to set up the context for the new program correctly. Once the context is set, the child process calls UNIX exec. UNIX exec brings the new executable image into memory and starts it running. It may seem wasteful to make a complete copy of the parent process, just to overwrite that copy when we bring in the new executable image into memory using exec, it turns out that fork and exec can be implemented efficiently(discussed later) With this design, UNIX fork takes no arguments and returns an integer. UNIX exec takes two arguments(the program to be run and an array of arguments to pass to the program). This is in place of the ten parameters needed for CreateProcess.<br>
+            <img id="medium_image" src="../assets/cs162/processmanagement.jpg" alt=""><br>
+            UNIX fork:<br>
+            1. Create and initialize the process control block(PCB) in the kernel.<br>
+            2. Create a new address space.<br>
+            3. Initialize the address space.<br>
+            4. Initialize the address space with a copy of the entire contents of the address space of the parent.<br>
+            5. Inherit the execution context of the parent(e.g., any open files)<br>
+            6. Inform the scheduler that the new process is ready to run.<br>
+            A strange aspect of UNIX fork is that the system call returns twice: once to the parent and once to the child. To the parent, UNIX returns the process ID of the child; to the child, it returns zero indicating success. Just as if you made a clone of yourself, you would need some way to tell who was the clone and who was the original, UNIX uses the return value from the fork to distinguish the two copies. 
+            UNIX exec:<br>
+            1. Load the program prog into the current address space.<br>
+            2. Copy arguments args into memory in the address space.<br>
+            3. Initialize the hardware context to start execution at "start".<br>
+            Note: exec does not create a new process. Often the parent process needs to pause until the child process completes, e.g., if the next step depends on the output of the previous step. UNIX has a system call, naturally enough called wait, that pauses the parent until the child finishes, crashes, or is terminated. Since the parent could have created many child processes, wait it parametrized with the process ID of the child.<br>
+        </p>
+    </p>
+    <h4 id="subhead">Input/Output:</h4>
+    <p id="subtext">
+        One of the primary innovations in UNIX was to regularize all device input and output behind a single common interface. In fact, UNIX took this one giant step further: it uses this same interface for reading and writing files and for interprocess communication. THis approach was so successful that it is almost universally followed in systems today.<br>
+        The basic ideas in UNIX I/O interface are:<br><br>
+        Uniformity: All device I/O, file operations, and interprocess communication use the same set of system calls: open, close, read and write.<br><br>
+        Open before use: Before an application does I/O it must first call open on the device, file, or communication channel. This gives the operating system a chance to check access permissions and to set up any internal bookkeeping. Some deices, such as a printer, only allow one application access at a time -- the open call can return an error if the device is in use. Open returns a handle to be used in later calls to read, write and close to identify the file, device, or channel; this handle is somewhat misleadingly called a file descriptor even when it refers to a device or channel so there is no file involved. For convenience, the UNIX shell starts application with open file descriptor for reading and writing to the terminal.<br><br>
+        Byte-oriented: All devices, even those that transfer fixed-size blocks of data, are accessed with byte arrays. SImilarly, file and communication channel access is in terms of bytes, even though we store data structures in files and send data structures across channels.<br><br>
+        Kernel-buffered reads: Stream data, such as from the network or keyboard, is stored in a kerne; buffer and returned to the application on request. This allows the UNIX system call read interface to be the same for devices with streaming reads as those with block reads. In both cases, if no data is available to be returned immediately, the red call blocks until it arrives, potentially giving up the processor to some other task with work to do.<br><br>
+        Kernel-buffered writes: Likewise, outgoing data is stored in a kerne; buffer for transmission when the device becomes available. In the normal case, the system call write copies the data into the kernel buffer and returns immediately. This decouples the application from the device, allowing each to go at its own speed. If the application generates data faster than the device can receive it, the write system call blocks in the kernel until there is enough room to store the new data in the buffer. <br><br>
+        Explicit close: When an application is done with the device or file it calls close. This signals to the operating system that is can decrement the reference-count on the device and garbage collect any unused kernel data structures.<br><br>
+        Pipes: A UNIX pipe is a kernel buffer with two file descriptors, one for writing(to put data into the pipe) and one for reading(to pull data out of the pope). Data is read in exactly the same sequence it is written, but since the data is buffered, the execution of the producer and consumer can be decoupled, reducing waiting in the common case. The pip terminates when either endpoint closes the pipe or exits. Note: the internet has a similar facility to UNIX pipes called TCP(Transmission Control Protocol). Where UNIX pipes connect processes on the same machine, TCP provides a bi-directional pip between two processes running on different machines. In TCP, data is written as a sequence of bytes on one machine and rea out as the same sequence on the other machine.<br><br>
+        Replace File Descriptor: By manipulating the file descriptors of the child process, the shell can cause the child to read its input from or send its output to, a file or pipe instead of from a keyboard or to the screen. This way the child process does not need to be aware of who is providing or consuming its I/O. The shell does this redirection using a special system call named dup2(from, to) that replaces the to file descriptor with a copy of the from file descriptor.<br><br>
+        Wait for Multiple Reads: for client-server computing, a server may have a pip open to multiple client processes. Normally, read will block if there is no data to be read, and it would be inefficient for the server to poll each pipe in turn to check if there is work for it to do. The UNIX system call select(fd[], number) addresses this. Select allows the server to wait for input from any set of file descriptors; it returns the descriptor that has data, but it does not read the data. Windows has an equivalent function, called WaitForMultipleObjects.<br>
+    </p>
+    <p id="subtext">
+        <img id="medium_image" src="../assets/cs162/unixsystemcalls1.jpg" alt="">
+    </p>
+    <h4 id="subhead">Implementing a Shell:</h4>
+    <p id="subtext">
+        The UNIX system calls above are enough to build a flexible and powerful command line shell, one that runs entirely at user-level with no special permissions. The process that creates the shell is responsible for providing it an open file descriptor for reading commands for its input called stdin and for writing output called stdout. 
+        <img id="medium_image" src="../assets/cs162/implementingashell.jpg" alt=""><br>
+        Note: because the commands to read and write to an open file descriptor are the same whether the file descriptor represents a keyboard, screen, file, device, or pipe, UNIX programs do not need to be aware of where their input is coming from, or where their output is going. This is helpful in a number of ways:<br><br>
+        <p id="subtext_bullet">
+            A program can be a file of commands. Programs are normally a set of machine instructions but on UNIX a program can be a file containing a list of commands for a shell to interpret. To disambiguate shell programs signified in UNIX by putting "#! interpreter" as the first line of the file, where "interpreter" is teh same of the shell executable.<br><br>
+            A program can send its output to a file: By changing the stdout file descriptor in the child, the shell can redirect the child's output to a file. In the standard UNIX shell, this is signified with a "greater than" symbol. Thus, "ls > tmp" lists the contents of the current directory into the file "tmp". After the fork and before the exec, the shell can replace the stdout file descriptor for the child using dup2. Because the paretn has been cloned, changing hte stdout for the child has no effect on the parent.<br>
+            A program can read its input from a file. Likewise by using dup2 to change the stdin file descriptor, the shell can cause the child to read its input from a file. In the standard UNIX shell, this is signified with a "less than" symbol. Thus, "zork < solution" plays the game "zork" with a list of instructions stored in the file "solution".<br>
+            The output of one program can be the input to another program. The shell can use pipe to connect two programs together, so that the output of one is the input of another. This is called a producer-consumer relationship. In the standard UNIX shell, a pipe connecting two programs is signified by a "|" symbol, as in: "cpp file.c | cparse |cgen | as > file.o". In this case the shell creates four separate child processes, each connected by pipes to its predecessor and successor. Each of the phases can run in parallel, with the parent waiting for all of them to finish. <br>
+        </p>
+    </p>
+    <h4 id="subhead">Interprocess Communication:</h4>
+    <p id="subtext">
+        For many of the same reasons it makes sense to construct complex applications from simpler modules, it often makes sense to create applications that can specialize on specific task, and then combine those applications into more complex structures.<br>
+        <p id="subtext_bullet">
+            Producer-Consumer. In this model, programs are structured to accept as input the output of other programs. Communication is one-way: the producer only writes, and the consumer only reads. As we explained above, this allows chaining: a consumer can be, in turn, a producer for a different process. Much of the success of UNIX was due to its ability to easily compose many different programs together in this fashion.<br>
+            Client-server. An alternative model is to allow two-way communication between processes, as in client-server computing. The server implements some specialized task, such as managing the printer queue or managing the display. Clients send request to the server to do some task, and when operation is complete, there server replies back to the client.<br>
+            File System. Another way programs can be connected together is through reading and writing files. A text editor can import an image created by a drawing program, and the editor can in turn write an HTML file that a web server can read to know how to display a web page. A key distinction is that, unlike the first two modes, communication through the file system can be separated in time: the writer of the file does not need to be running at the same time as the file reader. Therefore, data needs to be stored persistently on disk or other stable storage, and the data needs to be named so that you can find the files when needed later on.<br>
+        </p>
+    </p>
+    <p id="subtext">
+        <img id="medium_image" src="../assets/cs162/producerconsumer.jpg" alt="">
+        <img id="medium_image" src="../assets/cs162/clientserver.jpg" alt=""><br><br>
+    </p>
+    <h4 id="subhead">Operating System Structure:</h4>
+    <p id="subtext">
+        There are many dependencies among the modules inside the operating system, and there is often quite frequent interaction between these modules. This has led operating system designers to wrestle with a fundamental tradeoff: by centralizing functionality in the kernel, performance is improved and it makes it easier to arrange tight integration between kernel modules. However, the resulting systems are less flexible, less easy to change and less adaptive to user or application needs.<br><br>
+        Monolithic Kernels:<br>
+        <img id="medium_image" src="../assets/cs162/monolithickernel.jpg" alt=""><br><br>
+        Almost all widely used commercial OS systems use monolithic kernel design, e.g. Windows, MacOS and Linux. In a monolithic kernel design most of the OS functionality runs inside the OS kernel. In truth, the term is a bit of misnomer, because even in so-called monolithic systems, there are often large segments of what users consider the OS that runs outside the kernel, either as utilities like the shell, or in system libraries such as libraries to manage the user interface. Internal to the monolithic kernel, the OS designer is free to develop whatever interfaces between modules that make sense, and so there is quite a bit of variation from OS to OS in those internal structures. However, two common themes emerge across systems: to improve portability, almost all modern operating systems have both a hardware abstraction layer and dynamically loaded device drivers.<br><br>
+            Microkernel:<br>
+            An alternative to the monolithic kernel approach is to run as much of the operating system as possible in one or more user-level servers. The windows manager on most operating systems works this way: individual applications draw items on their portion of the screen by sending request to the window manager. The window manager adjudicates which application window is in front or in back for each pixel on the screen, then renders the result. If the system has a hardware graphics accelerator present, the window manager can use it to render items more quickly. Some systems have moved other parts other parts of the operating system into user-level servers: the network stack, the file system, device drivers, and so forth. The difference between a monolithic and microkernel design is often transparent to the application programmer. The location of the service can be hidden in a user-level library -- calls go to the library, which casts the requests either as system calls or as reads and writes to the server through a pipe. The location of the server can also be hidden inside the kernel -- the application calls the kernel as if the kernel implements the service but instead the kernel reformats the request into a pipe that the server can read. A microkernel design offers considerable benefit to the operating system developer, as its easier to modularize and debug user-level services than kernel code. Aside from a potential reliability improvement, however, microkernels offer little in the way of visible benefit to end users and can slow down overall performance by inserting extra steps between the application and service it needs. Thus in practice most systems adopt a hybrid model where some operating system services are run at user-level and some are in the kernel depending on the specific tradeoff between code complexity and performance. <br>
+    </p>
+    
+    <p id="subtext">
+        Hardware Abstraction Layer: <br>
+        A key goal of operating systems is to be portable across a wide variety of hardware platforms. To accomplish this especially within a monolithic system, requires careful design of the hardware abstraction layer. The hardware abstraction layer(HAL) is a portable interface to machine configuration and processor-specific operations within the kernel. For example, within the same processor family, such as an Intel x86, different computer manufacturers will require different machine-specific code to configure and mange interrupts and hardware timers. Operating systems that are portable across processor families say between an ARM and an x86 or between a 32bit and 64bit x86 will need processor specific code for process and thread context switches. The interrupt, processor exception, and system call trap handling is also processor specific; all systems have those functions, but the specific implementation will vary. With a will defined hardware abstraction layer in place, most of the operating system is machine and processor independent. Thus porting an operating system to a now computer is just a matter of creating new implementations of these low-level HAL routines and re-linking.<br>
+        Dynamically Installed Device Drivers:<br>
+        A similar consideration leads to operating systems that can easily accommodate a wide variety of physical I/O devices. Although there are only a handful of different instruction set architectures in wide use today, there are a huge number of different types of physical I/O devices, manufactured by a large number of companies. The key innovation widely adopted today is a dynamically loadable device driver. A dynamically loadable device driver is software to manage a specific device, interface, or chipset, added to the operating system kernel after the kernel starts running, to handle the devices that are present on a particular machine. The device manufacturer typically provides the driver code, using a standard interface supported by the kernel. The operating system kernel calls into the driver whenever it needs to read or write data to the device. The operating system boots with a small number of device drivers e.g. for the disk. For the devices physically attached to the computer, the computer manufacturer bundles those drivers into a file it stores along with the bootloader. When the OS starts up, it queries the I/O bus for which devices are attached to the computer and then loads thos drivers form the file on disk. Finally, for any network attached devices, such as a printer, the OS can load those drivers over the Internet. While dynamically loadable device drivers solve one problem, they pose a different one. Errors in a device driver can corrupt the OS kernel and application data structures; just as with a regular program, error may not be caught immediately, so that user may be unaware that their data is being silently modified. Even worse, a malicious attacker can use device drivers to introduce a computer virus into the operating system kernel and thereby silently gain control over the entire computer. Operating system developers have taken five approaches to dealing with this issue:<br>
+        <p id="subtext_bullet">
+            Code Inspection: operating system vendors typically require all device driver code to be submitted in advance for inspection and testing, before being allowed into the kernel.<br>
+            Bug Tracking: after every system crash, the operating system can collect information about the system configuration adn current kernel stack, and sends this information back to a central database for analysis.<br>
+            User-level Device Driver. Both Apple and Microsoft strongly encourage new device drivers to run at user-level rather than in kernel. Each device driver runs in a separate user-level process, using system calls to manipulate the physical device. This way, a buggy device driver can only affect its own internal data structures and not the rest of the OS kernel; if the device driver crashes the kernel can restart easily.<br>
+            Virtual Machine Device Drivers. To handle legacy device drivers one approach that has gained some traction is to run device driver code inside a guest os running on a virtual machine. The guest so loads the device drivers as if it was running directly on the real hardware, but when the devices attempt to access the physical hardware, the underlying virtual machine monitor regains control to ensure safety. Device drivers can still have bugs, but they can only corrupt the guest os and not other applications running on the underlying virtual machine monitor.<br>
+            Driver Sandboxing. A further challenge for both user-level drivers and virtual machine drivers is performance. Some device drivers need frequent interaction with hardware and the rest of the kernel. Some researchers have proposed running device drivers in their own restricted execution environment inside the kerne. This requires light weight sandboxing techniques discussed later.<br><br>
+        </p>
+    </p>
+    <p id="subtext">
+        Abstractions Summary:<br>
+        System calls can be used by application to create and manage processes, perform I/O, and communicate with other processes. Every operating system has its own unique system call interface. We focused on parts of the UNIX interface because it is both compact and powerful. A key aspect of the UNIX interface are that creating a process(with fork) is separate from starting to run a program in that process(with exec); another key feature is the use of kernel buffers to decouple reading and writing data through the kernel. Operating systems use the system call interface to provide services to applications and to aid in the internal structuring of the operating system itself. Almost all general purpose computer systems today have a user-level shell and/or window manager that can start and manage applications on behalf of the user. Many systems also implement parts of the operating system as user-level services accessed through kernel pipes.<br>
+        Future:<br>
+        A trend is for applications to become mini-operating systems in their own right, with multiple users, resource sharing and allocation, untrusted third-party code, processor and memory management and so forth. The system call interfaces for Windows and UNIX were not designed with this in mind and an interesting question is how they will change to accommodate this future of powerful meta-applications. Traditionally operating systems make resource allocation decisions -- when to schedule a process or a thread, how much memory to give a particular application, where and when to store its disk blocks, when to send its network packets -- transparently to the application, with a goal of improving user and overall sytem performance. APplication are unaware of how many resources they have, appearing to run by themselves, isolated on their own (virtual) machine. Of course, the reality is often quite different. An alternative model is for operating systems to divide resources among applications and then allow each application to decide for itself how best to use those resources. One can think of this as a type of federalism. If both the operating system and applications are governments doing their own resource allocation, they are likely to get in each other's way if they are not careful.<br>
+    </p>
+    
+
+
+   
 </body>
 </html>
