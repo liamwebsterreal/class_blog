@@ -14,7 +14,7 @@
         <li><a href="#FP2">Protection: Processes and Kernels</a></li>
         <li><a href="#FP3">Abstractions: Files, I/O, IPC, Pipes and Sockets</a></li>
         <li><a href="#FP4">Concurrency and Threads</a></li>
-        <li><a href="#FP4">Synchronizing Access to Shared Objects</a></li>
+        <li><a href="#FP5">Synchronizing Access to Shared Objects</a></li>
 
 
 
@@ -176,7 +176,6 @@
         <img id="medium_image" src="../assets/cs162/syscall2.jpg" alt=""><br><br>
         <img id="medium_image" src="../assets/cs162/syscall3.jpg" alt=""><br><br>
     </p>
-
     <h3 id="FP3">Abstractions: Files, I/O, IPC, Pipes and Sockets</h3>
     <h4 id="subhead">The Programming Interface:</h4>
     <p id="subtext">
@@ -264,7 +263,6 @@
             Microkernel:<br>
             An alternative to the monolithic kernel approach is to run as much of the operating system as possible in one or more user-level servers. The windows manager on most operating systems works this way: individual applications draw items on their portion of the screen by sending request to the window manager. The window manager adjudicates which application window is in front or in back for each pixel on the screen, then renders the result. If the system has a hardware graphics accelerator present, the window manager can use it to render items more quickly. Some systems have moved other parts other parts of the operating system into user-level servers: the network stack, the file system, device drivers, and so forth. The difference between a monolithic and microkernel design is often transparent to the application programmer. The location of the service can be hidden in a user-level library -- calls go to the library, which casts the requests either as system calls or as reads and writes to the server through a pipe. The location of the server can also be hidden inside the kernel -- the application calls the kernel as if the kernel implements the service but instead the kernel reformats the request into a pipe that the server can read. A microkernel design offers considerable benefit to the operating system developer, as its easier to modularize and debug user-level services than kernel code. Aside from a potential reliability improvement, however, microkernels offer little in the way of visible benefit to end users and can slow down overall performance by inserting extra steps between the application and service it needs. Thus in practice most systems adopt a hybrid model where some operating system services are run at user-level and some are in the kernel depending on the specific tradeoff between code complexity and performance. <br>
     </p>
-    
     <p id="subtext">
         Hardware Abstraction Layer: <br>
         A key goal of operating systems is to be portable across a wide variety of hardware platforms. To accomplish this especially within a monolithic system, requires careful design of the hardware abstraction layer. The hardware abstraction layer(HAL) is a portable interface to machine configuration and processor-specific operations within the kernel. For example, within the same processor family, such as an Intel x86, different computer manufacturers will require different machine-specific code to configure and mange interrupts and hardware timers. Operating systems that are portable across processor families say between an ARM and an x86 or between a 32bit and 64bit x86 will need processor specific code for process and thread context switches. The interrupt, processor exception, and system call trap handling is also processor specific; all systems have those functions, but the specific implementation will vary. With a will defined hardware abstraction layer in place, most of the operating system is machine and processor independent. Thus porting an operating system to a now computer is just a matter of creating new implementations of these low-level HAL routines and re-linking.<br>
@@ -284,7 +282,9 @@
         Future:<br>
         A trend is for applications to become mini-operating systems in their own right, with multiple users, resource sharing and allocation, untrusted third-party code, processor and memory management and so forth. The system call interfaces for Windows and UNIX were not designed with this in mind and an interesting question is how they will change to accommodate this future of powerful meta-applications. Traditionally operating systems make resource allocation decisions -- when to schedule a process or a thread, how much memory to give a particular application, where and when to store its disk blocks, when to send its network packets -- transparently to the application, with a goal of improving user and overall sytem performance. APplication are unaware of how many resources they have, appearing to run by themselves, isolated on their own (virtual) machine. Of course, the reality is often quite different. An alternative model is for operating systems to divide resources among applications and then allow each application to decide for itself how best to use those resources. One can think of this as a type of federalism. If both the operating system and applications are governments doing their own resource allocation, they are likely to get in each other's way if they are not careful.<br>
     </p>
-    <h3 id="FP3">Concurrency and Threads</h3>
+
+
+    <h3 id="FP4">Concurrency and Threads</h3>
     <p id="subtext">
         Concurrency: multiple activities happening at the same time. Correctly managing concurrency is a key challenge for operating system developers. The key idea is to write a concurrent program -- one with many simultaneous activities -- as a set of sequential streams of execution, or thread, that interact and share results in very precise ways. Threads let us define a set of tasks that run concurrently while the code for each task is sequential. The thread abstraction lets the programmer create as many threads as needed without worrying about the exact number of physical processors, or exactly which processor is doing what at each instant. Of course, threads are only an abstraction: the physical hardware has a limited number of processors(potentially only one). The operating system's job is to provide the illusion of a nearly infinite number of virtual processors even while the physical hardware is more limited. It sustains the illusion by transparently suspending and resuming threads so that at any given time only a subset of the threads are actively running.<br> 
     </p>
@@ -371,10 +371,67 @@
         Asynchronous I/O is a way to allow a single-threaded process to issue multiple concurrent I/O requests at the same time. The process makes a system call to issue an I/O request but the call returns immediately, without waiting for the result. At a later time, the operating system provides the result to the process by either: (1) calling a signal handler, (2) placing the result in a queue in the process’s memory, or (3) storing the result in kernel memory until the process makes another system call to retrieve it.<br>
         Data parallel programming. With data parallel programming, all processors perform the same instructions in parallel on different parts of a data set.<br>
         One popular model is data parallel programming, also known as SIMD (single instruction multiple data) programming or bulk synchronous parallel programming. In this model, the programmer describes a computation to apply in parallel across an entire data set at the same time, operating on independent data elements. The work on every data item must complete before moving onto the next step; one processor can use the results of a different processor only in some later step. As a result, the behavior of the program is deterministic. Rather than having programmers divide work among threads, the runtime system decides how to map the parallel work across the hardware’s processors.<br>
-    </p>>
+    </p>
 
 
-
+    <h3 id="FP4">Synchronizing Access to Shared Objects</h3>
+    <p id="subtext">
+        Multi-threaded programs extend the traditional, single-threaded programming model so that each thread provides a single sequential stream of execution composed of familiar instructions. If a program has independent threads that operate on completely separate subsets of memory, we can reason about each thread separately. In this case, reasoning about independent threads differs little from reasoning about a series of independent, single-threaded programs. However, most multi-threaded programs have both per-thread state (e.g., a thread’s stack and registers) and shared state (e.g., shared variables on the heap). Cooperating threads read and write shared state.Unfortunately, when cooperating threads share state, writing correct multi-threaded programs becomes much more difficult. Most programmers are used to thinking “sequentially” when reasoning about programs. For example, we often reason about the series of states traversed by a program as a sequence of instructions is executed. However, this sequential model of reasoning does not work in programs with cooperating threads, for three reasons:<br><br> 
+        1 Program execution depends on the possible interleavings of threads’ access to shared state.<br>
+        2 Program execution can be nondeterministic.<br>
+        3 Compilers and processor hardware can reorder instructions.<br>
+    </p>
+    <h4 id="subhead">Race Conditions:</h4>
+    <p id="subtext">
+        A race condition occurs when the behavior of a program depends on the interleaving of operations of different threads. In effect, the threads run a race between their operations, and the results of the program execution depends on who wins the race.<br>
+    </p>
+    <h4 id="subhead">Atomic Operations:</h4>
+    <p id="subtext">
+        Atomic operations, indivisible operations that cannot be interleaved with or split by other operations. On most modern architectures, a load or store of a 32-bit word from or to memory is an atomic operation. So, the previous analysis reasoned about interleaving of atomic loads and stores to memory. Conversely, a load or store is not always an atomic operation. Depending on the hardware implementation, if two threads store the value of a 64-bit floating point register to a memory address, the final result might be the first value, the second value, or a mix of the two.<br>
+    </p>
+    <h4 id="subhead">Structuring Shared Objects:</h4>
+    <p id="subtext">
+        <img id="medium_image" src="../assets/cs162/threadsharedstate.jpg" alt="">
+        <img id="medium_image" src="../assets/cs162/sharedprograms.jpg" alt=""><br><br>
+        Shared objects are objects that can be accessed safely by multiple threads. All shared state in a program — including variables allocated on the heap (e.g., objects allocated with malloc or new) and static, global variables — should be encapsulated in one or more shared objects.<br>
+        Programming with shared objects extends traditional object-oriented programming, in which objects hide their implementation details behind a clean interface. In the same way, shared objects hide the details of synchronizing the actions of multiple threads behind a clean interface. The threads using shared objects need only understand the interface; they do not need to know how the shared object internally handles synchronization.Like regular objects, programmers can design shared objects for whatever modules, interfaces, and semantics an application needs. Each shared object’s class defines a set of public methods on which threads operate. To assemble the overall program from these shared objects, each thread executes a “main loop” written in terms of actions on public methods of shared objects.<br>
+    </p>
+    <p id="subtext">
+        Shared object layer: as in standard object oriented programming, shared objects define application-specific logic and hide internal internal implementation details. Externally, they appear to have the same interface as you would define for a single-threaded program.<br>
+        Synchronization Variable Layer: rather than implementing shared objects directly with carefully interleaved atomic loads and stores, shared objects include synchronization variables as member variables. Synchronization variables, stored in memory just like any other object, can be included in any data structure. A synchronization variable is a data structure used for coordinating concurrent access to shared state. Both the interface and the implementation of synchronization variables must be carefully designed. In particular, we build shared objects using two types of synchronization variables: locks and condition variables. Synchronization variables coordinate access to state variables, which are just the normal member variables of an object that you are familiar with from single-threaded programming (e.g., integers, strings, arrays, and pointers).Using synchronization variables simplifies implementing shared objects. In fact, not only do shared objects externally resemble traditional single-threaded objects, but, byimplementing them with synchronization variables, their internal implementations are quite similar to those of single-threaded programs.<br>
+        Atomic instruction layer. Although the layers above benefit from a simpler programming model, it is not turtles all the way down. Internally, synchronization variables must manage the interleavings of different threads’ actions. Rather than implementing synchronization variables, such as locks and condition variables, using atomic loads and stores as we tried to do for the Too Much Milk problem, modern implementations build synchronization variables using atomic readmodify-write instructions. These processor-specific instructions let one thread have temporarily exclusive and atomic access to a memory location while the instruction executes. Typically, the instruction atomically reads a memory location, does some simple arithmetic operation to the value, and stores the result. The hardware guarantees that any other thread’s instructions accessing the same memory location will occur either entirely before, or entirely after, the atomic read-modify-write instruction.<br>
+    </p>
+    <h4 id="subhead">Locks: Mutual Exclusion:</h4>
+    <p id="subtext">
+        A lock is a synchronization variable that provides mutual exclusion — when one thread holds a lock, no other thread can hold it (i.e., other threads are excluded). A program associates each lock with some subset of shared state and requires a thread to hold the lock when accessing that state. Then, only one thread can access the shared state at a time. Mutual exclusion greatly simplifies reasoning about programs because a thread can perform an arbitrary set of operations while holding a lock, and those operations appear to be atomic to other threads. In particular, because a lock enforces mutual exclusion and threads must hold the lock to access shared state, no other thread can observe an intermediate state. Other threads can only observe the state left after the lock release.<br>
+        It is much easier to reason about interleavings of atomic groups of operations rather than interleavings of individual operations for two reasons. First, there are (obviously) fewer interleavings to consider. Reasoning about interleavings on a coarser-grained basis reduces the sheer number of cases to consider. Second, and more important, we can make each atomic group of operations correspond to the logical structure of the program, which allows us to reason about invariants not specific interleavings. In particular, shared objects usually have one lock guarding all of an object’s state. Each public method acquires the lock on entry and releases the lock on exit. Thus, reasoning about a shared class’s code is similar to reasoning about a traditional class’s code: we assume a set of invariants when a public method is called and re-establish those invariants before a public method returns. If we define our invariants well, we can then reason about each method independently.<br>
+    </p>
+    <h4 id="subhead">Locks: API and Properties:</h4>
+    <p id="subtext">
+        A lock enables mutual exclusion by providing two methods: Lock::acquire() and Lock::release().<br>
+        <p id="subtext_bullet">
+            A lock can be in one of two states: BUSY or FREE<br>
+            A lock is initially in the FREE state<br>
+            Lock::acquire waits until the lock is FREE then atomically makes the lock BUSY<br>
+            Lock::release makes the lock FREE. If there are pending acquire operations this state change causes one of them to proceed. 
+        </p>
+    </p>
+    <p id="subtext">
+        Formal properties. A lock can be defined more precisely as follows. A thread holds a lock if it has returned from a lock’s acquire method more often than it has returned from a lock’s release method. A thread is attempting to acquire a lock if it has called but not yet returned from a call to acquire on the lock.<br>
+        A lock should ensure the following three properties:<br>
+        <p id="subtext_bullet">
+            Mutual Exclusion: at most one thread holds the lock<br>
+            Progress: if no thread holds the lock and any thread attempts to acquire the lock then eventually some thread succeeds in acquiring the lock<br>
+            Bounded Waiting: if thread T attempts to acquire a lock then there exists a bound on the number of times other threads can successfully acquire the lock before T does.<br>
+        </p>
+    </p>
+    <h4 id="subhead">Case Study: Thread-Safe Bounded Queue:</h4>
+    <p id="subtext">
+        A bounded queue is a queue with a fixed size limit on the number of items stored in the queue. Operating system kernels use bounded queues for managing interprocess communication, TCP and UDP sockets, and I/O requests. Because the kernel runs in a finite physical memory, the kernel must be designed to work properly with finite resources. For example, instead of a simple, infinite buffer between a producer and a consumer thread, the kernel will instead use a limited size buffer, or bounded queue.<br>
+        A thread-safe bounded queue is a type of a bounded queue that is safe to call from multiple concurrent threads. Figure 5.3 gives an implementation; it lets any number of threads safely insert and remove items from the queue. As Figure 5.4 illustrates, a program can allocate multiple such queues (e.g., queue1, queue2, and queue3), each of which includes its own lock and state variables.<br>
+        A critical section is a sequence of code that atomically accesses shared state. By ensuring that a thread holds the object’s lock while executing any of its critical sections, we ensure that each critical section appears to execute atomically on its shared state. There is a critical section in each of the methods tryInsert and tryRemove.<br>
+        
+    </p>
 
    
 </body>
