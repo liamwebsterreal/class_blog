@@ -430,7 +430,9 @@
         A bounded queue is a queue with a fixed size limit on the number of items stored in the queue. Operating system kernels use bounded queues for managing interprocess communication, TCP and UDP sockets, and I/O requests. Because the kernel runs in a finite physical memory, the kernel must be designed to work properly with finite resources. For example, instead of a simple, infinite buffer between a producer and a consumer thread, the kernel will instead use a limited size buffer, or bounded queue.<br>
         A thread-safe bounded queue is a type of a bounded queue that is safe to call from multiple concurrent threads. Figure 5.3 gives an implementation; it lets any number of threads safely insert and remove items from the queue. As Figure 5.4 illustrates, a program can allocate multiple such queues (e.g., queue1, queue2, and queue3), each of which includes its own lock and state variables.<br>
         A critical section is a sequence of code that atomically accesses shared state. By ensuring that a thread holds the object’s lock while executing any of its critical sections, we ensure that each critical section appears to execute atomically on its shared state. There is a critical section in each of the methods tryInsert and tryRemove.<br>
-        
+    </p>
+    <p id="subtext">
+        Use locks for mutual exclusion and condition variables for scheduling constraints<br>
     </p>
 
    
