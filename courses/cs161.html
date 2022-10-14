@@ -27,6 +27,10 @@
         <li><a href="#FP15">Passwords</a></li>
         <li><a href="#FP16">Bitcoin/a></li>
         <li><a href="#FP17">Introduction to the Web/a></li>
+        <li><a href="#FP18">Cookies and Session Management/a></li>
+        <li><a href="#FP19">Cross-Site Request Forgery (CSRF)/a></li>
+        <li><a href="#FP20">Cross-Site Scripting (XSS)/a></li>
+        <li><a href="#FP21">Clickjacking/User Interface (UI) Attacks/a></li>
 
 
 
@@ -942,6 +946,112 @@
     </p>
 
 
+    <h3 id="FP18">Cookies and Session Management</h3>
+    <p id="subtext">
+        HTTP is a stateless protocol, which means each request and response is independent from all other requests and responses. However, many features on the web require maintaining some form of state. For example, when you log into your email account, you can stay logged in across many requests and responses. If you enable dark mode on a website and make subsequent requests to the website, you want the pages returned to have a dark background. If you’re browsing an online shopping website, you want the items in your cart to be saved across many requests and responses. Browser and servers store HTTP cookies to support these features. At a high level, you can think of cookies as pieces of data stored in your browser. When you make a request to enable dark mode or add an item to your shopping cart, the server sends a response with a Set-Cookie header, which tells your browser to store a new cookie. These cookies encode state that should persist across multiple requests and responses, such as your dark mode preference or a list of items in your shopping cart. In future requests, your browser will automatically attach the relevant cookies to a request and send it to the web server. The additional information in these cookies helps the web server customize its response.<br>
+    </p>
+    <h4 id="subtext">Cookie Attributes:</h4>
+    <p id="subtext">
+        Every cookie is a name-value pair. For example, a cookie darkmode=true has name darkmode and value true. For security and functionality reasons, we don’t want the browser to send every cookie in every request. A user might want to enable dark mode on one website but not on another website, so we need a way to only send certain cookies to certain URLs. Also, as we’ll see later, cookies may contain sensitive login information, so sending all cookies in all requests poses a security risk. These additional cookie attributes help the browser determine which cookies should be attached to each request.<br>
+        <p id="subtext">
+            The Domain and Path attributes tell the browser which URLs to send the cookie to. See the next section for more details.<br>
+            The Secure attribute tells the browser to only send the cookie over a secure HTTPS connection.<br>
+            The HttpOnly attribute prevents JavaScript from accessing and modifying the cookie.<br>
+            The expires field tells the browser when to stop remembering the cookie.<br>
+        </p>
+    </p>
+    <p id="subtext">
+        The browser sends a cookie to a given URL if the cookie’s Domain attribute is a domain-suffix of the URL domain, and the cookie’s Path attribute is a prefix of the URL path. In other words, the URL domain should end in the cookie’s Domain attribute, and the URL path should begin with the cookie’s Path attribute. For example, a cookie with Domain=example.com and Path=/some/path will be included on a request to http://foo.example.com/some/path/index.html, because the URL domain ends in the cookie domain, and the URL path begins with the cookie path. Note that cookie policy uses a different set of rules than the same origin policy. This has caused problems in the past.<br>
+    </p>
+    <h4 id="subtext">Cookie Setting and Path:</h4>
+    <p id="subtext">
+        For security reasons, we don’t want a malicious website evil.com to be able to set a cookie with domain bank.com, since this would allow an attacker to affect the functionality of the legitimate bank website. To prevent this, the cookie policy specifies that when a server sets a cookie, the cookie’s domain must be a URL suffix of the server’s URL. In other words, for the cookie to be set, the server’s URL must end in the cookie’s Domain attribute. Otherwise, the browser will reject the cookie. For example, a webpage with domain eecs.berkeley.edu can set a cookie with domain eecs.berkeley.edu or berkeley.edu, since the webpage domain ends in both of these domains. This policy has one exception: cookies cannot have domains set to a top-level domain, such as .edu or .com, since these are too broad and pose a security risk. If evil.com could set cookies with domain .com, the attacker would have the ability to affect all .com websites, since this cookie would be sent to all .com websites. The web browser maintains a list of top-level domains, which includes two-level TLDs like .co.uk.<br>
+    </p>
+    <h4 id="subtext">Session Management:</h4>
+    <p id="subtext">
+        Cookies are often used to keep users logged in to a website over many requests and responses. When a user sends a login request with a valid username and password, the server will generate a new session token and send it to the user as a cookie. In future requests, the browser will attach the session token cookie and send it to the server. The server maintains a mapping of session tokens to users, so when it receives a request with a session token cookie, it can look up the corresponding user and customize its response accordingly. Secure session tokens should be random and unpredictable, so an attacker cannot guess someone else’s session token and gain access to their account. Many servers also set the HttpOnly and Secure flags on session tokens to protect them from being accessed by XSS vulnerabilities or network attackers, respectively. It is easy to confuse session tokens and cookies. Session tokens are the values that the browser sends to the server to associate the request with a logged-in user. Cookies are how the browser stores and sends session tokens to the server. Cookies can also be used to save other state, as discussed earlier. In other words, session tokens are a special type of cookie that keep users logged in over many requests and responses.<br>
+    </p>
+
+
+    <h3 id="FP19">Cross-Site Request Forgery (CSRF)</h3>
+    <p id="subtext">
+        Using cookies and session tokens to keep a user logged in has some associated security risks. In a cross-site request forgery (CSRF) attack, the attacker forces the victim to make an unintended request. The victim’s browser will automatically attach the session token cookie to the unintended request, and the server will accept the request as coming from the victim.<br>
+        For example, suppose a website has an endpoint http://example.com/logout. To log out, a user makes a GET request to this URL with the appropriate session token attached, and the server checks the session token and performs the logout. If an attacker can trick a victim into clicking this link, the victim will be logged out of the website without their knowledge.<br>
+        CSRF attacks can also be executed on URLs with more malicious actions. For example, a GET request to https://bank.com/transfer?amount=100&recipient=mallory with a valid session token might send $100 to Mallory. An attacker could send an email to the victim with the following HTML snippet:<br>
+        <p id="subtext_bullet">
+            <img id="small_image" src="../assets/cs161/CSRF.jpg" alt=""><br><br>
+        </p>
+    </p>
+    <p id="subtext">
+        This will cause the browser to try and fetch an image from the malicious URL by making a GET request. Because the browser automatically attaches the session token to the request, this causes the victim to unknowingly send $100 to Mallory.<br>
+        It is usually bad practice to have HTTP GET endpoints that can change server state, so this type of CSRF attack is less common in practice. However, CSRF attacks are still possible over HTTP POST requests. HTML forms are a common example of a web feature that generates HTTP POST requests. The user fills in the form fields, and when they click the Submit button, the browser generates a POST request with the filled-out form fields. Consider the following HTML snippet on an attacker’s webpage:<br>
+        <p id="subtext_bullet">
+            <img id="small_image" src="../assets/cs161/CSRF2.jpg" alt=""><br><br>
+        </p>
+    </p>
+    <p id="subtext">
+        When the victim visits the attacker’s website, this HTML snippet will cause the victim’s browser to make a POST request to https://bank.com/transfer with form input values that transfer $100 to Mallory. Like before, the victim’s browser automatically attaches the session token to the request, so the server accepts this POST request as if it was from the victim.<br>
+    </p>
+    <h4 id="subtext">CSRF Defense:</h4>
+    <p id="subtext">
+        A good defense against CSRF attacks is to include a CSRF token on webpages. When a legitimate user loads a webpage from the server with a form, the server will randomly generate a CSRF token and include it as an extra field in the form. (In practice, this field often has a hidden attribute set so that it’s only visible in the HTML, so users don’t see random strings every time they submit a form.) When the user submits the form, the form will include the CSRF token, and the server will check that the CSRF token is valid. If the CSRF token is invalid or missing, the server will reject the request. To implement CSRF tokens, the server needs to generate a new CSRF token every time a user requests a form. CSRF tokens should be random and unpredictable so an attacker cannot guess the CSRF token. The server also needs to maintain a mapping of CSRF tokens to session tokens, so it can validate that a request with a session token has the correct corresponding CSRF token. This may require the server to store a large amount of state if it expects heavy traffic. If an attacker tries the attack in the previous section, the malicious form they create on their website will no longer contain a valid CSRF token. The attacker could try querying the server for a CSRF token, but it would not properly map to the victim’s session token, because the victim never requested the form legitimately.<br>
+        Another way to defend against CSRF tokens is to check the Referer1 field in the HTTP header. When a browser issues an HTTP request, it includes a Referer header which indicates which URL the request was made from. For example, if a user fills out a form from a legitimate bank website, the Referer header will be set to bank.com, but if the user visits the attacker’s website and the attacker fills out a form and submits it, the Referer header will be set to evil.com. The server can check the Referer header on each request and reject any requests that have untrusted or suspicious Referer headers. Referer validation is a good defense if it is included on every request, but it poses some problems if someone submits a request with the Referer header left blank. If a server accepts requests with blank Referer headers, it may be vulnerable to CSRF attacks, but if a server rejects requests with blank Referer headers, it may reduce functionality for some users. In practice, Referer headers may be removed by the browser, the operating system, or a network monitoring system for privacy issues. For example, if you click on a link to visit a website from a Google search, the website can know what Google search you made to visit its website from the Referer header. Some modern browsers also have options that let users disable sending the Referer header on all requests. Because not all requests are guaranteed to have a Referer header, it is usually only used as a defense-in-depth strategy in addition to CSRF tokens, instead of as the only defense against CSRF attacks.<br>
+    </p>
+
+
+    <h3 id="FP20">Cross-Site Scripting (XSS)</h3>
+    <p id="subtext">
+        XSS is a class of attacks where an attacker injects malicious JavaScript onto a webpage. When a victim user loads the webpage, the user’s browser will run the malicious JavaScript. XSS attacks are powerful because they subvert the same-origin policy. Normally, an attacker can only run JavaScript on websites they control (such as https://evil.com), so their JavaScript cannot affect websites with origins different from https://evil.com. However, if the attacker can inject JavaScript into https://google.com, then when a user loads https://google.com, their browser will run the attacker’s JavaScript with the origin of https://google.com. XSS attacks allow malicious JavaScript to run in the user’s browser with the same origin as a legitimate website. This allows the attacker to perform any action the user can perform at https://google.com or steal any user secrets associated with Google and send them back to the attacker. There are two main categories of XSS attacks: stored XSS and reflected XSS.<br>
+    </p>
+    <p id="subtext">
+        Stored XSS:<br><br>
+        <p id="subtext_bullet">
+            In a stored XSS attack, the attacker finds a way to persistently store malicious JavaScript on the web server. When the victim loads the webpage, the web server will load this malicious JavaScript and display it to the user. A classic example of stored XSS is a Facebook post. When a user makes a Facebook post, the contents of the post are stored on Facebook’s servers, so that other users can load their friends’ posts. If Facebook doesn’t properly check user inputs, an attacker could make a post that says<br>
+            <img id="small_image" src="../assets/cs161/storedXSS.jpg" alt=""><br><br>
+            This post is now stored in Facebook’s servers. If another user loads the attacker’s posts, they will receive an HTML page with this script on it, and the browser will run the script and trigger a pop-up that says XSS attack!<br>
+        </p>
+    </p>
+    <p id="subtext">
+        Reflected XSS:<br>
+        <p id="subtext">
+            In a reflected XSS attack, the attacker finds a vulnerable webpage where the server receives user input in an HTTP request and displays the user input in the response. A classic example of reflected XSS is a Google search. When you make an HTTP GET request for a Google search, such as https://www.google.com/search?&q=cs161, the returned webpage with search results will include something like<br>
+            <img id="small_image" src="../assets/cs161/reflectedXSS1.jpg" alt=""><br><br>
+            If Google does not properly check user input, an attacker could create a malicious URL https://www.google.com/search?&q=script>alert("XSS attack!")/script>. When the victim loads this URL, Google will return
+            <img id="small_image" src="../assets/cs161/refelectedXSS2.jpg" alt=""><br><br>
+            The victim’s browser will run the script and trigger a pop-up that says XSS attack!<br>
+        </p>
+    </p>
+    <h4 id="subtext">XSS Defense:</h4>
+    <p id=subtext">
+        Sanitize Input:<br>
+        <img id="small_image" src="../assets/cs161/XSSdefense1.jpg" alt=""><br><br>
+        Content Security Policy:<br>
+        Another XSS defense is using a content security policy (CSP) that specifies a list of allowed domains where scripts can be loaded from. For example, cs161.org might allow scripts that are loaded from *.cs161.org or *.google.com and disallow all other scripts, including any inline scripts that are injected by the attacker. CSPs are defined by a web server and enforced by a browser. In the HTTP response, the server attaches a Content-Security-Policy header, and the browser checks any scripts against the header. If you enable CSP, you can no longer run any scripts that are embedded directly in the HTML document. You can only load external scripts specified by the script tag and an external URL. These scripts can only be fetched from the sites specified in the CSP. This prevents an attacker from directly injecting scripts into an HTML document or modifying the HTML document to fetch scripts from the attacker’s domain.<br>
+    </p>
+
+
+    <h3 id="FP21">Clickjacking/User Interface (UI) Attacks</h3>
+    <p id="subtext">
+        Many of the web attacks we’ve seen involve forcing a victim to click on an attacker-generated link (reflected XSS), or forcing a victim to visit an attacker-controlled website (CSRF). How might an attacker achieve this? UI attacks (or clickjacking attacks) are a category of attacks that try to fool a victim into inadvertently clicking on an attacker-supplied input. The end goal of these attacks is to “steal” a click from the user, so that the user loads something controlled by the attacker (possibly for a further attack). Many UI attacks rely on clever visual tricks to deceive the user.<br>
+        Download buttons are a classic example of clickjacking. When you visit a website to download a file, you might see many different download buttons with different shapes and colors. One of these is the true download button, and the others are malicious download buttons that actually take you to attacker-controlled websites or perform other malicious actions in your browser. An unwitting user might click on the wrong download button and be sent to the attacker website. The malicious download buttons could be added to the website through a different web exploit (e.g. stored XSS) or as a paid advertisement.<br>
+        Depending on how much control the attacker has over the page, more sophisticated clickjacking attacks are possible:<br><br>
+        <p id="subtext_bullet">
+            The attacker could manipulate an HTML form so that the user sees a payment of $5, but the underlying form will actually submit a payment of $50.<br>
+            The attacker could draw a fake cursor on the page. The user sees the fake cursor over a legitimate button and clicks, but their real cursor has actually clicked on a malicious link.<br>
+            The attacker could draw an entire browser on the page. The user sees an address bar and clicks, but they have actually clicked on a fake address bar generated by the attacker (with a malicious link behind the address bar).<br>
+        </p>
+    </p>
+    <h4 id="subtext">Click Jacking Defenses Defense:</h4>
+    <p id="subtext">
+        Confirmation pop-ups: If the user clicks on a link or button that will perform some potentially dangerous activity (e.g. opening a website, executing Javascript, downloading a file), display a pop-up asking the user to confirm that this is their intended action. However, users might still click on the pop-up without reading it, especially if they’re too frequent. Remember to consider human factors!<br>
+        UI randomization: Randomize the location of certain elements on a website. For example, a submit button could alternately be located at the left side of the screen and the right side of the screen. This makes it harder for attackers to draw a fake submit button over the real submit button, because they won’t know where it’s located. However, webpages that look different every time could pose usability problems.<br>
+        Direct the user’s attention to their click: This can be done by freezing the rest of the screen besides the area directly around the user’s cursor, or by highlighting the user’s cursor. This will make the user less likely to be fooled by a fake cursor and force them to focus on where their real cursor is pointing. The user’s clicks can also be invalidated if the user tries to click outside of a relevant portion of the screen.<br>
+        Delay the click: Force the user to hover over the desired button for some amount of time before allowing the user to click the button. This forces the user to spend some time looking at where they’re clicking before they actually perform the click.<br>
+    </p>
+    <p id="subtext">
+        Summary:
+        Intro to Web: web is accessed via an address composed of protocol, location(domain, port), path( ? arguments), anchor. Same Origin policy: to protect good websites from maliscious websites a browser imposes the same origin policy. Meaning a website can only effect the session state of itself aka its domain. A web browser checks for the same protocol, domain, and port. Cookies: http is stateless architecture meaning requests are not sequential aka independent. Thus to maintain a state such as user login, web servers generate session tokens that the user receives and stores as a cookie. Another cookie could be browser dark mode. Cross site Request Forgery aims to subert same origin policy by injecting javascript into the site thus it comes from that domain when loaded. Stored XSS aims to store malicious javascript into a data server such as posting malisious javascript as a Facebook post so when users look at the post the script runs. Reflected XSS aims to expose vunerable websits that display user input, such as google searching a maliscious javascript that would then run upon load. To counter these attacks sanitization methods and content secuirty policies are put in place. UI attacks are also very common e.g. an ad dsiplaying a fraud download button. To defend against these attacks make a website make users aware of what they are clicking.
+    </p>
 
 
 
