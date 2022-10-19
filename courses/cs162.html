@@ -817,6 +817,27 @@
         <img id="medium_image" src="../assets/cs162/pagetables2.jpg" alt=""><br><br>
         Address translation with a page table. The virtual address has two components: a virtual page number and an offset within the page. The virtual page number indexes into the page table to yield a page frame in physical memory. The physical address is the physical page frame from the page table, concatenated with the page offset from the virtual address. The operating system can restrict process access to certain pages, e.g., to prevent writes to pages containing instructions.<br>  
     </p>
+    <p id="subtext">
+        Great Power of PTE:<br>
+        Demand Paging: keep only active pages in memory, place other in disk and mark PTEs invalid. <br>
+        Copy on Write: UNIX fork gives copy of parent address space to child; use combination of page sharing and marking pages as read-only.<br>
+        Zero Fill on Demand: NEw dat pages must carry no information; mark PTEs as invalid page fault on use gets zeroed page. <br>
+        Data Breakpoints: For debugger make instruction page as read only, which triggers page fault when trying to execute.<br>
+    </p>
+    <p id="subtext">
+        Limitations of Paging:<br>
+        Space Overhead: PTE can get very large emphasized on 64 bit architecture.<br>
+        Time Overhead: We are performing two memory lookups.<br>
+        Internal Fragmentation: 4KB pages can still be too large for "simple" projects.<br>
+    </p>
+    <p id="subtext">
+        Secret to the Whole OS:<br>
+        Batching<br>
+        Caching<br>
+        Indirection e.g. multi-level paging<br>
+        Specialized Hardware<br>
+    </p>
+
     <h4 id="subhead">Multi Level Translation:</h4>
     <p id="subtext">
         Paged Segmentation:<br>
@@ -824,11 +845,18 @@
     </p>
     <p id="subtext">
         Multi-Level Paging:<br>
+        For two level page system 10-10-12 bit split seems to tbe the magic number.<br>
         <img id="medium_image" src="../assets/cs162/multilevelpaging.jpg" alt=""><br><br>
     </p>
     <p id="subtext">
-        Multi-Level Paged Segmentation: We can combine these two approaches by using a segmented memory where each segment is managed by a multi-level page table. This is the approach taken by the x86, for both its 32-bit and 64-bit addressing modes.<br>
+        Multi-Level Paged Segmentation: <br>
+        We can combine these two approaches by using a segmented memory where each segment is managed by a multi-level page table. This is the approach taken by the x86, for both its 32-bit and 64-bit addressing modes.<br>
     </p>
+    <p id="subtext">
+        Paged Memory Summary:<br>
+        <img id="medium_image" src="../assets/cs162/pagedmemorysummary.JPG" alt=""><br><br>
+    </p>
+
     <h4 id="subhead">Towards Efficient Memory Translation:</h4>
     <p id="subtext">
         At this point, you should be getting a bit antsy. After all, most of the hardware mechanisms we have described involve at least two and possibly as many as four memory extra references, on each instruction, before we even reach the intended physical memory location! It should seem completely impractical for a processor to do several memory lookups on every instruction fetch, and even more that for every instruction that loads or stores data. In this section, we will discuss how to improve address translation performance without changing its logical behavior. In other words, despite the optimization, every virtual address is translated to exactly the same physical memory location, and every permission exception causes a trap, exactly as would have occurred without the performance optimization.<br>
