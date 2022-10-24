@@ -904,6 +904,13 @@
         Multiprocessors. On the other hand, multiprocessors will mean that maintaining TLB consistency will become increasingly expensive. A key assumption for using page table protection hardware for implementing copy-on-write and fill-on-demand is that the cost of modifying page table entries is modest. One possibility is that hardware will be added to systems to make TLB shootdown a much cheaper operation, e.g., by making TLBs cache coherent. Another possibility is to follow the trend towards software sandboxes. If TLB shootdown remains expensive, we may start to see copyon-write and other features implemented in software rather than hardware.<br>
         User-level sandboxes. Applications like browsers that run untrusted code are becoming increasingly prevalent. Operating systems have only recently begun to recognize the need to support these types of applications. Software protection has become common, both at the language level with JavaScript, and in the runtime system with Native Client and Application Domains. As these technologies become more widely used, it seems likely we may direct hardware support for application-level protection — to allow each application to set up its own protected execution environment, but enforced in hardware. If so, we may come to think of many applications as having their own embedded operating system, and the underlying operating system kernel as mediating between these operating systems.<br>
     </p>
+    <h4 id="subhead">Cache Review:</h4>
+    <p id="subtext">
+        <img id="medium_image" src="../assets/cs162/directmappedcache.jpg" alt=""><br><br>
+        <img id="medium_image" src="../assets/cs162/nwayassciativecache.jpg" alt=""><br><br>
+        <img id="medium_image" src="../assets/cs162/fullyassociativecache.jpg" alt=""><br><br>
+
+    </p>
 
 
 </body>
